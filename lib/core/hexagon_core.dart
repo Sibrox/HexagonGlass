@@ -1,24 +1,24 @@
 import "dart:io";
 import 'dart:math';
 
-enum HexagonColor {
+enum ButtonColor {
   color_1,
   color_2,
-  gray
+  noColor
 }
 
 class HexagonBlock {
   late int value;
   late bool isVisible;
-  late HexagonColor color;
+  late ButtonColor color;
 
   HexagonBlock() {
     value = 0;
-    color = HexagonColor.gray;
+    color = ButtonColor.noColor;
     isVisible = true;
   }
 
-  HexagonBlock.init(HexagonColor startColor) {
+  HexagonBlock.init(ButtonColor startColor) {
     value = 0;
     color = startColor;
     isVisible = true;
@@ -26,32 +26,42 @@ class HexagonBlock {
 
   HexagonBlock.build(int startValue, bool visibility) {
     value = startValue;
-    color = HexagonColor.gray;
+    color = ButtonColor.noColor;
     isVisible = visibility;
   }
 
   void changeColor()
   {
-    if(color == HexagonColor.gray){
-      color = HexagonColor.color_1;
+    if(color == ButtonColor.noColor){
+      color = ButtonColor.color_1;
     }
-    else if(color == HexagonColor.color_1) {
-      color = HexagonColor.color_2;
+    else if(color == ButtonColor.color_1) {
+      color = ButtonColor.color_2;
     }
     else{
-      color = HexagonColor.gray;
+      color = ButtonColor.noColor;
     }
   }
 
   @override
   String toString(){
-    return color == HexagonColor.color_1 ? "1" : "0";
+    return color == ButtonColor.color_1 ? "1" : "0";
   }
 }
 
 class HexagonGame{
   late List<List<HexagonBlock>> gameGrid;
-  late List<List<HexagonBlock>> statusGrid;
+  late List<List<HexagonBlock>> _statusGrid;
+
+  int nRows()
+  {
+    return gameGrid.length;
+  }
+
+  int nColumns()
+  {
+    return gameGrid[0].length;
+  }
 
   HexagonGame.create(int width, int height) {
     initGrid(width, height);
@@ -60,17 +70,17 @@ class HexagonGame{
 
   void initGrid(int width, int height) {
     gameGrid = <List<HexagonBlock>>[];
-    statusGrid = <List<HexagonBlock>>[];
+    _statusGrid = <List<HexagonBlock>>[];
     for (int i = 0; i < height; i++) {
       gameGrid.add([]);
-      statusGrid.add([]);
+      _statusGrid.add([]);
       for (int j = 0; j < width; j++) {
         var color = Random().nextInt(2) == 1 ?
-          HexagonColor.color_1 : HexagonColor.color_2;
+          ButtonColor.color_1 : ButtonColor.color_2;
 
         var visibility = Random().nextInt(30);
         gameGrid[i].add(HexagonBlock.init(color));
-        statusGrid[i].add(HexagonBlock());
+        _statusGrid[i].add(HexagonBlock());
       }
     }
   }
@@ -86,7 +96,7 @@ class HexagonGame{
     int counter = 0;
     int offset = i%2 == 0? 0 : 1;
 
-    HexagonColor currentColor = gameGrid[i][j].color;
+    ButtonColor currentColor = gameGrid[i][j].color;
 
     var top   = i - 1;
     var bot   = i + 1;
@@ -119,14 +129,14 @@ class HexagonGame{
   }
 
   void changeColor(int i, int j){
-    statusGrid[i][j].changeColor();
+    gameGrid[i][j].changeColor();
   }
 
   void calculateGrid() {
     for(int i = 0; i < gameGrid.length; i++) {
       for (int j = 0; j < gameGrid[i].length; j++) {
         gameGrid[i][j].value = calculateAdjValue(i,j);
-        statusGrid[i][j].value = gameGrid[i][j].value;
+        _statusGrid[i][j].value = gameGrid[i][j].value;
       }
     }
   }

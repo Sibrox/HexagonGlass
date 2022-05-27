@@ -1,9 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:flutter/material.dart';
+import 'package:hexagon_glass/core/hexagon_core.dart';
+
 
 class HexagonBottom extends StatefulWidget {
-  const HexagonBottom({Key? key}) : super(key: key);
+
+  final double width;
+  final Function changeColor;
+  final Color color;
+  final int num;
+
+  const HexagonBottom({
+    Key? key,
+    required this.width,
+    required this.changeColor,
+    required this.color,
+    required this.num
+  }) : super(key: key);
 
   @override
   _HexagonBottomState createState() => _HexagonBottomState();
@@ -22,12 +36,8 @@ class _HexagonBottomState extends State<HexagonBottom> with TickerProviderStateM
     curve: Curves.easeInOutBack,
   );
 
-  var deviceWidth = WidgetsBinding.instance?.window.physicalSize.width;
-  var marginPerc = 0.1;
-  var marginSpace = 0.0;
-  var hexagonBox = 0.0;
-  var hexagonNumber = 8;
-  var hexagonLength = 0.0;
+  double hexagonWidthAnimated = 0.0;
+  double hexagonWidthFixed = 0.0;
 
   @override
   void dispose(){
@@ -39,9 +49,7 @@ class _HexagonBottomState extends State<HexagonBottom> with TickerProviderStateM
   void initState(){
     super.initState();
     _controller.forward();
-    marginSpace = deviceWidth!*marginPerc;
-    hexagonBox = deviceWidth!-marginSpace;
-    hexagonLength = hexagonBox/hexagonNumber;
+    hexagonWidthAnimated = hexagonWidthFixed = widget.width;
   }
 
   Widget build(BuildContext context) {
@@ -49,52 +57,48 @@ class _HexagonBottomState extends State<HexagonBottom> with TickerProviderStateM
     return GestureDetector(
         onTapUp: (tapDetails) {
             setState(() {
-              hexagonLength *= 1.2;
+              hexagonWidthAnimated *= 1.2;
             });
+            widget.changeColor();
         },
         onTapDown: (tapDetails){
-
           setState(() {
-            hexagonLength = hexagonLength/1.2;
+            hexagonWidthAnimated /= 1.2;
           });
         },
-        child: ScaleTransition(
-          scale: _animation,
-          child: AnimatedContainer(
-            padding: EdgeInsets.zero,
-            margin: EdgeInsets.zero,
-            height: hexagonLength,
-            width: hexagonLength,
-            duration: const Duration(milliseconds: 400),
-            curve: Curves.bounceOut,
-            child: ClipPolygon(
-              sides: 6,
-              borderRadius: 5,
-              rotate: 0,
-              child: Container(
-                padding: EdgeInsets.zero,
-                margin: EdgeInsets.zero,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment(0.8, 1),
-                    colors: <Color>[
-                      Color(0xff1f005c),
-                      Color(0xff5b0060),
-                      Color(0xff870160),
-                      Color(0xffac255e),
-                      Color(0xffca485c),
-                      Color(0xffe16b5c),
-                      Color(0xfff39060),
-                      Color(0xffffb56b),
-                    ], // Gradient from https://learnui.design/tools/gradient-generator.html
-                    tileMode: TileMode.mirror,
+        child: SizedBox(
+            width: hexagonWidthFixed,
+            child: Center(
+              child: Stack(
+                children: <Widget>[
+                ScaleTransition(
+                  scale: _animation,
+                  child: AnimatedContainer(
+                    width: hexagonWidthAnimated,
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.bounceOut,
+                    child: ClipPolygon(
+                      sides: 6,
+                      borderRadius: 5,
+                      rotate: 0,
+                      child: Container(
+                          padding: EdgeInsets.zero,
+                          margin: EdgeInsets.zero,
+                          color: widget.color
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                  Positioned(
+                      left: hexagonWidthFixed / 2 * -1,
+                      top: hexagonWidthFixed / 2 * -1,
+                      child: Text('${widget.num}',
+                      ),
+                  )
+                ],
+              )
             ),
           ),
-        )
       );
   }
 }

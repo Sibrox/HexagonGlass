@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_polygon/flutter_polygon.dart';
+import 'package:hexagon_glass/core/hexagon_core.dart';
+import 'package:hexagon_glass/test21-5/hexagonGrid.dart';
 import "hexagon.dart";
 
 void main() {
@@ -50,65 +52,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  bool selected = false;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  double getBoxSize()
+  {
+    var deviceWidth = WidgetsBinding.instance?.window.physicalSize.width;
+    var marginPerc = 0.1;
+    var marginSpace = deviceWidth!*marginPerc;
+    var hexagonBox = deviceWidth!-marginSpace;
+    var hexagonNumber = 8;
+    var hexagonWidth = hexagonBox / hexagonNumber;
+
+    return hexagonWidth;
   }
 
   @override
   Widget build(BuildContext context) {
-    var hexagon = ClipPolygon(
-      sides: 6,
-      borderRadius: 5,
-      rotate: 0,
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment(0.8, 1),
-            colors: <Color>[
-              Color(0xff1f005c),
-              Color(0xff5b0060),
-              Color(0xff870160),
-              Color(0xffac255e),
-              Color(0xffca485c),
-              Color(0xffe16b5c),
-              Color(0xfff39060),
-              Color(0xffffb56b),
-            ], // Gradient from https://learnui.design/tools/gradient-generator.html
-            tileMode: TileMode.mirror,
-          ),
-        ),
-      ),
-    );
 
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: Center(
-                child:Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    HexagonBottom(),
-                    HexagonBottom(),
-                    HexagonBottom(),
-                    HexagonBottom(),
-                    HexagonBottom(),
-                    HexagonBottom(),
-                    HexagonBottom(),
-                    HexagonBottom(),
-                  ],
-                ) ,
+        body: Grid(
+        gameGrid: HexagonGame.create(8,8),
         )
-        );
+    );
   }
 }
+
+/**
+child: Container(
+color: Colors.blue,
+child: const Center(child: Text('Tap me')),
+),**/
