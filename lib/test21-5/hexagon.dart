@@ -38,6 +38,7 @@ class _HexagonBottomState extends State<HexagonBottom> with TickerProviderStateM
 
   double hexagonWidthAnimated = 0.0;
   double hexagonWidthFixed = 0.0;
+  double textScale = 15;
 
   @override
   void dispose(){
@@ -58,19 +59,20 @@ class _HexagonBottomState extends State<HexagonBottom> with TickerProviderStateM
         onTapUp: (tapDetails) {
             setState(() {
               hexagonWidthAnimated *= 1.2;
+              textScale = 15;
             });
             widget.changeColor();
         },
         onTapDown: (tapDetails){
           setState(() {
             hexagonWidthAnimated /= 1.2;
+            textScale = 10;
           });
         },
         child: SizedBox(
             width: hexagonWidthFixed,
             child: Center(
-              child: Stack(
-                children: <Widget>[
+              child:
                 ScaleTransition(
                   scale: _animation,
                   child: AnimatedContainer(
@@ -84,19 +86,18 @@ class _HexagonBottomState extends State<HexagonBottom> with TickerProviderStateM
                       child: Container(
                           padding: EdgeInsets.zero,
                           margin: EdgeInsets.zero,
-                          color: widget.color
+                          color: widget.color,
+                        child: Center(
+                          child: AnimatedDefaultTextStyle(
+                            duration: Duration(milliseconds: 100),
+                            style: TextStyle(fontSize: textScale),
+                            child: Text("${widget.num}"),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-                  Positioned(
-                      left: hexagonWidthFixed / 2 * -1,
-                      top: hexagonWidthFixed / 2 * -1,
-                      child: Text('${widget.num}',
-                      ),
-                  )
-                ],
-              )
             ),
           ),
       );
