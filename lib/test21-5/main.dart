@@ -74,8 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         body: Grid(
-        gameGrid: HexagonGame.create(8,8),
-        )
+                gameGrid: HexagonGame.create(8,8),
+              ),
     );
   }
 }

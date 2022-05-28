@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/core/hexagon_core.dart';
 import 'package:hexagon_glass/test21-5/hexagon.dart';
@@ -17,28 +19,34 @@ class _GridState extends State<Grid> {
 
   late double rowWidth;
   late double hexagonWidth;
+  late double apothem;
 
   @override
   void initState() {
     super.initState();
     gameLogic = widget.gameGrid;
 
-    var deviceWidth = WidgetsBinding.instance?.window.physicalSize.width;
+    var deviceWidth = WidgetsBinding.instance.window.physicalSize.width;
     var marginPer = 0.1;
     var marginSpace = 0.0;
-    marginSpace = deviceWidth!*marginPer;
-    rowWidth = deviceWidth!-marginSpace;
+    marginSpace = deviceWidth * marginPer;
+    rowWidth = deviceWidth - marginSpace;
     hexagonWidth = rowWidth/gameLogic.nRows();
+    apothem = hexagonWidth / 2 * sqrt(3) / 2;
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: List.generate(widget.gameGrid.nRows(), (i) =>
-        Positioned(
-          left: i % 2 == 0? hexagonWidth/2 : 0,
-          top: i * hexagonWidth,
-          child: Row(
+      Positioned(
+        left: i%2 != 0 ?  apothem : 0 ,
+        //top:  3 * (i * sqrt( pow(hexagonWidth/2, 2) - pow(apothem, 2) )) ,
+        top: i* 3 / 4 * hexagonWidth,
+      child:           Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            alignment: WrapAlignment.start,
+            spacing: - (hexagonWidth - (apothem * 2)),
             children: List.generate(widget.gameGrid.nColumns(),
                     (j) => HexagonBottom (
                     width: hexagonWidth,
@@ -55,8 +63,9 @@ class _GridState extends State<Grid> {
                     Colors.red : Colors.grey
                 )
             )
-          )
-        )
+        ),
+      )
+
       ),
     );
   }

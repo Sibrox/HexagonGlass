@@ -76,20 +76,21 @@ class _HexagonBottomState extends State<HexagonBottom> with TickerProviderStateM
                 ScaleTransition(
                   scale: _animation,
                   child: AnimatedContainer(
+                    padding: EdgeInsets.zero,
+                    margin: EdgeInsets.zero,
                     width: hexagonWidthAnimated,
                     duration: const Duration(milliseconds: 400),
                     curve: Curves.bounceOut,
                     child: ClipPolygon(
                       sides: 6,
                       borderRadius: 5,
-                      rotate: 0,
+                      rotate: 60,
                       child: Container(
-                          padding: EdgeInsets.zero,
-                          margin: EdgeInsets.zero,
+
                           color: widget.color,
                         child: Center(
                           child: AnimatedDefaultTextStyle(
-                            duration: Duration(milliseconds: 100),
+                            duration: Duration(milliseconds: 200),
                             style: TextStyle(fontSize: textScale),
                             child: Text("${widget.num}"),
                           ),
