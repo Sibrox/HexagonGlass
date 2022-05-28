@@ -54,7 +54,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool selected = false;
 
-  HexagonGame game = HexagonGame.create(8,8);
+  HexagonGame game = HexagonGame.create(8,10);
 
   double getBoxSize()
   {

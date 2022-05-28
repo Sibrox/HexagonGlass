@@ -38,7 +38,7 @@ class _GridState extends State<Grid> {
 
     print(rowWidth);
     print(widget.height);
-    hexagonWidth = rowWidth / gameLogic.nRows();
+    hexagonWidth = rowWidth / gameLogic.nColumns();
     apothem = hexagonWidth / 2 * sqrt(3) / 2;
 
     var space =(apothem * gameLogic.nRows() / 2);
