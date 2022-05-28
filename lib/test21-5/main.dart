@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:hexagon_glass/core/hexagon_core.dart';
 import 'package:hexagon_glass/test21-5/hexagonGrid.dart';
-import "hexagon.dart";
+import "hexagonButton.dart";
 
 void main() {
   runApp(const MyApp());
@@ -54,6 +54,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool selected = false;
 
+  HexagonGame game = HexagonGame.create(8,8);
+
   double getBoxSize()
   {
     var deviceWidth = WidgetsBinding.instance?.window.physicalSize.width;
@@ -73,10 +75,19 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: Grid(
-                gameGrid: HexagonGame.create(8,8),
-              ),
-    );
+        body: Center(
+            child:  LayoutBuilder(
+                builder:(BuildContext context, BoxConstraints constrain)
+                {
+                  return Grid(
+                      width: constrain.maxWidth,
+                      height: constrain.maxHeight,
+                      gameGrid:game
+                  );
+                }
+            ) ,
+          ),
+      );
   }
 }
 

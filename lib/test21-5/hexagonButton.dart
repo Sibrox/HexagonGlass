@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:hexagon_glass/core/hexagon_core.dart';
 
 
-class HexagonBottom extends StatefulWidget {
+class HexagonButton extends StatefulWidget {
 
   final double width;
   final Function changeColor;
   final Color color;
   final int num;
 
-  const HexagonBottom({
+  const HexagonButton({
     Key? key,
     required this.width,
     required this.changeColor,
@@ -20,10 +20,10 @@ class HexagonBottom extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _HexagonBottomState createState() => _HexagonBottomState();
+  _HexagonButtonState createState() => _HexagonButtonState();
 }
 
-class _HexagonBottomState extends State<HexagonBottom> with TickerProviderStateMixin {
+class _HexagonButtonState extends State<HexagonButton> with TickerProviderStateMixin {
   @override
 
   late final AnimationController _controller = AnimationController(
