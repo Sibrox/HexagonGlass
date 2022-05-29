@@ -3,6 +3,7 @@ import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:hexagon_glass/core/hexagon_core.dart';
 import 'package:hexagon_glass/test21-5/hexagonGrid.dart';
 import "hexagonButton.dart";
+import 'planetListView.dart';
 
 void main() {
   runApp(const MyApp());
@@ -54,14 +55,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool selected = false;
 
-  HexagonGame game = HexagonGame.create(8,8);
+  HexagonGame game = HexagonGame.create(8, 8);
 
-  double getBoxSize()
-  {
+  double getBoxSize() {
     var deviceWidth = WidgetsBinding.instance?.window.physicalSize.width;
     var marginPerc = 0.1;
-    var marginSpace = deviceWidth!*marginPerc;
-    var hexagonBox = deviceWidth!-marginSpace;
+    var marginSpace = deviceWidth! * marginPerc;
+    var hexagonBox = deviceWidth! - marginSpace;
     var hexagonNumber = 8;
     var hexagonWidth = hexagonBox / hexagonNumber;
 
@@ -70,24 +70,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var hexagonGrid = Center(
+      child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constrain) {
+        return Grid(
+            width: constrain.maxWidth,
+            height: constrain.maxHeight,
+            gameGrid: game);
+      }),
+    );
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Center(
-            child:  LayoutBuilder(
-                builder:(BuildContext context, BoxConstraints constrain)
-                {
-                  return Grid(
-                      width: constrain.maxWidth,
-                      height: constrain.maxHeight,
-                      gameGrid:game
-                  );
-                }
-            ) ,
-          ),
-      );
+    var listPlanetView = PlanetListView();
+    return Scaffold(body: listPlanetView);
   }
 }
 
