@@ -9,15 +9,9 @@ class Planet extends StatefulWidget {
 }
 
 class _PlanetState extends State<Planet> with TickerProviderStateMixin {
-  @override
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 1000),
     vsync: this,
-  );
-
-  late final Animation<double> _animation = CurvedAnimation(
-    parent: _controller,
-    curve: Curves.easeInOutBack,
   );
 
   late double width;
@@ -53,9 +47,9 @@ class _PlanetState extends State<Planet> with TickerProviderStateMixin {
       alignment: Alignment.center,
       children: [
         AnimatedContainer(
-          duration: Duration(milliseconds: 400),
+          duration: const Duration(milliseconds: 400),
           curve: Curves.bounceOut,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               color: Colors.green),
           height: 180,
@@ -157,14 +151,13 @@ class _PlanetListViewState extends State<PlanetListView> {
   void initState() {
     super.initState();
     planetImages = [];
-    planetImages.add(AssetImage('images/ArancioBlu.png'));
-    planetImages.add(AssetImage('images/Avezzano.png'));
-    planetImages.add(AssetImage('images/ZurroneII.png'));
+    planetImages.add(const AssetImage('images/ArancioBlu.png'));
+    planetImages.add(const AssetImage('images/Avezzano.png'));
+    planetImages.add(const AssetImage('images/ZurroneII.png'));
   }
 
   @override
   Widget build(BuildContext context) {
-    var planets = [];
 
     return Container(
         decoration: const BoxDecoration(

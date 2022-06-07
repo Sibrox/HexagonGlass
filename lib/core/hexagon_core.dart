@@ -69,8 +69,6 @@ class HexagonGame {
         var color = Random().nextInt(2) == 1
             ? ButtonColor.color_1
             : ButtonColor.color_2;
-
-        var visibility = Random().nextInt(30);
         gameGrid[i].add(HexagonBlock.init(color));
         _statusGrid[i].add(HexagonBlock());
       }
