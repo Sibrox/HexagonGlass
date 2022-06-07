@@ -23,7 +23,7 @@ class HexagonButton extends StatefulWidget {
 
 class _HexagonButtonState extends State<HexagonButton>
     with TickerProviderStateMixin {
-
+  @override
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 1000),
     vsync: this,
@@ -85,7 +85,7 @@ class _HexagonButtonState extends State<HexagonButton>
                   color: widget.color,
                   child: Center(
                     child: AnimatedDefaultTextStyle(
-                      duration: const Duration(milliseconds: 200),
+                      duration: Duration(milliseconds: 200),
                       style: TextStyle(fontSize: textScale),
                       child: Text("${widget.num}"),
                     ),
