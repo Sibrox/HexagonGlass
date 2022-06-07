@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/core/hexagon_core.dart';
-import 'package:hexagon_glass/test21-5/hexagonButton.dart';
+import 'package:hexagon_glass/test21-5/hexagon_button.dart';
 
 class Grid extends StatefulWidget {
   final HexagonGame gameGrid;
@@ -39,13 +39,8 @@ class _GridState extends State<Grid> {
     marginSpace = deviceWidth * marginPer;
     rowWidth = deviceWidth - 0;
 
-    print(rowWidth);
-    print(widget.height);
     hexagonWidth = rowWidth / gameLogic.nColumns();
     apothem = hexagonWidth / 2 * sqrt(3) / 2;
-
-    var space = (apothem * gameLogic.nRows() / 2);
-    print(space);
   }
 
   @override

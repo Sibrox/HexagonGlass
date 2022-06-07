@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:hexagon_glass/core/hexagon_core.dart';
-import 'package:hexagon_glass/test21-5/hexagonGrid.dart';
-import "hexagonButton.dart";
-import 'planetListView.dart';
+import 'package:hexagon_glass/test21-5/hexagon_grid.dart';
+import 'planet_list_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,10 +56,10 @@ class _MyHomePageState extends State<MyHomePage> {
   HexagonGame game = HexagonGame.create(8, 8);
 
   double getBoxSize() {
-    var deviceWidth = WidgetsBinding.instance?.window.physicalSize.width;
+    var deviceWidth = WidgetsBinding.instance.window.physicalSize.width;
     var marginPerc = 0.1;
-    var marginSpace = deviceWidth! * marginPerc;
-    var hexagonBox = deviceWidth! - marginSpace;
+    var marginSpace = deviceWidth * marginPerc;
+    var hexagonBox = deviceWidth - marginSpace;
     var hexagonNumber = 8;
     var hexagonWidth = hexagonBox / hexagonNumber;
 
@@ -80,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
       }),
     );
 
-    var listPlanetView = PlanetListView();
+    var listPlanetView = const PlanetListView();
     return Scaffold(body: listPlanetView);
   }
 }
