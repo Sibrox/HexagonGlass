@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:flutter/material.dart';
-import 'package:hexagon_glass/core/hexagon_core.dart';
 
 class HexagonButton extends StatefulWidget {
   final double width;
@@ -23,7 +22,6 @@ class HexagonButton extends StatefulWidget {
 
 class _HexagonButtonState extends State<HexagonButton>
     with TickerProviderStateMixin {
-
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 1000),
     vsync: this,
@@ -51,6 +49,7 @@ class _HexagonButtonState extends State<HexagonButton>
     hexagonWidthAnimated = hexagonWidthFixed = widget.width;
   }
 
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTapUp: (tapDetails) {
