@@ -2,144 +2,69 @@ import 'package:flutter/material.dart';
 
 class Planet extends StatefulWidget {
   final AssetImage image;
-  const Planet({Key? key, required this.image}) : super(key: key);
+  final bool isSelected;
+  const Planet({Key? key, required this.image, required this.isSelected}) : super(key: key);
 
   @override
   _PlanetState createState() => _PlanetState();
 }
 
 class _PlanetState extends State<Planet> with TickerProviderStateMixin {
-  @override
+
+  late double width, bigWidth;
+  late double height, bigHeight;
+
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(milliseconds: 1000),
+    duration: const Duration(milliseconds: 1400),
     vsync: this,
   );
 
-  late final Animation<double> _animation = CurvedAnimation(
-    parent: _controller,
-    curve: Curves.easeInOutBack,
-  );
-
-  late double width;
-  late double height;
-
-  late double widthAnimated;
-  late double heightAnimated;
-
-  late double positionAnimated;
   late bool isSelected;
-
-  late double boxInfoWidthAnim;
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   void initState() {
+
     super.initState();
-    _controller.forward();
     height = width = 200;
-    heightAnimated = widthAnimated = 200;
-    positionAnimated = boxInfoWidthAnim = 0;
-    isSelected = false;
+    bigHeight = bigWidth = width * 2;
+    isSelected = widget.isSelected;
   }
 
   @override
-  Widget build(BuildContext context) {
-    var ilResto = Stack(
-      alignment: Alignment.center,
-      children: [
-        AnimatedContainer(
-          duration: Duration(milliseconds: 400),
-          curve: Curves.bounceOut,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Colors.green),
-          height: 180,
-          width: boxInfoWidthAnim,
-        ),
-        AnimatedPositioned(
-            child: GestureDetector(
-                onTapDown: (tapDetails) => {
-                      setState(() {
-                        heightAnimated = widthAnimated = widthAnimated / 1.2;
-                      })
-                    },
-                onTapUp: (tapDetails) {
-                  setState(() {
-                    if (!isSelected) {
-                      boxInfoWidthAnim = 300;
-                      positionAnimated = 150;
-                      heightAnimated = widthAnimated = widthAnimated * 1.4;
-                    } else {
-                      boxInfoWidthAnim = 0;
-                      positionAnimated = 0;
-                      heightAnimated = widthAnimated = widthAnimated * 1.2;
-                    }
-                    isSelected = !isSelected;
-                  });
-                },
+  Wid 1get build(BuildContext context) {
+
+    return LayoutBuilder(
+        builder: (BuildContext contextText, BoxConstraints constraints) {
+          final Size biggest = constraints.biggest;
+
+          RelativeRect start = RelativeRect.fromSize(
+              Rect.fromLTWH(biggest.width/2 - width/2, biggest.height/4 - height/2, width, height), biggest);
+          RelativeRect end = RelativeRect.fromSize(
+              Rect.fromLTWH(biggest.width/2 - bigWidth/2,
+                  biggest.height/2 - bigWidth/2, bigWidth, bigWidth),
+              biggest);
+
+          return Stack(
+            children: [
+              AnimatedPositioned(
+                top: isSelected? biggest.height/4 - height/2 : biggest.height/2 - bigWidth/2,
+                left: isSelected? biggest.width/2 - bigWidth/2 : biggest.width/2 - width/2,
+                width: isSelected? bigWidth : width,
+                height: isSelected? bigHeight : height,
                 child: Container(
-                    decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: widget.image,
-                    fit: BoxFit.contain,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: widget.image,
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ))),
-            width: widthAnimated,
-            height: heightAnimated,
-            left: (MediaQuery.of(context).size.width / 2) -
-                width / 2 -
-                positionAnimated,
-            duration: const Duration(milliseconds: 400),
-            curve: Curves.bounceOut),
-      ],
-    );
-
-    return Center(
-        child: GestureDetector(
-            onTapDown: (tapDetails) => {
-                  setState(() {
-                    heightAnimated = widthAnimated = widthAnimated / 1.2;
-                  })
-                },
-            onTapUp: (tapDetails) {
-              setState(() {
-                if (!isSelected) {
-                  boxInfoWidthAnim = 300;
-                  positionAnimated = 150;
-                  heightAnimated = widthAnimated = widthAnimated * 1.4;
-                } else {
-                  boxInfoWidthAnim = 0;
-                  positionAnimated = 0;
-                  heightAnimated = widthAnimated = widthAnimated * 1.2;
-                }
-                isSelected = !isSelected;
-              });
-            },
-            child: AnimatedContainer(
-                width: widthAnimated,
-                height: heightAnimated,
-                duration: const Duration(milliseconds: 400),
+                ),
+                duration: Duration(milliseconds: 500),
                 curve: Curves.bounceOut,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: widget.image,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-
-                    )
-                  ],
-                ))));
+              ),
+            ],
+          );
+        });
   }
 }
 
@@ -153,9 +78,14 @@ class PlanetListView extends StatefulWidget {
 class _PlanetListViewState extends State<PlanetListView> {
   late List<AssetImage> planetImages;
 
+  late int currentIndex;
+  late PageController _pageController;
   @override
   void initState() {
     super.initState();
+
+    currentIndex = 0;
+    _pageController = PageController(initialPage: 0);
     planetImages = [];
     planetImages.add(AssetImage('images/ArancioBlu.png'));
     planetImages.add(AssetImage('images/Avezzano.png'));
@@ -167,20 +97,50 @@ class _PlanetListViewState extends State<PlanetListView> {
     var planets = [];
 
     return Container(
+        alignment: Alignment.center,
         decoration: const BoxDecoration(
             image: DecorationImage(
           image: AssetImage("images/SuDario.png"),
           fit: BoxFit.fill,
         )),
         child: Center(
-            child: ListView(
-                padding: const EdgeInsets.all(8),
-                children: List.generate(
-                  planetImages.length,
-                  (index) => Container(
-                    margin: const EdgeInsets.only(bottom: 30.0),
-                    child: Planet(image: planetImages[index]),
+          child: PageView.builder(
+              itemBuilder: (context, position) {
+                return Center(
+                  child: Row(
+
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                          child: TextButton(
+                              onPressed: () {
+                                if (currentIndex <= 0) return;
+                                setState(() {
+                                  currentIndex--;
+                                });
+                                _pageController.animateToPage(currentIndex,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.easeIn);
+                              },
+                              child: Text("Left"))),
+                      Flexible(child: Planet(image: planetImages[position], isSelected: position == currentIndex ? true : false)),
+                      Flexible(
+                          child: TextButton(
+                              onPressed: () {
+                                if (currentIndex >= planetImages.length - 1) return;
+                                setState(() {
+                                  currentIndex++;
+                                });
+                                _pageController.animateToPage(currentIndex,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.easeIn);
+                              },
+                              child: Text("Right"))),
+                    ],
                   ),
-                ))));
+                );
+              },
+              controller: _pageController),
+        ));
   }
 }
