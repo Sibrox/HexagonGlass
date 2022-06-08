@@ -7,8 +7,21 @@ class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        const Flexible(child: PlanetListView())
+      children: const [
+        // Flexible(
+        //   flex: 1,
+        //   child: Center(
+        //     child: Text("Space Hex"),
+        //   )
+        // ),
+        Flexible(flex: 6,
+            child: PlanetListView()
+        ),
+        // Flexible(flex: 1,
+        //     child: Center(
+        //       child: Text("Footer"),
+        //     )
+        // ),
       ],
     );
 

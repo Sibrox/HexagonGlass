@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Planet extends StatefulWidget {
@@ -13,7 +14,7 @@ class Planet extends StatefulWidget {
 
 class _PlanetState extends State<Planet> with TickerProviderStateMixin {
 
-  var animationTime = const Duration(milliseconds: 800);
+  var animationTime = const Duration(milliseconds: 1000);
 
   late final AnimationController _controllerPlanet = AnimationController(
     duration: animationTime,
@@ -36,11 +37,17 @@ class _PlanetState extends State<Planet> with TickerProviderStateMixin {
     curve: Curves.easeOut,
   );
 
+  late final AnimationController _controllerRotation = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 100)
+  )..repeat();
+
   @override
   void dispose() {
     _controllerBox.dispose();
     _controllerPlanet.dispose();
     _controllerIdle.dispose();
+    _controllerRotation.dispose();
     super.dispose();
   }
 
@@ -53,12 +60,16 @@ class _PlanetState extends State<Planet> with TickerProviderStateMixin {
         builder: (BuildContext contextText, BoxConstraints constraints) {
           final Size biggest = constraints.biggest;
 
-          var width = biggest.width / 4;
-          var height = biggest.width / 2;
+          var width = biggest.height > biggest.width?
+                biggest.width / 4 : biggest.height / 4;
+          var height = biggest.height > biggest.width?
+              biggest.width / 4 : biggest.height / 4;
+
           var bigWidth = width * 2;
           var bigHeight = height * 2;
 
-          var boxWidth =  biggest.width * 0.9;
+          var boxWidth = biggest.height > biggest.width?
+                biggest.width * 0.9 : biggest.height * 0.9;
           var boxHeight = boxWidth * 0.8;
 
           RelativeRect startPlanet = RelativeRect.fromSize(
@@ -112,17 +123,25 @@ class _PlanetState extends State<Planet> with TickerProviderStateMixin {
                         parent: _controllerPlanet, curve: Curves.elasticIn)),
                 child: ScaleTransition(
                   scale: _animation,
-                  child:  Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: widget.image,
-                        fit: BoxFit.contain,
+                  child: AnimatedBuilder (
+                   animation: _controllerRotation,
+                  builder: (_, child) {
+                    return Transform.rotate(
+                        angle: _controllerRotation.value * 2 * pi,
+                        child: child,
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: widget.image,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
-                  ),
+                  )
                 ),
               )
-
             ],
           );
         });

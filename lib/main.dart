@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+        fontFamily: 'Rowdies',
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -94,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
       )
     );
 
-    return const Scaffold(body: Menu());
+    return const Scaffold( body: Menu());
   }
 }
 
