@@ -79,7 +79,7 @@ class _HexagonButtonState extends State<HexagonButton>
               curve: Curves.bounceOut,
               child: ClipPolygon(
                 sides: 6,
-                borderRadius: 5,
+                borderRadius: 0,
                 rotate: 60,
                 child: Container(
                   color: widget.color,
@@ -87,7 +87,31 @@ class _HexagonButtonState extends State<HexagonButton>
                     child: AnimatedDefaultTextStyle(
                       duration: const Duration(milliseconds: 200),
                       style: TextStyle(fontSize: textScale),
-                      child: Text("${widget.num}"),
+                      child: Stack(
+                    children: [
+                          // The text border
+                          Text(
+                          '${widget.num}',
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 4
+                                ..color = Colors.black,
+                            ),
+                          ),
+                          // The text inside
+                           Text(
+                            '${widget.num}',
+                            style: const TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      )
                     ),
                   ),
                 ),
