@@ -14,10 +14,10 @@ class HexagonBlock {
     isVisible = true;
   }
 
-  HexagonBlock.init(ButtonColor startColor) {
+  HexagonBlock.init(ButtonColor startColor, bool visibility) {
     value = 0;
     color = startColor;
-    isVisible = true;
+    isVisible = visibility;
   }
 
   HexagonBlock.build(int startValue, bool visibility) {
@@ -44,7 +44,7 @@ class HexagonBlock {
 
 class HexagonGame {
   late List<List<HexagonBlock>> gameGrid;
-  late List<List<HexagonBlock>> _statusGrid;
+  late List<List<HexagonBlock>> statusGrid;
 
   int nRows() {
     return gameGrid.length;
@@ -61,16 +61,18 @@ class HexagonGame {
 
   void initGrid(int width, int height) {
     gameGrid = <List<HexagonBlock>>[];
-    _statusGrid = <List<HexagonBlock>>[];
+    statusGrid = <List<HexagonBlock>>[];
     for (int i = 0; i < height; i++) {
       gameGrid.add([]);
-      _statusGrid.add([]);
+      statusGrid.add([]);
       for (int j = 0; j < width; j++) {
-        var color = Random().nextInt(2) == 1
-            ? ButtonColor.color_1
-            : ButtonColor.color_2;
-        gameGrid[i].add(HexagonBlock.init(color));
-        _statusGrid[i].add(HexagonBlock());
+        var rand = Random().nextInt(3);
+        var color =  rand != 1
+            ? rand == 2? ButtonColor.color_2
+            : ButtonColor.noColor : ButtonColor.color_1;
+        var visibility = color == ButtonColor.noColor ? false  :true;
+        gameGrid[i].add(HexagonBlock.init(color, visibility));
+        statusGrid[i].add(HexagonBlock.init(ButtonColor.noColor, visibility));
       }
     }
   }
@@ -84,7 +86,7 @@ class HexagonGame {
     int offset = i % 2 == 0 ? 0 : 1;
 
     ButtonColor currentColor = gameGrid[i][j].color;
-
+    if(currentColor == ButtonColor.noColor) return -1;
     var top = i - 1;
     var bot = i + 1;
     var left = j - 1;
@@ -124,15 +126,19 @@ class HexagonGame {
     return counter;
   }
 
+  bool checkIndices(int i, int j, ButtonColor currentColor) {
+    return currentColor != ButtonColor.noColor && checkRange(i, j) && gameGrid[i][j].color == currentColor;
+  }
+
   void changeColor(int i, int j) {
-    gameGrid[i][j].changeColor();
+    statusGrid[i][j].changeColor();
   }
 
   void calculateGrid() {
     for (int i = 0; i < gameGrid.length; i++) {
       for (int j = 0; j < gameGrid[i].length; j++) {
         gameGrid[i][j].value = calculateAdjValue(i, j);
-        _statusGrid[i][j].value = gameGrid[i][j].value;
+        statusGrid[i][j].value = gameGrid[i][j].value;
       }
     }
   }

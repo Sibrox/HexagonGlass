@@ -1,19 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:flutter/material.dart';
+import 'package:hexagon_glass/core/hexagon_core.dart';
 
 class HexagonButton extends StatefulWidget {
   final double width;
   final Function changeColor;
-  final Color color;
-  final int num;
+  final HexagonBlock block;
 
   const HexagonButton(
       {Key? key,
       required this.width,
       required this.changeColor,
-      required this.color,
-      required this.num})
+      required this.block})
       : super(key: key);
 
   @override
@@ -82,7 +81,11 @@ class _HexagonButtonState extends State<HexagonButton>
                 borderRadius: 0,
                 rotate: 60,
                 child: Container(
-                  color: widget.color,
+                  color:
+                    widget.block.color != ButtonColor.color_1 ?
+                    widget.block.color != ButtonColor.color_2 ?
+                    !widget.block.isVisible ?
+                    Colors.transparent : Colors.grey : Colors.red : Colors.blue,
                   child: Center(
                     child: AnimatedDefaultTextStyle(
                       duration: const Duration(milliseconds: 200),
@@ -91,7 +94,7 @@ class _HexagonButtonState extends State<HexagonButton>
                     children: [
                           // The text border
                           Text(
-                          '${widget.num}',
+                            widget.block.isVisible ? '${widget.block.value}' : "",
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
@@ -103,7 +106,7 @@ class _HexagonButtonState extends State<HexagonButton>
                           ),
                           // The text inside
                            Text(
-                            '${widget.num}',
+                             widget.block.isVisible? '${widget.block.value}' : "",
                             style: const TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
