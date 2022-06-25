@@ -46,7 +46,8 @@ class _HexagonButtonState extends State<HexagonButton>
   void initState() {
     super.initState();
     _controller.forward();
-    hexagonWidthAnimated = hexagonWidthFixed = widget.width;
+    hexagonWidthAnimated = widget.width *0.87;
+    hexagonWidthFixed = widget.width;
   }
 
   @override
@@ -54,14 +55,14 @@ class _HexagonButtonState extends State<HexagonButton>
     return GestureDetector(
       onTapUp: (tapDetails) {
         setState(() {
-          hexagonWidthAnimated *= 1.2;
+          hexagonWidthAnimated *= 1.1;
           textScale = 15;
         });
         widget.changeColor();
       },
       onTapDown: (tapDetails) {
         setState(() {
-          hexagonWidthAnimated /= 1.2;
+          hexagonWidthAnimated /= 1.1;
           textScale = 10;
         });
       },
@@ -80,41 +81,46 @@ class _HexagonButtonState extends State<HexagonButton>
                 sides: 6,
                 borderRadius: 0,
                 rotate: 60,
+                boxShadows: [
+                  PolygonBoxShadow(color: Colors.black, elevation: widget.block.isVisible ? 10.0 : 0)
+                ],
                 child: Container(
-                  color:
+                  decoration: BoxDecoration(
+                    color:
                     widget.block.color != ButtonColor.color_1 ?
                     widget.block.color != ButtonColor.color_2 ?
                     !widget.block.isVisible ?
-                    Colors.transparent : Colors.grey : Colors.red : Colors.blue,
+                    Colors.transparent : Color(0xFFD6D6D6): Color(0xFF2CE295): Color(0xFFA66DDE),
+                  ),
                   child: Center(
                     child: AnimatedDefaultTextStyle(
-                      duration: const Duration(milliseconds: 200),
-                      style: TextStyle(fontSize: textScale),
-                      child: Stack(
-                    children: [
-                          // The text border
-                          Text(
-                            widget.block.isVisible ? '${widget.block.value}' : "",
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              foreground: Paint()
-                                ..style = PaintingStyle.stroke
-                                ..strokeWidth = 4
-                                ..color = Colors.black,
+                        duration: const Duration(milliseconds: 200),
+                        style: TextStyle(fontSize: textScale, fontFamily: 'Rowdies'),
+                        child: Stack(
+                          children: [
+                            // The text border
+                            Text(
+                              widget.block.isVisible ? '${widget.block.value}' : "",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                foreground: Paint()
+                                  ..style = PaintingStyle.stroke
+                                  ..strokeWidth = 2
+                                  ..color = Colors.black,
+                              ),
                             ),
-                          ),
-                          // The text inside
-                           Text(
-                             widget.block.isVisible? '${widget.block.value}' : "",
-                            style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                            // The text inside
+                            Text(
+                              widget.block.isVisible? '${widget.block.value}' : "",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
-                      )
+                          ],
+                        )
                     ),
                   ),
                 ),

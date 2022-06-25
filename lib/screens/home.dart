@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/core/hexagon_core.dart';
+import 'package:hexagon_glass/screens/level.dart';
 import 'package:hexagon_glass/widgets/planet_list_view.dart';
 
 import '../widgets/hexagon_grid.dart';
 
 class HomePage extends StatelessWidget {
 
-  HexagonGame hexagonGrid = HexagonGame.create(8,8);
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -22,7 +23,7 @@ class HomePage extends StatelessWidget {
               onTap:() {
                 Navigator.push(context,
                   MaterialPageRoute(builder: (context) =>
-                     Grid(gameGrid: hexagonGrid)
+                    Level()
                   )
                 );
               },

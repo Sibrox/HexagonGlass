@@ -37,7 +37,7 @@ class _GridState extends State<Grid> {
       var rowWidth = deviceWidth - 0;
       var hexagonWidth =  rowWidth/ gameLogic.nColumns();
       var apothem = hexagonWidth / 2 * sqrt(3) / 2;
-
+      
       return Stack(
         alignment: Alignment.center,
         children: List.generate(

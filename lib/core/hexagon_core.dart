@@ -1,6 +1,7 @@
 import "dart:io";
 import 'dart:math';
 
+
 enum ButtonColor { color_1, color_2, noColor }
 
 class HexagonBlock {
@@ -76,6 +77,7 @@ class HexagonGame {
       }
     }
   }
+
 
   bool checkRange(int i, int j) {
     return i >= 0 && j >= 0 && i < gameGrid.length && j < gameGrid[0].length;
