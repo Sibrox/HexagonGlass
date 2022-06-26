@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:hexagon_glass/ui/pulse.dart';
+import '../animated/animated_pulse.dart';
 
 class Planet extends StatefulWidget {
   final String name;
@@ -117,8 +117,7 @@ class _PlanetState extends State<Planet> with TickerProviderStateMixin {
             rect: RelativeRectTween(begin: startPlanet, end: endPlanet).animate(
                 CurvedAnimation(
                     parent: _controllerPlanet, curve: Curves.elasticIn)),
-            child: Pulse (
-
+            child: AnimatedPulse (
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(

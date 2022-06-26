@@ -147,6 +147,14 @@ class HexagonGame {
     }
   }
 
+  void reset() {
+    for (int i = 0; i < gameGrid.length; i++) {
+      for (int j = 0; j < gameGrid[i].length; j++) {
+        statusGrid[i][j].color = ButtonColor.noColor;
+      }
+    }
+  }
+
   void printGrid() {
     //Colors
     for (int i = 0; i < gameGrid.length; i++) {

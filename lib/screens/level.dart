@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
-import 'package:hexagon_glass/ui/pulse.dart';
+import '../animated/animated_pulse.dart';
 
 import '../core/hexagon_core.dart';
 import '../widgets/hexagon_grid.dart';
@@ -20,24 +20,11 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
 
   var animationTime = const Duration(milliseconds: 1000);
 
-  late final AnimationController _controllerIdle = AnimationController(
-    duration: animationTime,
-    vsync: this,
-    lowerBound: 0.8,
-  )..repeat(reverse: true);
-
-  late final Animation<double> _animation = CurvedAnimation(
-    parent: _controllerIdle,
-    curve: Curves.easeOut,
-  );
-
   late final AnimationController _controllerRotation =
-      AnimationController(vsync: this, duration: const Duration(seconds: 100))
-        ..repeat();
+      AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
 
   @override
   void dispose() {
-    _controllerIdle.dispose();
     _controllerRotation.dispose();
     super.dispose();
   }
@@ -97,7 +84,7 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                               //TODO: it is an error -> How use navigator outside build?
                               Navigator.pop(context);
                             },
-                            child: Pulse (
+                            child: AnimatedPulse (
                               child: Image.asset(
                                 (widget.currentTheme.planet_path),
                                 fit: BoxFit.contain,
@@ -117,9 +104,25 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                           child: Align(
                               alignment: Alignment.bottomRight,
                               child: GestureDetector(
+                                onTap: () {
+                                  _controllerRotation.reset();
+                                  _controllerRotation.forward();
+
+                                  setState(() {
+                                    hexagonGrid.reset();
+                                  });
+                                },
                                   child: Padding(
-                                padding: EdgeInsets.all(8),
-                                child: Image.asset("images/refresh_icon.png"),
+                                padding: const EdgeInsets.all(8),
+                                  child: AnimatedBuilder(
+                                      animation: _controllerRotation,
+                                      builder: (_, child) {
+                                        return Transform.rotate(
+                                          angle: _controllerRotation.value * 2 * pi,
+                                          child: child,
+                                        );
+                                      },
+                                      child: Image.asset("images/refresh_icon.png"))
                               ))))
                     ],
                   ),
@@ -128,3 +131,5 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
         ));
   }
 }
+
+//Image.asset("images/refresh_icon.png"),

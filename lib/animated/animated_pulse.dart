@@ -2,17 +2,17 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class Pulse extends StatefulWidget {
+class AnimatedPulse extends StatefulWidget {
   Widget child;
   Duration duration;
-  Pulse({Key? key, required this.child, required this.duration,})
+  AnimatedPulse({Key? key, required this.child, required this.duration,})
       : super(key: key);
 
   @override
-  _PulseState createState() => _PulseState();
+  _AnimatedPulseState createState() => _AnimatedPulseState();
 }
 
-class _PulseState extends State<Pulse> with TickerProviderStateMixin {
+class _AnimatedPulseState extends State<AnimatedPulse> with TickerProviderStateMixin {
 
   late final Animation<double> _animation = CurvedAnimation(
     parent: _controllerIdle,
