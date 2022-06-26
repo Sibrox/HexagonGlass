@@ -38,7 +38,6 @@ class _PlanetListViewState extends State<PlanetListView> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
         alignment: Alignment.center,
         decoration: const BoxDecoration(
@@ -48,49 +47,49 @@ class _PlanetListViewState extends State<PlanetListView> {
         )),
         child: Center(
           child: PageView.builder(
-              itemCount: 3,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, position) {
-                return Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Flexible(
-                      //     child: TextButton(
-                      //         onPressed: () {
-                      //           if (currentIndex <= 0) return;
-                      //           setState(() {
-                      //             currentIndex--;
-                      //           });
-                      //           _pageController.animateToPage(currentIndex,
-                      //               duration: const Duration(milliseconds: 300),
-                      //               curve: Curves.easeIn);
-                      //         },
-                      //         child: const Text("Left"))),
-                      Flexible(
-                          child: Planet(
-                              image: planetImages[position],
-                              name: planetString[position])
-                      ),
-                      // Flexible(
-                      //     child: TextButton(
-                      //         onPressed: () {
-                      //           if (currentIndex >= planetImages.length - 1) {
-                      //             return;
-                      //           }
-                      //           setState(() {
-                      //             currentIndex++;
-                      //           });
-                      //           _pageController.animateToPage(currentIndex,
-                      //               duration: const Duration(milliseconds: 300),
-                      //               curve: Curves.easeIn);
-                      //         },
-                      //         child: const Text("Right"))),
-                    ],
-                  ),
-                );
-              },
-              controller: _pageController,),
+            itemCount: 3,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, position) {
+              return Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Flexible(
+                    //     child: TextButton(
+                    //         onPressed: () {
+                    //           if (currentIndex <= 0) return;
+                    //           setState(() {
+                    //             currentIndex--;
+                    //           });
+                    //           _pageController.animateToPage(currentIndex,
+                    //               duration: const Duration(milliseconds: 300),
+                    //               curve: Curves.easeIn);
+                    //         },
+                    //         child: const Text("Left"))),
+                    Flexible(
+                        child: Planet(
+                            image: planetImages[position],
+                            name: planetString[position])),
+                    // Flexible(
+                    //     child: TextButton(
+                    //         onPressed: () {
+                    //           if (currentIndex >= planetImages.length - 1) {
+                    //             return;
+                    //           }
+                    //           setState(() {
+                    //             currentIndex++;
+                    //           });
+                    //           _pageController.animateToPage(currentIndex,
+                    //               duration: const Duration(milliseconds: 300),
+                    //               curve: Curves.easeIn);
+                    //         },
+                    //         child: const Text("Right"))),
+                  ],
+                ),
+              );
+            },
+            controller: _pageController,
+          ),
         ));
   }
 }

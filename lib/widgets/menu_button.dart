@@ -8,11 +8,9 @@ class MenuButton extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          decoration: const BoxDecoration(
-            color: Colors.black87,
-            borderRadius: BorderRadius.all(Radius.circular(20))
-          )
-        ),
+            decoration: const BoxDecoration(
+                color: Colors.black87,
+                borderRadius: BorderRadius.all(Radius.circular(20)))),
       ],
     );
   }

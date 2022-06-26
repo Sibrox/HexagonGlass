@@ -1,7 +1,6 @@
 import "dart:io";
 import 'dart:math';
 
-
 enum ButtonColor { color_1, color_2, noColor }
 
 class HexagonBlock {
@@ -68,16 +67,17 @@ class HexagonGame {
       statusGrid.add([]);
       for (int j = 0; j < width; j++) {
         var rand = Random().nextInt(3);
-        var color =  rand != 1
-            ? rand == 2? ButtonColor.color_2
-            : ButtonColor.noColor : ButtonColor.color_1;
-        var visibility = color == ButtonColor.noColor ? false  :true;
+        var color = rand != 1
+            ? rand == 2
+                ? ButtonColor.color_2
+                : ButtonColor.noColor
+            : ButtonColor.color_1;
+        var visibility = color == ButtonColor.noColor ? false : true;
         gameGrid[i].add(HexagonBlock.init(color, visibility));
         statusGrid[i].add(HexagonBlock.init(ButtonColor.noColor, visibility));
       }
     }
   }
-
 
   bool checkRange(int i, int j) {
     return i >= 0 && j >= 0 && i < gameGrid.length && j < gameGrid[0].length;
@@ -88,7 +88,7 @@ class HexagonGame {
     int offset = i % 2 == 0 ? 0 : 1;
 
     ButtonColor currentColor = gameGrid[i][j].color;
-    if(currentColor == ButtonColor.noColor) return -1;
+    if (currentColor == ButtonColor.noColor) return -1;
     var top = i - 1;
     var bot = i + 1;
     var left = j - 1;
@@ -129,7 +129,9 @@ class HexagonGame {
   }
 
   bool checkIndices(int i, int j, ButtonColor currentColor) {
-    return currentColor != ButtonColor.noColor && checkRange(i, j) && gameGrid[i][j].color == currentColor;
+    return currentColor != ButtonColor.noColor &&
+        checkRange(i, j) &&
+        gameGrid[i][j].color == currentColor;
   }
 
   void changeColor(int i, int j) {

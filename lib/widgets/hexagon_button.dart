@@ -11,12 +11,11 @@ class HexagonButton extends StatefulWidget {
   final HexagonTheme currentTheme;
 
   const HexagonButton(
-      { Key? key,
-        required this.width,
-        required this.changeColor,
-        required this.block,
-        required this.currentTheme
-      })
+      {Key? key,
+      required this.width,
+      required this.changeColor,
+      required this.block,
+      required this.currentTheme})
       : super(key: key);
 
   @override
@@ -25,7 +24,6 @@ class HexagonButton extends StatefulWidget {
 
 class _HexagonButtonState extends State<HexagonButton>
     with TickerProviderStateMixin {
-
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 1000),
     vsync: this,
@@ -50,7 +48,7 @@ class _HexagonButtonState extends State<HexagonButton>
   void initState() {
     super.initState();
     _controller.forward();
-    hexagonWidthAnimated = widget.width *0.87;
+    hexagonWidthAnimated = widget.width * 0.87;
     hexagonWidthFixed = widget.width;
   }
 
@@ -59,14 +57,14 @@ class _HexagonButtonState extends State<HexagonButton>
     return GestureDetector(
       onTapUp: (tapDetails) {
         setState(() {
-          hexagonWidthAnimated *= 1.1;
+          hexagonWidthAnimated *= 5;
           textScale = 15;
         });
         widget.changeColor();
       },
       onTapDown: (tapDetails) {
         setState(() {
-          hexagonWidthAnimated /= 1.1;
+          hexagonWidthAnimated /= 5;
           textScale = 10;
         });
       },
@@ -86,25 +84,32 @@ class _HexagonButtonState extends State<HexagonButton>
                 borderRadius: 0,
                 rotate: 60,
                 boxShadows: [
-                  PolygonBoxShadow(color: Colors.black, elevation: widget.block.isVisible ? 5.0 : 0)
+                  PolygonBoxShadow(
+                      color: Colors.black,
+                      elevation: widget.block.isVisible ? 5.0 : 0)
                 ],
                 child: Container(
                   decoration: BoxDecoration(
-                    color:
-                    widget.block.color != ButtonColor.color_1 ?
-                    widget.block.color != ButtonColor.color_2 ?
-                    !widget.block.isVisible ?
-                    Colors.transparent : widget.currentTheme.no_color: widget.currentTheme.color_2: widget.currentTheme.color_1,
+                    color: widget.block.color != ButtonColor.color_1
+                        ? widget.block.color != ButtonColor.color_2
+                            ? !widget.block.isVisible
+                                ? Colors.transparent
+                                : widget.currentTheme.no_color
+                            : widget.currentTheme.color_2
+                        : widget.currentTheme.color_1,
                   ),
                   child: Center(
                     child: AnimatedDefaultTextStyle(
                         duration: const Duration(milliseconds: 200),
-                        style: TextStyle(fontSize: textScale, fontFamily: 'Rowdies'),
+                        style: TextStyle(
+                            fontSize: textScale, fontFamily: 'Rowdies'),
                         child: Stack(
                           children: [
                             // The text border
                             Text(
-                              widget.block.isVisible ? '${widget.block.value}' : "",
+                              widget.block.isVisible
+                                  ? '${widget.block.value}'
+                                  : "",
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -116,7 +121,9 @@ class _HexagonButtonState extends State<HexagonButton>
                             ),
                             // The text inside
                             Text(
-                              widget.block.isVisible? '${widget.block.value}' : "",
+                              widget.block.isVisible
+                                  ? '${widget.block.value}'
+                                  : "",
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -124,8 +131,7 @@ class _HexagonButtonState extends State<HexagonButton>
                               ),
                             ),
                           ],
-                        )
-                    ),
+                        )),
                   ),
                 ),
               ),

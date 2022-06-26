@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:hexagon_glass/ui/pulse.dart';
 
 class Planet extends StatefulWidget {
   final String name;
@@ -13,7 +14,6 @@ class Planet extends StatefulWidget {
 }
 
 class _PlanetState extends State<Planet> with TickerProviderStateMixin {
-
   var animationTime = const Duration(milliseconds: 1000);
 
   late final AnimationController _controllerPlanet = AnimationController(
@@ -37,10 +37,9 @@ class _PlanetState extends State<Planet> with TickerProviderStateMixin {
     curve: Curves.easeOut,
   );
 
-  late final AnimationController _controllerRotation = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: 100)
-  )..repeat();
+  late final AnimationController _controllerRotation =
+      AnimationController(vsync: this, duration: const Duration(seconds: 100))
+        ..repeat();
 
   @override
   void dispose() {
@@ -58,92 +57,81 @@ class _PlanetState extends State<Planet> with TickerProviderStateMixin {
 
     return LayoutBuilder(
         builder: (BuildContext contextText, BoxConstraints constraints) {
-          final Size biggest = constraints.biggest;
+      final Size biggest = constraints.biggest;
 
-          var width = biggest.height > biggest.width?
-                biggest.width / 4 : biggest.height / 4;
-          var height = biggest.height > biggest.width?
-              biggest.width / 4 : biggest.height / 4;
+      var width = biggest.height > biggest.width
+          ? biggest.width / 4
+          : biggest.height / 4;
+      var height = biggest.height > biggest.width
+          ? biggest.width / 4
+          : biggest.height / 4;
 
-          var bigWidth = width * 2;
-          var bigHeight = height * 2;
+      var bigWidth = width * 2;
+      var bigHeight = height * 2;
 
-          var boxWidth = biggest.height > biggest.width?
-                biggest.width * 0.9 : biggest.height * 0.9;
-          var boxHeight = boxWidth * 0.8;
+      var boxWidth = biggest.height > biggest.width
+          ? biggest.width * 0.9
+          : biggest.height * 0.9;
+      var boxHeight = boxWidth * 0.8;
 
-          RelativeRect startPlanet = RelativeRect.fromSize(
-              Rect.fromLTWH(
-                  biggest.width / 2 - bigWidth / 2,
-                  biggest.height / 2 - bigHeight / 2,
-                  bigWidth, bigHeight),
-              biggest);
+      RelativeRect startPlanet = RelativeRect.fromSize(
+          Rect.fromLTWH(biggest.width / 2 - bigWidth / 2,
+              biggest.height / 2 - bigHeight / 2, bigWidth, bigHeight),
+          biggest);
 
-          RelativeRect endPlanet = RelativeRect.fromSize(
-              Rect.fromLTWH(
-                  biggest.width / 2 - width / 2,
-                  (biggest.height - boxHeight) / 2 - height / 3,
-                  width, height),
-              biggest);
+      RelativeRect endPlanet = RelativeRect.fromSize(
+          Rect.fromLTWH(biggest.width / 2 - width / 2,
+              (biggest.height - boxHeight) / 2 - height / 3, width, height),
+          biggest);
 
-          RelativeRect startBox = RelativeRect.fromSize(
-              Rect.fromLTWH(biggest.width / 2,
-                  biggest.height / 2 , 0, 0),
-              biggest);
+      RelativeRect startBox = RelativeRect.fromSize(
+          Rect.fromLTWH(biggest.width / 2, biggest.height / 2, 0, 0), biggest);
 
-          RelativeRect endBox = RelativeRect.fromSize(
-              Rect.fromLTWH(
-                  (biggest.width - boxWidth) / 2 ,
-                  (biggest.height - boxHeight) / 2 + height / 8,
-                  boxWidth, boxHeight),
-              biggest);
+      RelativeRect endBox = RelativeRect.fromSize(
+          Rect.fromLTWH(
+              (biggest.width - boxWidth) / 2,
+              (biggest.height - boxHeight) / 2 + height / 8,
+              boxWidth,
+              boxHeight),
+          biggest);
 
-          return Stack(
-            children: [
-              PositionedTransition(
-                rect: RelativeRectTween(begin: startBox, end: endBox).animate(
-                    CurvedAnimation(parent: _controllerBox, curve: Curves.elasticIn)),
-                child: Container(
-                  decoration: const BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.all(Radius.circular(20))
-                  ),
-                  child: Center(child: Text( widget.name,
+      return Stack(
+        children: [
+          PositionedTransition(
+            rect: RelativeRectTween(begin: startBox, end: endBox).animate(
+                CurvedAnimation(
+                    parent: _controllerBox, curve: Curves.elasticIn)),
+            child: Container(
+              decoration: const BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
+              child: Center(
+                  child: Text(widget.name,
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 30,
-                          fontWeight: FontWeight.bold
-                      )
-                  ) ) ,
-                ),
-              ),
-              PositionedTransition(
-                rect: RelativeRectTween(begin: startPlanet, end: endPlanet).animate(
-                    CurvedAnimation(
-                        parent: _controllerPlanet, curve: Curves.elasticIn)),
-                child: ScaleTransition(
-                  scale: _animation,
-                  child: AnimatedBuilder (
-                   animation: _controllerRotation,
-                  builder: (_, child) {
-                    return Transform.rotate(
-                        angle: _controllerRotation.value * 2 * pi,
-                        child: child,
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: widget.image,
-                          fit: BoxFit.contain,
-                        ),
+                          fontWeight: FontWeight.bold))),
+            ),
+          ),
+          PositionedTransition(
+            rect: RelativeRectTween(begin: startPlanet, end: endPlanet).animate(
+                CurvedAnimation(
+                    parent: _controllerPlanet, curve: Curves.elasticIn)),
+            child: Pulse (
+
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: widget.image,
+                        fit: BoxFit.contain,
                       ),
                     ),
-                  )
-                ),
-              )
-            ],
-          );
-        });
+                  ),
+                  duration: animationTime,
+                )
+          )
+        ],
+      );
+    });
   }
 }

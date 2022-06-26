@@ -13,14 +13,13 @@ class HexagonTheme {
 }
 
 class MozillaTheme extends HexagonTheme {
-
   MozillaTheme() {
-    color_1   = const Color(0xFFF7AF28);
-    color_2   = const Color(0xFF00F4CF);
-    no_color  = const Color(0xFFD6D6D6);
-
+    color_1 = const Color(0xFFF7AF28);
+    color_2 = const Color(0xFF00F4CF);
     gradient_1 = const Color(0xFFFFCB68);
     gradient_2 = const Color(0xFF920025);
+
+    no_color = const Color(0xFFD6D6D6);
 
     planet_path = "images/mozilla_planet.png";
     background_path = "images/mozilla_background.jpg";
@@ -28,17 +27,15 @@ class MozillaTheme extends HexagonTheme {
 }
 
 class DinoTheme extends HexagonTheme {
-
   DinoTheme() {
-    color_1   = const Color(0xFF2CE295);
-    color_2   = const Color(0xFFA66DDE);
-    no_color  = const Color(0xFFD6D6D6);
-
+    color_1 = const Color(0xFF2CE295);
+    color_2 = const Color(0xFFA66DDE);
     gradient_1 = const Color(0xFF4E8CAD);
     gradient_2 = const Color(0xFF2D3F8A);
+
+    no_color = const Color(0xFFD6D6D6);
 
     planet_path = "images/dino_planet.png";
     background_path = "images/dino_background.jpg";
   }
-
 }
