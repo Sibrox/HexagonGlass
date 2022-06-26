@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:hexagon_glass/core/hexagon_core.dart';
 import 'package:hexagon_glass/widgets/hexagon_button.dart';
 
+import 'package:hexagon_glass/ui/hexagon_theme.dart';
+
 class Grid extends StatefulWidget {
   final HexagonGame gameGrid;
+  final HexagonTheme currentTheme;
 
   const Grid({
         Key? key,
-        required this.gameGrid
+        required this.gameGrid,
+        required this.currentTheme
       })
       : super(key: key);
 
@@ -32,7 +36,7 @@ class _GridState extends State<Grid> {
     return LayoutBuilder(builder: (BuildContext context, BoxConstraints constrain) {
 
       var deviceWidth = constrain.biggest.width;
-      var deviceWHeight = constrain.biggest.height;
+      var deviceWHeight = constrain.biggest.height ;
 
       var rowWidth = deviceWidth - 0;
       var hexagonWidth =  rowWidth/ gameLogic.nColumns();
@@ -43,10 +47,10 @@ class _GridState extends State<Grid> {
         children: List.generate(
             widget.gameGrid.nRows(),
                 (i) => Positioned(
-              left: i % 2 != 0 ? apothem + apothem / 2 : 0 + apothem / 2 ,
+              left: i % 2 != 0 ? 3 / 2 * apothem  : apothem / 2 ,
               top: (i * (3 / 4 * hexagonWidth) +
                   (apothem * gameLogic.nRows() / 4)) +
-                  ((deviceWHeight - (hexagonWidth * gameLogic.nRows())) / 2),
+                  ((deviceWHeight - (hexagonWidth * gameLogic.nRows())) / 2) ,
               child: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   alignment: WrapAlignment.start,
@@ -63,6 +67,7 @@ class _GridState extends State<Grid> {
                             }
                           },
                           block: gameLogic.statusGrid[i][j],
+                          currentTheme: widget.currentTheme,
                         )) ,
             )),
       ));

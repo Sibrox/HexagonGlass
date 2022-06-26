@@ -2,17 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/core/hexagon_core.dart';
+import 'package:hexagon_glass/ui/hexagon_theme.dart';
 
 class HexagonButton extends StatefulWidget {
   final double width;
   final Function changeColor;
   final HexagonBlock block;
+  final HexagonTheme currentTheme;
 
   const HexagonButton(
-      {Key? key,
-      required this.width,
-      required this.changeColor,
-      required this.block})
+      { Key? key,
+        required this.width,
+        required this.changeColor,
+        required this.block,
+        required this.currentTheme
+      })
       : super(key: key);
 
   @override
@@ -82,7 +86,7 @@ class _HexagonButtonState extends State<HexagonButton>
                 borderRadius: 0,
                 rotate: 60,
                 boxShadows: [
-                  PolygonBoxShadow(color: Colors.black, elevation: widget.block.isVisible ? 10.0 : 0)
+                  PolygonBoxShadow(color: Colors.black, elevation: widget.block.isVisible ? 5.0 : 0)
                 ],
                 child: Container(
                   decoration: BoxDecoration(
@@ -90,7 +94,7 @@ class _HexagonButtonState extends State<HexagonButton>
                     widget.block.color != ButtonColor.color_1 ?
                     widget.block.color != ButtonColor.color_2 ?
                     !widget.block.isVisible ?
-                    Colors.transparent : Color(0xFFD6D6D6): Color(0xFF2CE295): Color(0xFFA66DDE),
+                    Colors.transparent : widget.currentTheme.no_color: widget.currentTheme.color_2: widget.currentTheme.color_1,
                   ),
                   child: Center(
                     child: AnimatedDefaultTextStyle(

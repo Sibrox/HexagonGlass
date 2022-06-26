@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:hexagon_glass/ui/hexagon_theme.dart';
 
 import '../core/hexagon_core.dart';
 import '../widgets/hexagon_grid.dart';
 
 class Level extends StatelessWidget {
-  Level({Key? key}) : super(key: key);
+  HexagonTheme currentTheme;
+  Level({Key? key, required this.currentTheme }) : super(key: key);
 
   HexagonGame hexagonGrid = HexagonGame.create(6,10);
-  var level = "PRova";
-  // 070A4D
-  // 4690C1
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF4E8CAD),
-              Color(0xFF2D3F8A),
+              currentTheme.gradient_1,
+              currentTheme.gradient_2,
             ],
           )
       ),
@@ -31,9 +31,12 @@ class Level extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color: Colors.blue,
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20),),
-                  image: const DecorationImage(
-                      image: AssetImage("images/dino_background.jpg"),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
+                  image:  DecorationImage(
+                      image: AssetImage(currentTheme.background_path),
                       fit: BoxFit.cover
                   ),
                   boxShadow: [
@@ -41,7 +44,7 @@ class Level extends StatelessWidget {
                       color: Colors.black87.withOpacity(0.6),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 1), // changes position of shadow
+                      offset: const Offset(0, 1), // changes position of shadow
                     ),
                   ],
                 ),
@@ -49,25 +52,45 @@ class Level extends StatelessWidget {
           ),
           Flexible(
               flex: 8,
-              child: Grid(gameGrid: hexagonGrid)
+              child: Grid(gameGrid: hexagonGrid, currentTheme: currentTheme,)
           ),
           Flexible(
             flex: 1,
-              child: Center(
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child:  Image.asset(
-                        ("images/dino_planet.png"),
+            child: Center(
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: GestureDetector(
+                      onTap: () {Navigator.pop(context);},
+                      child: Image.asset(
+                        (currentTheme.planet_path),
                         fit: BoxFit.contain,
-
                       ),
-                    ),
-                    const DefaultTextStyle( style: TextStyle(fontSize: 20, fontFamily: 'Rowdies', color: Colors.white),child: Text( "5 / 10"))
-                  ],
-                ),
-              )
+                    )
+                  ),
+                  const DefaultTextStyle(
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Rowdies',
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                      ),
+                      child: Text( "5 / 10")),
+                  Flexible(child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: GestureDetector(
+                      child:
+                        Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Image.asset("images/refresh_icon.png"),
+                        )
+                      ),
+                    )
+                  )
+                ],
+              ),
+            )
           )
         ],
       )
