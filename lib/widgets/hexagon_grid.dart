@@ -33,7 +33,7 @@ class _GridState extends State<Grid> {
       var deviceWidth = constrain.biggest.width;
       var deviceWHeight = constrain.biggest.height;
 
-      var margin = deviceWidth * 0.1;
+      var margin = deviceWidth * 0.05;
       deviceWidth = deviceWidth - margin;
       var rowWidth = deviceWidth - 0;
       var hexagonWidth = rowWidth / gameLogic.nColumns();

@@ -114,21 +114,20 @@ class _PlanetState extends State<Planet> with TickerProviderStateMixin {
             ),
           ),
           PositionedTransition(
-            rect: RelativeRectTween(begin: startPlanet, end: endPlanet).animate(
-                CurvedAnimation(
-                    parent: _controllerPlanet, curve: Curves.elasticIn)),
-            child: AnimatedPulse (
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: widget.image,
-                        fit: BoxFit.contain,
-                      ),
+              rect: RelativeRectTween(begin: startPlanet, end: endPlanet)
+                  .animate(CurvedAnimation(
+                      parent: _controllerPlanet, curve: Curves.elasticIn)),
+              child: AnimatedPulse(
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: widget.image,
+                      fit: BoxFit.contain,
                     ),
                   ),
-                  duration: animationTime,
-                )
-          )
+                ),
+                duration: animationTime,
+              ))
         ],
       );
     });

@@ -54,3 +54,7 @@ google-services.json
 
 # Android Profiling
 *.hprof
+linux/
+windows/
+web/
+macos/

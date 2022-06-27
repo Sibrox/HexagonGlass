@@ -20,8 +20,8 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
 
   var animationTime = const Duration(milliseconds: 1000);
 
-  late final AnimationController _controllerRotation =
-      AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
+  late final AnimationController _controllerRotation = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 300));
 
   @override
   void dispose() {
@@ -80,18 +80,17 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                       Padding(
                           padding: const EdgeInsets.all(10),
                           child: GestureDetector(
-                            onTap: () {
-                              //TODO: it is an error -> How use navigator outside build?
-                              Navigator.pop(context);
-                            },
-                            child: AnimatedPulse (
-                              child: Image.asset(
-                                (widget.currentTheme.planet_path),
-                                fit: BoxFit.contain,
-                              ),
-                              duration: const Duration(milliseconds: 800),
-                            )
-                          )),
+                              onTap: () {
+                                //TODO: it is an error -> How use navigator outside build?
+                                Navigator.pop(context);
+                              },
+                              child: AnimatedPulse(
+                                child: Image.asset(
+                                  (widget.currentTheme.planet_path),
+                                  fit: BoxFit.contain,
+                                ),
+                                duration: const Duration(milliseconds: 800),
+                              ))),
                       const DefaultTextStyle(
                           style: TextStyle(
                             fontSize: 20,
@@ -104,26 +103,28 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                           child: Align(
                               alignment: Alignment.bottomRight,
                               child: GestureDetector(
-                                onTap: () {
-                                  _controllerRotation.reset();
-                                  _controllerRotation.forward();
+                                  onTap: () {
+                                    _controllerRotation.reset();
+                                    _controllerRotation.forward();
 
-                                  setState(() {
-                                    hexagonGrid.reset();
-                                  });
-                                },
+                                    setState(() {
+                                      hexagonGrid.reset();
+                                    });
+                                  },
                                   child: Padding(
-                                padding: const EdgeInsets.all(8),
-                                  child: AnimatedBuilder(
-                                      animation: _controllerRotation,
-                                      builder: (_, child) {
-                                        return Transform.rotate(
-                                          angle: _controllerRotation.value * 2 * pi,
-                                          child: child,
-                                        );
-                                      },
-                                      child: Image.asset("images/refresh_icon.png"))
-                              ))))
+                                      padding: const EdgeInsets.all(8),
+                                      child: AnimatedBuilder(
+                                          animation: _controllerRotation,
+                                          builder: (_, child) {
+                                            return Transform.rotate(
+                                              angle: _controllerRotation.value *
+                                                  2 *
+                                                  pi,
+                                              child: child,
+                                            );
+                                          },
+                                          child: Image.asset(
+                                              "images/refresh_icon.png"))))))
                     ],
                   ),
                 ))
