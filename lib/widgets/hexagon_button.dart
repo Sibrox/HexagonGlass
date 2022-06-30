@@ -1,19 +1,21 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:flutter/material.dart';
-import 'package:hexagon_glass/core/hexagon_core.dart';
+
+import 'package:flutter_polygon/flutter_polygon.dart';
+import 'package:hexagon_glass/core/block.dart';
+
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
+import 'package:hexagon_glass/ui/stroke_text.dart';
 
 class HexagonButton extends StatefulWidget {
   final double width;
-  final Function changeColor;
-  final HexagonBlock block;
-  final HexagonTheme currentTheme;
+  final Function onClick;
+  final Block block;
+  final PlanetTheme currentTheme;
 
   const HexagonButton(
       {Key? key,
       required this.width,
-      required this.changeColor,
+      required this.onClick,
       required this.block,
       required this.currentTheme})
       : super(key: key);
@@ -60,7 +62,7 @@ class _HexagonButtonState extends State<HexagonButton>
           hexagonWidthAnimated *= 5;
           textScale = 15;
         });
-        widget.changeColor();
+        widget.onClick();
       },
       onTapDown: (tapDetails) {
         setState(() {
@@ -90,8 +92,8 @@ class _HexagonButtonState extends State<HexagonButton>
                 ],
                 child: Container(
                   decoration: BoxDecoration(
-                    color: widget.block.color != ButtonColor.color_1
-                        ? widget.block.color != ButtonColor.color_2
+                    color: widget.block.color != BlockColor.color_1
+                        ? widget.block.color != BlockColor.color_2
                             ? !widget.block.isVisible
                                 ? Colors.transparent
                                 : widget.currentTheme.no_color
@@ -103,35 +105,12 @@ class _HexagonButtonState extends State<HexagonButton>
                         duration: const Duration(milliseconds: 200),
                         style: TextStyle(
                             fontSize: textScale, fontFamily: 'Rowdies'),
-                        child: Stack(
-                          children: [
-                            // The text border
-                            Text(
-                              widget.block.isVisible
-                                  ? '${widget.block.value}'
-                                  : "",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                foreground: Paint()
-                                  ..style = PaintingStyle.stroke
-                                  ..strokeWidth = 2
-                                  ..color = Colors.black,
-                              ),
-                            ),
-                            // The text inside
-                            Text(
-                              widget.block.isVisible
-                                  ? '${widget.block.value}'
-                                  : "",
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        )),
+                        child: StrokeText(
+                          text: widget.block.isVisible
+                            ? '${widget.block.value}'
+                            : ""
+                        )
+                    ),
                   ),
                 ),
               ),

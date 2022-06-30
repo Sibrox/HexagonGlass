@@ -4,14 +4,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/animated/animated_pop.dart';
 import 'package:hexagon_glass/animated/animated_pulse.dart';
-import 'package:hexagon_glass/core/hexagon_core.dart';
+import 'package:hexagon_glass/core/block_grid.dart';
 import 'package:hexagon_glass/screens/level.dart';
+import 'package:hexagon_glass/ui/stroke_text.dart';
+import 'package:hexagon_glass/widgets/hexagon_grid.dart';
 
+import '../core/game_logic.dart';
 import '../ui/hexagon_theme.dart';
-import 'hexagon_grid.dart';
+import 'game_grid.dart';
 
 class PageMenu extends StatefulWidget {
-  HexagonTheme currentTheme;
+  PlanetTheme currentTheme;
   PageMenu({Key? key, required this.currentTheme}) : super(key: key);
 
   @override
@@ -35,6 +38,7 @@ class _PageMenuState extends State<PageMenu> {
 
       return Stack(
         children: [
+
           // Box levels
           Positioned(
             height: boxLevelDim,
@@ -47,13 +51,24 @@ class _PageMenuState extends State<PageMenu> {
                     color: Colors.black.withOpacity(0.25)),
                 child: Container(
                   margin: EdgeInsets.all(10),
-                  child: Grid(
+                  child: HexagonGrid(
                     currentTheme: widget.currentTheme,
-                    gameGrid: HexagonGame.create(4, 6),
+                    grid: BlockGrid.fromString(widget.currentTheme.gridMenu),
+                    onClick: (i,j) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Level(currentTheme: widget.currentTheme)));
+                    }, gameGrid: null,
                   ),
                 )),
           ),
-
+            Positioned(
+            top: 30,
+            left: 40,
+            child: StrokeText(text: widget.currentTheme.difficult, fontSize: 40,),
+           ),
           // Box levels
           AnimatedPop(
             begin: RelativeRect.fromSize(

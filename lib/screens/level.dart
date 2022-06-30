@@ -1,14 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:hexagon_glass/core/game_logic.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
-import '../animated/animated_pulse.dart';
+import 'package:hexagon_glass/animated/animated_pulse.dart';
 
-import '../core/hexagon_core.dart';
-import '../widgets/hexagon_grid.dart';
+import 'package:hexagon_glass/widgets/game_grid.dart';
 
 class Level extends StatefulWidget {
-  HexagonTheme currentTheme;
+  PlanetTheme currentTheme;
   Level({Key? key, required this.currentTheme}) : super(key: key);
 
   @override
@@ -16,7 +16,7 @@ class Level extends StatefulWidget {
 }
 
 class _LevelState extends State<Level> with TickerProviderStateMixin {
-  HexagonGame hexagonGrid = HexagonGame.create(6, 10);
+  GameLogic gameLogic = GameLogic(GridType.hexagon, 6, 10);
 
   var animationTime = const Duration(milliseconds: 1000);
 
@@ -68,9 +68,15 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                 )),
             Flexible(
                 flex: 8,
-                child: Grid(
-                  gameGrid: hexagonGrid,
+                child: GameGrid(
+                  gameGrid: null,
+                  gameLogic: gameLogic,
                   currentTheme: widget.currentTheme,
+                  onClick: (i,j) {
+                    setState(() {
+                      gameLogic.status.changeColor(i, j);
+                    });
+                  },
                 )),
             Flexible(
                 flex: 1,
@@ -98,7 +104,7 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
-                          child: Text("5 / 10")),
+                          child: Text("Level 5")),
                       Flexible(
                           child: Align(
                               alignment: Alignment.bottomRight,
@@ -108,7 +114,7 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                                     _controllerRotation.forward();
 
                                     setState(() {
-                                      hexagonGrid.reset();
+                                      gameLogic.resetGame();
                                     });
                                   },
                                   child: Padding(
@@ -124,7 +130,7 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                                             );
                                           },
                                           child: Image.asset(
-                                              "images/refresh_icon.png"))))))
+                                              "images/icons/refresh_icon.png"))))))
                     ],
                   ),
                 ))

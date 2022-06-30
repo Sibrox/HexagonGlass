@@ -2,12 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hexagon_glass/core/hexagon_core.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:hexagon_glass/widgets/page_menu.dart';
 import 'package:hexagon_glass/widgets/planet_list_view.dart';
 
-import '../widgets/hexagon_grid.dart';
+import '../widgets/game_grid.dart';
 
 class Menu extends StatefulWidget {
   Menu({Key? key}) : super(key: key);
@@ -28,11 +27,13 @@ class _MenuState extends State<Menu> {
     position = 0;
   }
 
-  HexagonTheme getTheme(int? page) {
+  PlanetTheme getTheme(int? page) {
     switch (page) {
       case 0:
         return MozillaTheme();
       case 1:
+        return PinkTheme();
+      case 2:
         return DinoTheme();
     }
 
@@ -70,7 +71,7 @@ class _MenuState extends State<Menu> {
                     Flexible(
                       flex: 9,
                       child: PageView.builder(
-                        itemCount: 2,
+                        itemCount: 3,
                         onPageChanged: (page) {
                           setState(() {
                             position = page;

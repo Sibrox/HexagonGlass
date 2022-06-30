@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hexagon_glass/core/hexagon_core.dart';
-import 'package:hexagon_glass/screens/level.dart';
-import 'package:hexagon_glass/widgets/hexagon_grid.dart';
-import 'widgets/planet_list_view.dart';
 import 'package:hexagon_glass/screens/menu.dart';
-import 'package:hexagon_glass/screens/home.dart';
 import 'package:flutter/services.dart';
 
 import 'dart:async' show Future;
@@ -62,8 +57,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool selected = false;
-
-  HexagonGame game = HexagonGame.create(8, 8);
 
   @override
   void dispose() {

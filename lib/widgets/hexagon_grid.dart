@@ -1,74 +1,76 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:hexagon_glass/core/hexagon_core.dart';
+import 'package:hexagon_glass/core/block_grid.dart';
+import 'package:hexagon_glass/core/game_logic.dart';
 import 'package:hexagon_glass/widgets/hexagon_button.dart';
 
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 
-class Grid extends StatefulWidget {
-  final HexagonGame gameGrid;
-  final HexagonTheme currentTheme;
+class HexagonGrid extends StatefulWidget {
+  final BlockGrid grid;
+  final PlanetTheme currentTheme;
+  final Function(int, int) onClick;
 
-  const Grid({Key? key, required this.gameGrid, required this.currentTheme})
+  const HexagonGrid({Key? key,
+    required this.grid,
+    required this.currentTheme,
+    required this.onClick, required gameGrid
+  })
       : super(key: key);
 
   @override
-  _GridState createState() => _GridState();
+  _GameGridState createState() => _GameGridState();
 }
 
-class _GridState extends State<Grid> {
-  late HexagonGame gameLogic;
+class _GameGridState extends State<HexagonGrid> {
 
+  late BlockGrid grid;
   @override
   void initState() {
     super.initState();
-    gameLogic = widget.gameGrid;
+    grid = widget.grid;
   }
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constrain) {
-      var deviceWidth = constrain.biggest.width;
-      var deviceWHeight = constrain.biggest.height;
+          var deviceWidth = constrain.biggest.width;
+          var deviceWHeight = constrain.biggest.height;
 
-      var margin = deviceWidth * 0.05;
-      deviceWidth = deviceWidth - margin;
-      var rowWidth = deviceWidth - 0;
-      var hexagonWidth = rowWidth / gameLogic.nColumns();
-      var apothem = hexagonWidth / 2 * sqrt(3) / 2;
+          var margin = deviceWidth * 0.05;
+          var rowWidth = deviceWidth - 0;
+          var hexagonWidth = rowWidth / grid.nCol;
+          var apothem = hexagonWidth / 2 * sqrt(3) / 2;
 
-      return Stack(
-          alignment: Alignment.center,
-          children: List.generate(
-            widget.gameGrid.nRows(),
-            (i) => Positioned(
-                left: i % 2 != 0 ? 3 / 2 * apothem : apothem / 2,
-                top: (i * (3 / 4 * hexagonWidth) +
-                        (apothem * gameLogic.nRows() / 4)) +
-                    ((deviceWHeight - (hexagonWidth * gameLogic.nRows())) / 2),
-                child: Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  alignment: WrapAlignment.start,
-                  spacing: -(hexagonWidth - (apothem * 2)),
-                  children: List.generate(
-                      widget.gameGrid.nColumns(),
-                      (j) => HexagonButton(
+          return Stack(
+              alignment: Alignment.center,
+              children: List.generate(
+                grid.nRow,
+                    (i) => Positioned(
+                    left: i % 2 != 0 ? 3 / 2 * apothem : apothem / 2,
+                    top: (i * (3 / 4 * hexagonWidth) +
+                        (apothem * grid.nRow / 4)) +
+                        ((deviceWHeight - (hexagonWidth * grid.nRow)) / 2),
+                    child: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      alignment: WrapAlignment.start,
+                      spacing: -(hexagonWidth - (apothem * 2)),
+                      children: List.generate(
+                          grid.nCol,
+                              (j) => HexagonButton(
                             width: hexagonWidth,
-                            changeColor: () => {
-                              if (gameLogic.gameGrid[i][j].value != -1)
-                                {
-                                  setState(() {
-                                    gameLogic.changeColor(i, j);
-                                  })
-                                }
+                            onClick: () {
+                              setState(() {
+                                widget.onClick(i,j);
+                              });
                             },
-                            block: gameLogic.statusGrid[i][j],
+                            block: grid.grid[i][j],
                             currentTheme: widget.currentTheme,
                           )),
-                )),
-          ));
-    });
+                    )),
+              ));
+        });
   }
 }
