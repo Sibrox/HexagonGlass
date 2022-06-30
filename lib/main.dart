@@ -1,31 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/screens/menu.dart';
 import 'package:flutter/services.dart';
 
 import 'dart:async' show Future;
 
-Future<String> loadAsset() async {
-  String toParse = await rootBundle.loadString('resources/level_1.txt');
-  List<List<String>> game = [[]];
-  List<String> rows = toParse.split("\n");
-  for (var row in rows) {
-    game.add(row.split(" "));
-  }
-
-  for (int i = 0; i < game.length; i++) {
-    for (int j = 0; j < game[i].length; j++) {
-      (game[i][j]);
-    }
-  }
-
-  return toParse;
-}
+import 'package:hexagon_glass/ui/hexagon_theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
     //This line is used for showing the bottom bar
   ]);
+
   runApp(const MyApp());
 }
 

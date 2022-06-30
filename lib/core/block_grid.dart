@@ -41,6 +41,8 @@ class BlockGrid {
         );
       }
     }
+    nCol = origin.nCol;
+    nRow = origin.nRow;
   }
 
   void changeColor(int i, int j) {

@@ -2,18 +2,17 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/core/block_grid.dart';
-import 'package:hexagon_glass/core/game_logic.dart';
 import 'package:hexagon_glass/widgets/hexagon_button.dart';
 
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:hexagon_glass/widgets/square_button.dart';
 
-class HexagonGrid extends StatefulWidget {
+class SquareGrid extends StatefulWidget {
   final BlockGrid grid;
   final PlanetTheme currentTheme;
   final Function(int, int) onClick;
 
-  const HexagonGrid({Key? key,
+  const SquareGrid({Key? key,
     required this.grid,
     required this.currentTheme,
     required this.onClick
@@ -24,7 +23,7 @@ class HexagonGrid extends StatefulWidget {
   _GameGridState createState() => _GameGridState();
 }
 
-class _GameGridState extends State<HexagonGrid> {
+class _GameGridState extends State<SquareGrid> {
 
   late BlockGrid grid;
   @override
@@ -41,28 +40,23 @@ class _GameGridState extends State<HexagonGrid> {
           var deviceWHeight = constrain.biggest.height;
 
           var margin = deviceWidth * 0.05;
-          deviceWidth = deviceWidth - margin;
           var rowWidth = deviceWidth - 0;
-          var hexagonWidth = rowWidth / grid.nCol;
-          var apothem = hexagonWidth / 2 * sqrt(3) / 2;
+          var width = rowWidth / grid.nCol;
+          var apothem = width / 2 * sqrt(3) / 2;
 
           return Stack(
               alignment: Alignment.center,
               children: List.generate(
                 grid.nRow,
                     (i) => Positioned(
-                    left: i % 2 != 0 ? 3 / 2 * apothem : apothem / 2,
-                    top: (i * (3 / 4 * hexagonWidth) +
-                        (apothem * grid.nRow / 4)) +
-                        ((deviceWHeight - (hexagonWidth * grid.nRow)) / 2),
+                    top: i * width,
                     child: Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
                       alignment: WrapAlignment.start,
-                      spacing: -(hexagonWidth - (apothem * 2)),
                       children: List.generate(
                           grid.nCol,
-                              (j) => HexagonButton(
-                            width: hexagonWidth,
+                              (j) => SquareButton(
+                            width: width,
                             onClick: () {
                               setState(() {
                                 widget.onClick(i,j);

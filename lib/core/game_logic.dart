@@ -27,7 +27,7 @@ class GameLogic {
   void resetGame() {
     for (int i = 0; i < origin.grid.length; i++) {
       for (int j = 0; j < origin.grid[i].length; j++) {
-        origin.grid[i][j].color = BlockColor.noColor;
+        status.grid[i][j].color = BlockColor.noColor;
       }
     }
   }

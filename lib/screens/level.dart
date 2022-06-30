@@ -9,14 +9,15 @@ import 'package:hexagon_glass/widgets/game_grid.dart';
 
 class Level extends StatefulWidget {
   PlanetTheme currentTheme;
-  Level({Key? key, required this.currentTheme}) : super(key: key);
+  final int level;
+  Level({Key? key, required this.currentTheme, required this.level}) : super(key: key);
 
   @override
   _LevelState createState() => _LevelState();
 }
 
 class _LevelState extends State<Level> with TickerProviderStateMixin {
-  GameLogic gameLogic = GameLogic(GridType.hexagon, 6, 10);
+  GameLogic gameLogic = GameLogic(GridType.hexagon, 5, 8);
 
   var animationTime = const Duration(milliseconds: 1000);
 
@@ -45,25 +46,28 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
           children: [
             Flexible(
                 flex: 2,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                    image: DecorationImage(
-                        image: AssetImage(widget.currentTheme.background_path),
-                        fit: BoxFit.cover),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black87.withOpacity(0.6),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset:
-                            const Offset(0, 1), // changes position of shadow
+                child: Hero(
+                  tag: "background",
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
                       ),
-                    ],
+                      image: DecorationImage(
+                          image: AssetImage(widget.currentTheme.background_path),
+                          fit: BoxFit.cover),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black87.withOpacity(0.6),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset:
+                          const Offset(0, 1), // changes position of shadow
+                        ),
+                      ],
+                    ),
                   ),
                 )),
             Flexible(
@@ -90,21 +94,24 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                                 //TODO: it is an error -> How use navigator outside build?
                                 Navigator.pop(context);
                               },
-                              child: AnimatedPulse(
-                                child: Image.asset(
-                                  (widget.currentTheme.planet_path),
-                                  fit: BoxFit.contain,
-                                ),
-                                duration: const Duration(milliseconds: 800),
-                              ))),
-                      const DefaultTextStyle(
-                          style: TextStyle(
+                              child: Hero(
+                                tag: "planet",
+                                child:  AnimatedPulse(
+                                  child: Image.asset(
+                                    (widget.currentTheme.planet_path),
+                                    fit: BoxFit.contain,
+                                  ),
+                                  duration: const Duration(milliseconds: 800),
+                                ))),
+                              ),
+                       DefaultTextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontFamily: 'Rowdies',
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
-                          child: Text("Level 5")),
+                          child: Text("Level " + widget.level.toString())),
                       Flexible(
                           child: Align(
                               alignment: Alignment.bottomRight,

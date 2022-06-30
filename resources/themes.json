@@ -1,32 +1,44 @@
 {
   "easy" : {
-    "color_1"   : "0xFFF7AF28",
-    "color_2"   : "0xFF00F4CF",
-    "no_color"  : "0xFFD6D6D6",
-    "gradient_1": "0xFFFFCB68",
-    "gradient_2": "0xFFA5600E",
+    "color_1"   : "FFFDB74E",
+    "color_2"   : "FF88E1FE",
+    "no_color"  : "FFD6D6D6",
+    "gradient_1": "FFF8BE50",
+    "gradient_2": "FF870202",
     "background_path": "images/background/mozilla_background.jpg",
     "planet_path" : "images/planets/mozilla_planet.png",
-    "grid" : "- 0 0 - \n 0 0 0 - \n- 0 0 - \n- - - - "
+    "grid" : "- 0 0 - \n 0 0 0 - \n- 0 0 - \n- 0 -  - "
   },
   "medium" : {
-    "color_1"   : "0xFF2CE295",
-    "color_2"   : "0xFFA66DDE",
-    "no_color"  : "0xFFD6D6D6",
-    "gradient_1": "0xFF4E8CAD",
-    "gradient_2": "0xFF2D3F8A",
-    "background_path": "images/background/dino_background.jpg",
-    "planet_path" : "images/planets/dino_planet.png",
-    "grid" : "- 0 0 - \n 0 0 0 - \n- 0 0 - \n- - - - "
-  },
-  "hard" : {
-    "color_1"   : "0xFFFF5399",
-    "color_2"   : "0xFF44C7A7",
-    "no_color"  : "0xFFD6D6D6",
-    "gradient_1": "0xFFFFB0D4",
-    "gradient_2": "0xFFA42B24",
+    "color_1"   : "FFFF75AD",
+    "color_2"   : "FFF8CCA4",
+    "no_color"  : "FFD6D6D6",
+    "gradient_1": "FFFFA7CE",
+    "gradient_2": "FFA42B24",
     "background_path": "images/background/pink_background.jpg",
     "planet_path" : "images/planets/pink_planet.png",
-    "grid" : "- 0 0 - \n 0 0 0 - \n- 0 0 - \n- - - - "
+    "grid" : "0 0 0 0 \n 0 - 0 - \n- 0 0 - \n0 - 0 - "
+  },
+  "hard" : {
+    "color_1"   : "FF2CE295",
+    "color_2"   : "FFA66DDE",
+    "no_color"  : "FFD6D6D6",
+    "gradient_1": "FF94C0D8",
+    "gradient_2": "FF2D3F8A",
+    "background_path": "images/background/dino_background.jpg",
+    "planet_path" : "images/planets/dino_planet.png",
+
+    "grid" : "0 0 0 0 \n 0 - 0 - \n0 0 0 0 \n0 0 0 - "
+  },
+  "secret" : {
+    "color_1"   : "FF3D26C1",
+    "color_2"   : "FFBF19E6",
+    "no_color"  : "FFD6D6D6",
+    "gradient_1": "FFA390F1",
+    "gradient_2": "FF6622BC",
+    "background_path": "images/background/infinity_background.jpg",
+    "planet_path" : "images/planets/infinity_planet.png",
+
+    "grid" : "0 0 0 0 \n - 0 - - \n0 0 0 0 \n- 0 - - "
   }
 }

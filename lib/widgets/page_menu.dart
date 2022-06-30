@@ -22,6 +22,8 @@ class PageMenu extends StatefulWidget {
 }
 
 class _PageMenuState extends State<PageMenu> {
+
+  late BlockGrid menuGrid = BlockGrid.fromString(widget.currentTheme.gridMenu);
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -53,14 +55,29 @@ class _PageMenuState extends State<PageMenu> {
                   margin: EdgeInsets.all(10),
                   child: HexagonGrid(
                     currentTheme: widget.currentTheme,
-                    grid: BlockGrid.fromString(widget.currentTheme.gridMenu),
+                    grid: menuGrid,
                     onClick: (i,j) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  Level(currentTheme: widget.currentTheme)));
-                    }, gameGrid: null,
+                      Navigator.of(context).push(
+                          PageRouteBuilder(
+                              transitionDuration: Duration(milliseconds: 800),
+                              reverseTransitionDuration: Duration(milliseconds: 500),
+
+                              pageBuilder: (_, __, ___) => Level(
+                                    currentTheme: widget.currentTheme,
+                                    level: menuGrid.grid[i][j].value,),
+                            transitionsBuilder: (BuildContext context,
+                                Animation<double> animation,
+                                Animation<double> secondaryAnimation,
+                                Widget child) {
+                              return FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              );
+                            },
+
+                          ),
+                      );
+                    },
                   ),
                 )),
           ),
@@ -86,25 +103,28 @@ class _PageMenuState extends State<PageMenu> {
                 ),
                 constraints.biggest),
             duration: Duration(milliseconds: 1000),
-            child: Container(
-              margin: const EdgeInsets.only(top: 50, left: 20, right: 20),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
-                color: Colors.black.withOpacity(0.25),
-                image: DecorationImage(
-                  image: AssetImage(widget.currentTheme.background_path),
-                  fit: BoxFit.cover,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(0, 3), // changes position of shadow
+            child:  Hero(
+              tag: "background",
+              child: Container(
+                margin: const EdgeInsets.only(top: 50, left: 20, right: 20),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  color: Colors.black.withOpacity(0.25),
+                  image: DecorationImage(
+                    image: AssetImage(widget.currentTheme.background_path),
+                    fit: BoxFit.cover,
                   ),
-                ],
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3), // changes position of shadow // changes position of shadow
+                    ),
+                  ],
+                ),
               ),
-            ),
+            )
           ),
           // Box levels
           AnimatedPop(
@@ -123,19 +143,15 @@ class _PageMenuState extends State<PageMenu> {
                   ),
                   constraints.biggest),
               duration: Duration(milliseconds: 1000 ),
-              child: AnimatedPulse(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                Level(currentTheme: widget.currentTheme)));
-                  },
-                  child: Planet(planet_path: widget.currentTheme.planet_path),
-                ),
-                duration: const Duration(milliseconds: 800),
-              )),
+              child: Hero(
+                  tag: "planet",
+                  child:  AnimatedPulse(
+                    child: Image.asset(
+                      (widget.currentTheme.planet_path),
+                      fit: BoxFit.contain,
+                    ),
+                    duration: const Duration(milliseconds: 800),
+                  ))),
         ],
       );
     });

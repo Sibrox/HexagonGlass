@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:hexagon_glass/widgets/page_menu.dart';
-import 'package:hexagon_glass/widgets/planet_list_view.dart';
 
 import '../widgets/game_grid.dart';
 
@@ -22,81 +22,70 @@ class _MenuState extends State<Menu> {
 
   late var position;
 
+  bool loadedThemes = false;
+
   @override
   void initState() {
+    super.initState();
     position = 0;
+    loadThemes();
   }
 
-  PlanetTheme getTheme(int? page) {
-    switch (page) {
-      case 0:
-        return MozillaTheme();
-      case 1:
-        return PinkTheme();
-      case 2:
-        return DinoTheme();
-    }
+  void loadThemes() async {
+    String themes = await rootBundle.loadString('resources/themes.json');
+    Themes.instance.loadThemes(themes);
 
-    return MozillaTheme();
+    print("TEst");
+    setState(() {
+      loadedThemes = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
+
+    var menuPage =  LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constrain) {
-      return Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-              getTheme(position).gradient_1,
-              getTheme(position).gradient_2
-            ])),
-        child: Column(
-          children: [
-            Flexible(
-                flex: 3,
-                child: Row(
-                  children: [
-                    // Flexible(
-                    //     child: GestureDetector(
-                    //       onTap: () {
-                    //         _controller.previousPage(
-                    //         duration: const Duration(milliseconds: 800),
-                    //         curve: Curves.ease);
-                    //       },
-                    //       child: Image.asset("images/arrow_left.png")),
-                    // ),
-                    Flexible(
-                      flex: 9,
-                      child: PageView.builder(
-                        itemCount: 3,
-                        onPageChanged: (page) {
-                          setState(() {
-                            position = page;
-                          });
-                        },
-                        itemBuilder: (context, position) {
-                          return PageMenu(currentTheme: getTheme(position));
-                        },
-                        controller: _controller,
-                      ),
-                    ),
-                    // Flexible(
-                    //   child: GestureDetector(
-                    //       onTap: () {
-                    //         _controller.nextPage(
-                    //             duration: const Duration(milliseconds: 800),
-                    //             curve: Curves.ease);
-                    //       },
-                    //       child: Image.asset("images/arrow_right.png")),
-                    // )
-                  ],
-                )),
-          ],
-        ),
-      );
-    });
+          return Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Themes.instance.getTheme(position).gradient_1,
+                      Themes.instance.getTheme(position).gradient_2
+                    ]
+                )
+            ),
+            child: Column(
+              children: [
+                Flexible(
+                    flex: 3,
+                    child: Row(
+                      children: [
+                        Flexible(
+                          flex: 9,
+                          child: PageView.builder(
+                            itemCount: Themes.instance.planets.length,
+                            onPageChanged: (page) {
+                              setState(() {
+                                position = page;
+                              });
+                            },
+                            itemBuilder: (context, position) {
+                              return PageMenu(
+                                  currentTheme: Themes.instance.getTheme(position)
+                              );
+                            },
+                            controller: _controller,
+                          ),
+                        ),
+                      ],
+                    )),
+              ],
+            ),
+          );
+        });
+    return loadedThemes ? menuPage : const CircularProgressIndicator();
   }
 }

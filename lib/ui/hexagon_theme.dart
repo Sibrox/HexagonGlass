@@ -2,6 +2,32 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+class Themes {
+  late List<PlanetTheme> planets;
+
+  static final Themes instance = Themes._internal();
+
+  factory Themes() {
+    return instance;
+  }
+
+  void loadThemes(String configThemes) {
+
+    Map<String, dynamic> themesJson = jsonDecode(configThemes);
+
+    themesJson.forEach((key, value) {
+      planets.add(PlanetTheme.fromString(key, value));
+    });
+  }
+
+  PlanetTheme getTheme(int index) => planets[index];
+
+  Themes._internal() {
+    planets = [];
+  }
+
+}
+
 class PlanetTheme {
 
   late Color color_1;
@@ -19,71 +45,18 @@ class PlanetTheme {
 
   PlanetTheme() {}
 
-  PlanetTheme.fromString(String themeString) {
-    Map<String, dynamic> theme = jsonDecode(themeString);
+  PlanetTheme.fromString(String key, Map<String, dynamic> theme) {
 
-    color_1 = const Color(0xFFFDB74E);
-    color_2 = const Color(0xFF88E1FE);
-    gradient_1 = const Color(0xFFF8BE50);
-    gradient_2 = const Color(0xFF870202);
+    color_1 = Color(int.parse(theme["color_1"], radix: 16));
+    color_2 = Color(int.parse(theme["color_2"], radix: 16));
+    gradient_1 = Color(int.parse(theme["gradient_1"], radix: 16));
+    gradient_2 = Color(int.parse(theme["gradient_2"], radix: 16));
 
     no_color = const Color(0xFFD6D6D6);
 
     planet_path = theme["planet_path"];
     background_path = theme["background_path"];
-    difficult = "Easy";
-    gridMenu = "- 0 0 - \n 0 0 0 - \n- 0 0 - \n- - - - ";
-  }
-
-
-}
-
-class MozillaTheme extends PlanetTheme {
-  MozillaTheme() {
-    color_1 = const Color(0xFFFDB74E);
-    color_2 = const Color(0xFF88E1FE);
-    gradient_1 = const Color(0xFFF8BE50);
-    gradient_2 = const Color(0xFF870202);
-
-    no_color = const Color(0xFFD6D6D6);
-
-    planet_path = "images/planets/mozilla_planet.png";
-    background_path = "images/background/mozilla_background_2.png";
-    difficult = "Easy";
-    gridMenu = "- 0 0 - \n 0 0 0 - \n- 0 0 - \n- 0 -  - ";
-  }
-}
-
-class PinkTheme extends PlanetTheme {
-  PinkTheme() {
-    color_1 = const Color(0xFFFF75AD);
-    color_2 = const Color(0xFFF8CCA4);
-    gradient_1 = const Color(0xFFFFA7CE);
-    gradient_2 = const Color(0xFFA42B24);
-
-    no_color = const Color(0xFFD6D6D6);
-
-    planet_path = "images/planets/pink_planet.png";
-    background_path = "images/background/pink_background.jpg";
-
-    difficult = "Medium";
-    gridMenu = "0 0 0 0 \n 0 - 0 - \n- 0 0 - \n0 - 0 - ";
-  }
-}
-
-class DinoTheme extends PlanetTheme {
-  DinoTheme() {
-    color_1 = const Color(0xFF2CE295);
-    color_2 = const Color(0xFFA66DDE);
-    gradient_1 = const Color(0xFF94C0D8);
-    gradient_2 = const Color(0xFF2D3F8A);
-
-    no_color = const Color(0xFFD6D6D6);
-
-    planet_path = "images/planets/dino_planet.png";
-    background_path = "images/background/dino_background.jpg";
-
-    difficult = "Hard";
-    gridMenu = "0 0 0 0 \n 0 - 0 - \n0 0 0 0 \n0 0 0 - ";
+    difficult = key[0].toUpperCase() + key.substring(1);
+    gridMenu = theme["grid"];
   }
 }
