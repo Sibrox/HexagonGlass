@@ -24,6 +24,8 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
   late final AnimationController _controllerRotation = AnimationController(
       vsync: this, duration: const Duration(milliseconds: 300));
 
+  bool completed = false;
+
   @override
   void dispose() {
     _controllerRotation.dispose();
@@ -79,6 +81,8 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                   onClick: (i,j) {
                     setState(() {
                       gameLogic.status.changeColor(i, j);
+                      completed = gameLogic.checkGame();
+                      //TODO: add end game
                     });
                   },
                 )),

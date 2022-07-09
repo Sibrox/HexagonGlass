@@ -32,6 +32,39 @@ class GameLogic {
     }
   }
 
+  bool checkGame() {
+
+    bool reversed = _isReversed();
+
+    for (int i = 0; i < origin.grid.length; i++) {
+      for (int j = 0; j < origin.grid[i].length; j++) {
+
+        if(!origin.grid[i][j].isVisible) continue;
+
+        if(status.grid[i][j].color != origin.grid[i][j].color && !reversed) {
+          return false;
+        }
+
+        if(status.grid[i][j].color == origin.grid[i][j].color && reversed) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  bool _isReversed() {
+    for (int i = 0; i < origin.grid.length; i++) {
+      for (int j = 0; j < origin.grid[i].length; j++) {
+        if(origin.grid[i][j].isVisible == true){
+          return origin.grid[i][j].color != status.grid[i][j].color;
+        }
+      }
+    }
+    return false;
+  }
+
   void initGame() {
     status = BlockGrid.buildGame(origin);
   }
