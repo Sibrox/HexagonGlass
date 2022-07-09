@@ -64,7 +64,7 @@ class _MenuState extends State<Menu> {
               children: [
                 Flexible(
                     flex: 3,
-                    child: Row(
+                    child: Row (
                       children: [
                         Flexible(
                           flex: 9,
