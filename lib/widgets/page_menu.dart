@@ -10,6 +10,7 @@ import 'package:hexagon_glass/ui/stroke_text.dart';
 import 'package:hexagon_glass/widgets/hexagon_grid.dart';
 
 import '../core/game_logic.dart';
+import '../core/player_status.dart';
 import '../ui/hexagon_theme.dart';
 import 'game_grid.dart';
 
@@ -61,7 +62,6 @@ class _PageMenuState extends State<PageMenu> {
                           PageRouteBuilder(
                               transitionDuration: Duration(milliseconds: 800),
                               reverseTransitionDuration: Duration(milliseconds: 500),
-
                               pageBuilder: (_, __, ___) => Level(
                                     currentTheme: widget.currentTheme,
                                     level: menuGrid.grid[i][j].value,),
@@ -74,7 +74,6 @@ class _PageMenuState extends State<PageMenu> {
                                 child: child,
                               );
                             },
-
                           ),
                       );
                     },

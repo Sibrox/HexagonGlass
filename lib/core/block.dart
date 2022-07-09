@@ -25,9 +25,9 @@ class Block {
   }
 
   void changeColor() {
-    if (color == BlockColor.noColor) {
+    if (color == BlockColor.noColor && isVisible) {
       color = BlockColor.color_1;
-    } else if (color == BlockColor.color_1) {
+    } else if (color == BlockColor.color_1 && isVisible) {
       color = BlockColor.color_2;
     } else {
       color = BlockColor.noColor;
@@ -41,6 +41,11 @@ class Block {
       color != BlockColor.color_1 ?
       color != BlockColor.color_2 ?
       "0" : "2" : "1" : "-";
+  }
+
+  bool getVisible(){
+
+    return isVisible;
   }
 
 }

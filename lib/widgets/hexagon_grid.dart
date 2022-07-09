@@ -64,9 +64,11 @@ class _GameGridState extends State<HexagonGrid> {
                               (j) => HexagonButton(
                             width: hexagonWidth,
                             onClick: () {
-                              setState(() {
-                                widget.onClick(i,j);
-                              });
+                              if(grid.grid[i][j].isVisible) {
+                                setState(() {
+                                  widget.onClick(i, j);
+                                });
+                              }
                             },
                             block: grid.grid[i][j],
                             currentTheme: widget.currentTheme,

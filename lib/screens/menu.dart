@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:hexagon_glass/widgets/page_menu.dart';
 
+import '../core/player_status.dart';
 import '../widgets/game_grid.dart';
 
 class Menu extends StatefulWidget {
@@ -34,6 +35,8 @@ class _MenuState extends State<Menu> {
   void loadThemes() async {
     String themes = await rootBundle.loadString('resources/themes.json');
     Themes.instance.loadThemes(themes);
+    String infos = await rootBundle.loadString('resources/status.json');
+    Status.instance.loadStatus(infos);
 
     print("TEst");
     setState(() {
