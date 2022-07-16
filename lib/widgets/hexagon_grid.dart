@@ -8,15 +8,19 @@ import 'package:hexagon_glass/widgets/hexagon_button.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:hexagon_glass/widgets/square_button.dart';
 
+import '../core/player_status.dart';
+
 class HexagonGrid extends StatefulWidget {
   final BlockGrid grid;
   final PlanetTheme currentTheme;
+  final String type;
   final Function(int, int) onClick;
 
   const HexagonGrid({Key? key,
     required this.grid,
     required this.currentTheme,
-    required this.onClick
+    required this.onClick,
+    required this.type,
   })
       : super(key: key);
 
@@ -45,6 +49,24 @@ class _GameGridState extends State<HexagonGrid> {
           var rowWidth = deviceWidth - 0;
           var hexagonWidth = rowWidth / grid.nCol;
           var apothem = hexagonWidth / 2 * sqrt(3) / 2;
+          int buttonCounter = 0;
+          
+          bool isEnableLogic(String type){
+
+            bool finalValue = true;
+
+            if(type == "menu"){
+              if(buttonCounter++ <= Status.instance.getLastLv("hexagon",widget.currentTheme.difficult)){
+
+                finalValue = true;
+              }
+              else{
+                finalValue = false;
+              }
+            }
+
+            return finalValue;
+          }
 
           return Stack(
               alignment: Alignment.center,
@@ -62,6 +84,7 @@ class _GameGridState extends State<HexagonGrid> {
                       children: List.generate(
                           grid.nCol,
                               (j) => HexagonButton(
+                            isEnable: grid.grid[i][j].isVisible ? isEnableLogic(widget.type): false,
                             width: hexagonWidth,
                             onClick: () {
                               if(grid.grid[i][j].isVisible) {

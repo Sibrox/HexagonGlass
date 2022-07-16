@@ -77,7 +77,7 @@ class _MenuState extends State<Menu> {
                             },
                             itemBuilder: (context, position) {
                               return PageMenu(
-                                  currentTheme: Themes.instance.getTheme(position)
+                                  currentTheme: Themes.instance.getTheme(position),
                               );
                             },
                             controller: _controller,

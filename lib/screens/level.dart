@@ -7,6 +7,8 @@ import 'package:hexagon_glass/animated/animated_pulse.dart';
 
 import 'package:hexagon_glass/widgets/game_grid.dart';
 
+import '../core/player_status.dart';
+
 class Level extends StatefulWidget {
   PlanetTheme currentTheme;
   final int level;
@@ -82,6 +84,10 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                     setState(() {
                       gameLogic.status.changeColor(i, j);
                       completed = gameLogic.checkGame();
+                      if(completed){
+                        Status.instance.updateLvlStatus(widget.currentTheme.difficult, widget.level);
+                        Themes.instance.updatePlanetGrid(widget.currentTheme.position, widget.level);
+                      }
                       //TODO: add end game
                     });
                   },

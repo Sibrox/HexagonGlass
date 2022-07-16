@@ -16,6 +16,7 @@ import 'game_grid.dart';
 
 class PageMenu extends StatefulWidget {
   PlanetTheme currentTheme;
+
   PageMenu({Key? key, required this.currentTheme}) : super(key: key);
 
   @override
@@ -55,6 +56,7 @@ class _PageMenuState extends State<PageMenu> {
                 child: Container(
                   margin: EdgeInsets.all(10),
                   child: HexagonGrid(
+                    type: "menu",
                     currentTheme: widget.currentTheme,
                     grid: menuGrid,
                     onClick: (i,j) {

@@ -14,5 +14,18 @@ class Status{
     infoJson = jsonDecode(statusInfo);
   }
 
+  void updateLvlStatus(String diff,int levelDone){
+    String modifiedJson;
+    //TODO: Need to add in the themes.json the type level: rectangle, hexagon ecc..
+    infoJson["hexagon"][diff.toLowerCase()]["level"] = levelDone;
+    modifiedJson = jsonEncode(infoJson);
+    //rewrite file
+  }
+
+  int getLastLv(String type,String diff){
+
+    return infoJson[type][diff.toLowerCase()]["level"];
+  }
+
   Status._internal();
 }
