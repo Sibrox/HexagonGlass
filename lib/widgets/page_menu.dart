@@ -25,7 +25,11 @@ class PageMenu extends StatefulWidget {
 
 class _PageMenuState extends State<PageMenu> {
 
-  late BlockGrid menuGrid = BlockGrid.fromString(widget.currentTheme.gridMenu);
+  late BlockGrid menuGrid = BlockGrid.fromString(
+      widget.currentTheme.gridMenu,
+      isMenu: true
+  );
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -56,7 +60,6 @@ class _PageMenuState extends State<PageMenu> {
                 child: Container(
                   margin: EdgeInsets.all(10),
                   child: HexagonGrid(
-                    type: "menu",
                     currentTheme: widget.currentTheme,
                     grid: menuGrid,
                     onClick: (i,j) {
@@ -66,7 +69,7 @@ class _PageMenuState extends State<PageMenu> {
                               reverseTransitionDuration: Duration(milliseconds: 500),
                               pageBuilder: (_, __, ___) => Level(
                                     currentTheme: widget.currentTheme,
-                                    level: menuGrid.grid[i][j].value,),
+                                    level: menuGrid.matrix[i][j].value,),
                             transitionsBuilder: (BuildContext context,
                                 Animation<double> animation,
                                 Animation<double> secondaryAnimation,

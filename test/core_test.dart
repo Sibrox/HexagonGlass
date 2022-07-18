@@ -13,7 +13,7 @@ void main() {
     GameLogic game = GameLogic(GridType.hexagon, 4, 4);
     for(int i = 0; i < game.nRows(); i++) {
       for (int j = 0; j < game.nColumns(); j++) {
-        game.status.grid[i][j].color = game.origin.grid[i][j].color;
+        game.status.matrix[i][j].color = game.origin.matrix[i][j].color;
       }
     }
 
@@ -21,8 +21,8 @@ void main() {
 
     for(int i = 0; i < game.nRows(); i++) {
       for (int j = 0; j < game.nColumns(); j++) {
-        game.status.grid[i][j].color =
-          game.status.grid[i][j].color == BlockColor.color_1 ?
+        game.status.matrix[i][j].color =
+          game.status.matrix[i][j].color == BlockColor.color_1 ?
             BlockColor.color_2 : BlockColor.color_1;
       }
     }
@@ -35,15 +35,15 @@ void main() {
     GameLogic game = GameLogic(GridType.hexagon, 4, 4);
     for(int i = 0; i < game.nRows(); i++) {
       for (int j = 0; j < game.nColumns(); j++) {
-        game.status.grid[i][j].color = game.origin.grid[i][j].color;
+        game.status.matrix[i][j].color = game.origin.matrix[i][j].color;
       }
     }
 
     for(int i = 0; i < game.nRows(); i++) {
       for (int j = 0; j < game.nColumns(); j++) {
-        if(game.origin.grid[i][j].isVisible) {
-          game.status.grid[i][j].color =
-            game.status.grid[i][j].color == BlockColor.color_1 ?
+        if(game.origin.matrix[i][j].isVisible) {
+          game.status.matrix[i][j].color =
+            game.status.matrix[i][j].color == BlockColor.color_1 ?
             BlockColor.color_2 : BlockColor.color_1;
           break;
         }

@@ -4,15 +4,17 @@ class Block {
 
   late int value;
   late bool isVisible;
+  late bool isEnabled;
   late BlockColor color;
 
   Block() {
     value = 0;
     color = BlockColor.noColor;
     isVisible = true;
+    isEnabled = true;
   }
 
-  Block.build(this.value, this.isVisible, this.color);
+  Block.build(this.value, this.isVisible, this.color, this.isEnabled);
 
   Block.random(int rand) {
     color = rand != 1
@@ -21,6 +23,7 @@ class Block {
         : BlockColor.noColor
         : BlockColor.color_1;
     isVisible = color == BlockColor.noColor ? false : true;
+    isEnabled = isVisible;
     value = 0;
   }
 

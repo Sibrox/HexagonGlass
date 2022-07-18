@@ -6,37 +6,38 @@ import 'package:hexagon_glass/core/block.dart';
 class BlockGrid {
 
   late int nCol, nRow;
-  late List<List<Block>> grid;
+  late List<List<Block>> matrix;
 
   BlockGrid() {
       nCol = 0;
       nRow = 0;
-      grid = [[]];
+      matrix = [[]];
   }
 
   BlockGrid.buildRandom(this.nCol, this.nRow, [int? seed]) {
     var randomGenerator = Random(seed);
 
-    grid = [];
+    matrix = [];
     for(int i = 0; i < nRow; i++) {
-      grid.add([]);
+      matrix.add([]);
       for(int j = 0; j < nCol; j++) {
         var rand = randomGenerator.nextInt(3);
-        grid[i].add(Block.random(rand));
+        matrix[i].add(Block.random(rand));
       }
     }
   }
 
   BlockGrid.buildGame(BlockGrid origin) {
-    grid = [];
+    matrix = [];
     for(int i = 0; i < origin.nRow; i++){
-      grid.add([]);
+      matrix.add([]);
       for(int j = 0; j < origin.nCol; j++) {
-        grid[i].add(
+        matrix[i].add(
             Block.build(
-                origin.grid[i][j].value,
-                origin.grid[i][j].isVisible,
-                BlockColor.noColor
+                origin.matrix[i][j].value,
+                origin.matrix[i][j].isVisible,
+                BlockColor.noColor,
+                origin.matrix[i][j].isEnabled,
             )
         );
       }
@@ -46,32 +47,38 @@ class BlockGrid {
   }
 
   void changeColor(int i, int j) {
-    grid[i][j].changeColor();
+    matrix[i][j].changeColor();
   }
 
-  BlockGrid.fromString(String template) {
+  BlockGrid.fromString(String template, {bool isMenu = false}) {
     List<String> rows = template.split("\n");
 
-    grid = [[]];
+    matrix = [[]];
     nRow = 0;
     nCol = rows.length ;
     int nElement = 1;
     for(var row in rows){
-      grid.add([]);
+      matrix.add([]);
       List<String> elements =  row.split(" ");
       for(var block in elements) {
         switch(block) {
           case "-" : // missing element
-            grid[nRow].add(Block.build(0, false, BlockColor.noColor));
+            matrix[nRow].add(Block.build(0, false, BlockColor.noColor, false));
             break;
           case "0" : // present with no color by default
-            grid[nRow].add(Block.build(nElement++, true, BlockColor.noColor));
+            matrix[nRow].add(
+                Block.build(nElement++, true, BlockColor.noColor, !isMenu)
+            );
             break;
           case "1" : // present with color_1 by default
-            grid[nRow].add(Block.build(nElement++, true, BlockColor.color_1));
+            matrix[nRow].add(
+                Block.build(nElement++, true, BlockColor.color_1, true)
+            );
             break;
           case "2": // present with color_2 by default
-            grid[nRow].add(Block.build(nElement++, true, BlockColor.color_2));
+            matrix[nRow].add(
+                Block.build(nElement++, true, BlockColor.color_2, true)
+            );
             break;
         }
       }

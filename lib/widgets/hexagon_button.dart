@@ -11,16 +11,13 @@ class HexagonButton extends StatefulWidget {
   final Function onClick;
   final Block block;
   final PlanetTheme currentTheme;
-  final bool isEnable;
 
-  const HexagonButton(
-      {Key? key,
-      required this.width,
-      required this.onClick,
-      required this.block,
-      required this.currentTheme,
-      required this.isEnable})
-      : super(key: key);
+  const HexagonButton({Key? key,
+    required this.width,
+    required this.onClick,
+    required this.block,
+    required this.currentTheme
+  }): super(key: key);
 
   @override
   _HexagonButtonState createState() => _HexagonButtonState();
@@ -60,7 +57,7 @@ class _HexagonButtonState extends State<HexagonButton>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTapUp: (tapDetails) {
-        if(widget.isEnable){
+        if(widget.block.isEnabled){
           setState(() {
             hexagonWidthAnimated *= 5;
             textScale = 15;
@@ -70,9 +67,10 @@ class _HexagonButtonState extends State<HexagonButton>
       },
       onTapDown: (tapDetails) {
 
-        if(widget.isEnable){
+        if(widget.block.isEnabled){
           setState(() {
             hexagonWidthAnimated /= 5;
+            //TODO: change hardcode
             textScale = 10;
           });
         }

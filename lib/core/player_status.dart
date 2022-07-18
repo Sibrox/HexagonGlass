@@ -22,8 +22,7 @@ class Status{
     //rewrite file
   }
 
-  int getLastLv(String type,String diff){
-
+  int getLastLvl(String type,String diff){
     return infoJson[type][diff.toLowerCase()]["level"];
   }
 

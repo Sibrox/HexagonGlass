@@ -17,17 +17,17 @@ class GameLogic {
   }
 
   int nRows() {
-    return origin.grid.length;
+    return origin.matrix.length;
   }
 
   int nColumns() {
-    return origin.grid[0].length;
+    return origin.matrix[0].length;
   }
 
   void resetGame() {
-    for (int i = 0; i < origin.grid.length; i++) {
-      for (int j = 0; j < origin.grid[i].length; j++) {
-        status.grid[i][j].color = BlockColor.noColor;
+    for (int i = 0; i < origin.matrix.length; i++) {
+      for (int j = 0; j < origin.matrix[i].length; j++) {
+        status.matrix[i][j].color = BlockColor.noColor;
       }
     }
   }
@@ -36,16 +36,16 @@ class GameLogic {
 
     bool reversed = _isReversed();
 
-    for (int i = 0; i < origin.grid.length; i++) {
-      for (int j = 0; j < origin.grid[i].length; j++) {
+    for (int i = 0; i < origin.matrix.length; i++) {
+      for (int j = 0; j < origin.matrix[i].length; j++) {
 
-        if(!origin.grid[i][j].isVisible) continue;
+        if(!origin.matrix[i][j].isVisible) continue;
 
-        if(status.grid[i][j].color != origin.grid[i][j].color && !reversed) {
+        if(status.matrix[i][j].color != origin.matrix[i][j].color && !reversed) {
           return false;
         }
 
-        if(status.grid[i][j].color == origin.grid[i][j].color && reversed) {
+        if(status.matrix[i][j].color == origin.matrix[i][j].color && reversed) {
           return false;
         }
       }
@@ -55,10 +55,10 @@ class GameLogic {
   }
 
   bool _isReversed() {
-    for (int i = 0; i < origin.grid.length; i++) {
-      for (int j = 0; j < origin.grid[i].length; j++) {
-        if(origin.grid[i][j].isVisible == true){
-          return origin.grid[i][j].color != status.grid[i][j].color;
+    for (int i = 0; i < origin.matrix.length; i++) {
+      for (int j = 0; j < origin.matrix[i].length; j++) {
+        if(origin.matrix[i][j].isVisible == true){
+          return origin.matrix[i][j].color != status.matrix[i][j].color;
         }
       }
     }
@@ -70,9 +70,9 @@ class GameLogic {
   }
 
   void calculateValues() {
-    for (int i = 0; i < origin.grid.length; i++) {
-      for (int j = 0; j < origin.grid[i].length; j++) {
-        origin.grid[i][j].value = calculateAdjValue(i, j);
+    for (int i = 0; i < origin.matrix.length; i++) {
+      for (int j = 0; j < origin.matrix[i].length; j++) {
+        origin.matrix[i][j].value = calculateAdjValue(i, j);
       }
     }
   }
@@ -81,8 +81,8 @@ class GameLogic {
     int counter = 0;
     int offset = i % 2 == 0 ? 0 : 1;
 
-    BlockColor currentColor = origin.grid[i][j].color;
-    if (!origin.grid[i][j].isVisible) return 0;
+    BlockColor currentColor = origin.matrix[i][j].color;
+    if (!origin.matrix[i][j].isVisible) return 0;
 
     var top = i - 1;
     var bot = i + 1;
@@ -91,32 +91,32 @@ class GameLogic {
 
     // left
     counter +=
-    checkRange(i, left) && origin.grid[i][left].color == currentColor ? 1 : 0;
+    checkRange(i, left) && origin.matrix[i][left].color == currentColor ? 1 : 0;
     // right
     counter +=
-    checkRange(i, right) && origin.grid[i][right].color == currentColor ? 1 : 0;
+    checkRange(i, right) && origin.matrix[i][right].color == currentColor ? 1 : 0;
 
     left += offset;
     right = left + 1;
     // top left
     counter +=
-    checkRange(top, left) && origin.grid[top][left].color == currentColor
+    checkRange(top, left) && origin.matrix[top][left].color == currentColor
         ? 1
         : 0;
     // top right
     counter +=
-    checkRange(top, right) && origin.grid[top][right].color == currentColor
+    checkRange(top, right) && origin.matrix[top][right].color == currentColor
         ? 1
         : 0;
 
     // bot left
     counter +=
-    checkRange(bot, left) && origin.grid[bot][left].color == currentColor
+    checkRange(bot, left) && origin.matrix[bot][left].color == currentColor
         ? 1
         : 0;
     // bot right
     counter +=
-    checkRange(bot, right) && origin.grid[bot][right].color == currentColor
+    checkRange(bot, right) && origin.matrix[bot][right].color == currentColor
         ? 1
         : 0;
     return counter;
@@ -126,26 +126,26 @@ class GameLogic {
     return
       i >= 0 &&
       j >= 0 &&
-      i < origin.grid.length &&
-      j < origin.grid[0].length;
+      i < origin.matrix.length &&
+      j < origin.matrix[0].length;
   }
 
   void printGrid() {
     //Colors
-    for (int i = 0; i < origin.grid.length; i++) {
+    for (int i = 0; i < origin.matrix.length; i++) {
       if (i % 2 != 0) stdout.write(' ');
-      for (int j = 0; j < origin.grid[i].length; j++) {
-        stdout.write(origin.grid[i][j].toString() + ' ');
+      for (int j = 0; j < origin.matrix[i].length; j++) {
+        stdout.write(origin.matrix[i][j].toString() + ' ');
       }
       stdout.write('\n');
     }
 
     //Values
     stdout.write('\n');
-    for (int i = 0; i < origin.grid.length; i++) {
+    for (int i = 0; i < origin.matrix.length; i++) {
       if (i % 2 != 0) stdout.write(' ');
-      for (int j = 0; j < origin.grid[i].length; j++) {
-        stdout.write(origin.grid[i][j].value.toString() + ' ');
+      for (int j = 0; j < origin.matrix[i].length; j++) {
+        stdout.write(origin.matrix[i][j].value.toString() + ' ');
       }
       stdout.write('\n');
     }
