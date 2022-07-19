@@ -35,10 +35,9 @@ class _MenuState extends State<Menu> {
   void loadThemes() async {
     String themes = await rootBundle.loadString('resources/themes.json');
     Themes.instance.loadThemes(themes);
-    String infos = await rootBundle.loadString('resources/status.json');
-    Status.instance.loadStatus(infos);
+    String info = await rootBundle.loadString('resources/status.json');
+    Status.instance.loadStatus(info);
 
-    print("TEst");
     setState(() {
       loadedThemes = true;
     });

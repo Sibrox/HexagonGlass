@@ -38,7 +38,6 @@ class _GameGridState extends State<GameGrid> {
   Widget build(BuildContext context) {
     return gameLogic.type == GridType.hexagon ?
       HexagonGrid(
-          type: "game",
           grid: gameLogic.status,
           currentTheme: widget.currentTheme,
           onClick: widget.onClick,

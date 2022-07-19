@@ -13,6 +13,9 @@
     },
     "hard": {
       "level": 0
+    },
+    "secret": {
+      "level": 0
     }
   },
 

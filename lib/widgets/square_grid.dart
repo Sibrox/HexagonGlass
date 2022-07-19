@@ -62,7 +62,7 @@ class _GameGridState extends State<SquareGrid> {
                                 widget.onClick(i,j);
                               });
                             },
-                            block: grid.grid[i][j],
+                            block: grid.matrix[i][j],
                             currentTheme: widget.currentTheme,
                           )),
                     )),
