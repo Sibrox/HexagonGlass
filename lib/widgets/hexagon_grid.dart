@@ -28,15 +28,9 @@ class HexagonGrid extends StatefulWidget {
 
 class _GameGridState extends State<HexagonGrid> {
 
-  late BlockGrid grid;
-  @override
-  void initState() {
-    super.initState();
-    grid = widget.grid;
-  }
-
   @override
   Widget build(BuildContext context) {
+
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constrain) {
           var deviceWidth = constrain.biggest.width;
@@ -45,34 +39,34 @@ class _GameGridState extends State<HexagonGrid> {
           var margin = deviceWidth * 0.05;
           deviceWidth = deviceWidth - margin;
           var rowWidth = deviceWidth - 0;
-          var hexagonWidth = rowWidth / grid.nCol;
+          var hexagonWidth = rowWidth / widget.grid.nCol;
           var apothem = hexagonWidth / 2 * sqrt(3) / 2;
 
           return Stack(
               alignment: Alignment.center,
               children: List.generate(
-                grid.nRow,
+                widget.grid.nRow,
                     (i) => Positioned(
                     left: i % 2 != 0 ? 3 / 2 * apothem : apothem / 2,
                     top: (i * (3 / 4 * hexagonWidth) +
-                        (apothem * grid.nRow / 4)) +
-                        ((deviceWHeight - (hexagonWidth * grid.nRow)) / 2),
+                        (apothem * widget.grid.nRow / 4)) +
+                        ((deviceWHeight - (hexagonWidth * widget.grid.nRow)) / 2),
                     child: Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
                       alignment: WrapAlignment.start,
                       spacing: -(hexagonWidth - (apothem * 2)),
                       children: List.generate(
-                          grid.nCol,
+                          widget.grid.nCol,
                               (j) => HexagonButton(
                             width: hexagonWidth,
                             onClick: () {
-                              if(grid.matrix[i][j].isVisible) {
+                              if(widget.grid.matrix[i][j].isVisible) {
                                 setState(() {
                                   widget.onClick(i, j);
                                 });
                               }
                             },
-                            block: grid.matrix[i][j],
+                            block: widget.grid.matrix[i][j],
                             currentTheme: widget.currentTheme,
                           )),
                     )),

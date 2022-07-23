@@ -80,9 +80,15 @@ class _PageMenuState extends State<PageMenu> {
                               );
                             },
                           ),
-                      );
-                    },
-                  ),
+                        ).then((value) => {
+                          setState((){
+                            menuGrid = BlockGrid.fromString(
+                                widget.currentTheme.gridMenu,
+                                isMenu: true
+                            );
+                          })
+                        });
+                      }),
                 )),
           ),
             Positioned(
