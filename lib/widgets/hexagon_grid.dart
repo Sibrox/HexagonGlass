@@ -2,12 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/core/block_grid.dart';
-import 'package:hexagon_glass/core/game_logic.dart';
 import 'package:hexagon_glass/widgets/hexagon_button.dart';
-
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
-import 'package:hexagon_glass/widgets/square_button.dart';
-
 import '../core/player_status.dart';
 
 class HexagonGrid extends StatefulWidget {

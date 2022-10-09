@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:hexagon_glass/core/block.dart';
 import 'package:hexagon_glass/core/block_grid.dart';
 
-enum GridType { hexagon, square }
+enum GridType { hexagon }
 
 class GameLogic {
   late BlockGrid status;
