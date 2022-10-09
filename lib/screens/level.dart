@@ -12,7 +12,8 @@ import '../core/player_status.dart';
 class Level extends StatefulWidget {
   PlanetTheme currentTheme;
   final int level;
-  Level({Key? key, required this.currentTheme, required this.level}) : super(key: key);
+  Level({Key? key, required this.currentTheme, required this.level})
+      : super(key: key);
 
   @override
   _LevelState createState() => _LevelState();
@@ -60,7 +61,8 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                         bottomRight: Radius.circular(20),
                       ),
                       image: DecorationImage(
-                          image: AssetImage(widget.currentTheme.background_path),
+                          image:
+                              AssetImage(widget.currentTheme.background_path),
                           fit: BoxFit.cover),
                       boxShadow: [
                         BoxShadow(
@@ -68,7 +70,7 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                           spreadRadius: 5,
                           blurRadius: 7,
                           offset:
-                          const Offset(0, 1), // changes position of shadow
+                              const Offset(0, 1), // changes position of shadow
                         ),
                       ],
                     ),
@@ -80,13 +82,15 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                   gameGrid: null,
                   gameLogic: gameLogic,
                   currentTheme: widget.currentTheme,
-                  onClick: (i,j) {
+                  onClick: (i, j) {
                     setState(() {
                       gameLogic.status.changeColor(i, j);
                       completed = gameLogic.checkGame();
-                      if(completed){
-                        Status.instance.updateLvlStatus(widget.currentTheme.difficult, widget.level);
-                        Themes.instance.updatePlanetGrid(widget.currentTheme.position, widget.level);
+                      if (completed) {
+                        Status.instance.updateLvlStatus(
+                            widget.currentTheme.difficult, widget.level);
+                        Themes.instance.updatePlanetGrid(
+                            widget.currentTheme.position, widget.level);
                       }
                       //TODO: add end game
                     });
@@ -98,23 +102,23 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                   child: Row(
                     children: [
                       Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: GestureDetector(
-                              onTap: () {
-                                //TODO: it is an error -> How use navigator outside build?
-                                Navigator.pop(context);
-                              },
-                              child: Hero(
+                        padding: const EdgeInsets.all(10),
+                        child: GestureDetector(
+                            onTap: () {
+                              //TODO: it is an error -> How use navigator outside build?
+                              Navigator.pop(context);
+                            },
+                            child: Hero(
                                 tag: "planet",
-                                child:  AnimatedPulse(
+                                child: AnimatedPulse(
                                   child: Image.asset(
                                     (widget.currentTheme.planet_path),
                                     fit: BoxFit.contain,
                                   ),
                                   duration: const Duration(milliseconds: 800),
                                 ))),
-                              ),
-                       DefaultTextStyle(
+                      ),
+                      DefaultTextStyle(
                           style: const TextStyle(
                             fontSize: 20,
                             fontFamily: 'Rowdies',

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class StrokeText extends StatelessWidget {
-
   final String text;
   final double fontSize;
 
@@ -9,32 +8,33 @@ class StrokeText extends StatelessWidget {
     Key? key,
     required this.text,
     this.fontSize = 20,
-
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
-        children: [
+      children: [
         // The text border
-        Text(text,
-            style: TextStyle(
+        Text(
+          text,
+          style: TextStyle(
             fontSize: fontSize,
             fontWeight: FontWeight.bold,
             foreground: Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 2
-          ..color = Colors.black,
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 2
+              ..color = Colors.black,
+          ),
         ),
-      ),
-    // The text inside
-      Text(text,
-          style:  TextStyle(
-          fontSize: fontSize,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
+        // The text inside
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
-          ),
+        ),
       ],
     );
   }

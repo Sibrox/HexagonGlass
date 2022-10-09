@@ -1,20 +1,18 @@
 import 'dart:convert';
 
-class Status{
-
+class Status {
   static final Status instance = Status._internal();
-  late Map<String,dynamic> infoJson;
+  late Map<String, dynamic> infoJson;
 
-  factory Status(){
+  factory Status() {
     return instance;
   }
 
-  void loadStatus(String statusInfo){
-
+  void loadStatus(String statusInfo) {
     infoJson = jsonDecode(statusInfo);
   }
 
-  void updateLvlStatus(String diff,int levelDone){
+  void updateLvlStatus(String diff, int levelDone) {
     String modifiedJson;
     //TODO: Need to add in the themes.json the type level: rectangle, hexagon ecc..
     infoJson["hexagon"][diff.toLowerCase()]["level"] = levelDone;
@@ -22,7 +20,7 @@ class Status{
     //rewrite file
   }
 
-  int getLastLvl(String type,String diff){
+  int getLastLvl(String type, String diff) {
     return infoJson[type][diff.toLowerCase()]["level"];
   }
 

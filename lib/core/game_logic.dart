@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:hexagon_glass/core/block.dart';
 import 'package:hexagon_glass/core/block_grid.dart';
 
-enum GridType {hexagon, square}
+enum GridType { hexagon, square }
 
 class GameLogic {
   late BlockGrid status;
@@ -33,19 +33,19 @@ class GameLogic {
   }
 
   bool checkGame() {
-
     bool reversed = _isReversed();
 
     for (int i = 0; i < origin.matrix.length; i++) {
       for (int j = 0; j < origin.matrix[i].length; j++) {
+        if (!origin.matrix[i][j].isVisible) continue;
 
-        if(!origin.matrix[i][j].isVisible) continue;
-
-        if(status.matrix[i][j].color != origin.matrix[i][j].color && !reversed) {
+        if (status.matrix[i][j].color != origin.matrix[i][j].color &&
+            !reversed) {
           return false;
         }
 
-        if(status.matrix[i][j].color == origin.matrix[i][j].color && reversed) {
+        if (status.matrix[i][j].color == origin.matrix[i][j].color &&
+            reversed) {
           return false;
         }
       }
@@ -57,7 +57,7 @@ class GameLogic {
   bool _isReversed() {
     for (int i = 0; i < origin.matrix.length; i++) {
       for (int j = 0; j < origin.matrix[i].length; j++) {
-        if(origin.matrix[i][j].isVisible == true){
+        if (origin.matrix[i][j].isVisible == true) {
           return origin.matrix[i][j].color != status.matrix[i][j].color;
         }
       }
@@ -91,43 +91,46 @@ class GameLogic {
 
     // left
     counter +=
-    checkRange(i, left) && origin.matrix[i][left].color == currentColor ? 1 : 0;
+        checkRange(i, left) && origin.matrix[i][left].color == currentColor
+            ? 1
+            : 0;
     // right
     counter +=
-    checkRange(i, right) && origin.matrix[i][right].color == currentColor ? 1 : 0;
+        checkRange(i, right) && origin.matrix[i][right].color == currentColor
+            ? 1
+            : 0;
 
     left += offset;
     right = left + 1;
     // top left
     counter +=
-    checkRange(top, left) && origin.matrix[top][left].color == currentColor
-        ? 1
-        : 0;
+        checkRange(top, left) && origin.matrix[top][left].color == currentColor
+            ? 1
+            : 0;
     // top right
-    counter +=
-    checkRange(top, right) && origin.matrix[top][right].color == currentColor
+    counter += checkRange(top, right) &&
+            origin.matrix[top][right].color == currentColor
         ? 1
         : 0;
 
     // bot left
     counter +=
-    checkRange(bot, left) && origin.matrix[bot][left].color == currentColor
-        ? 1
-        : 0;
+        checkRange(bot, left) && origin.matrix[bot][left].color == currentColor
+            ? 1
+            : 0;
     // bot right
-    counter +=
-    checkRange(bot, right) && origin.matrix[bot][right].color == currentColor
+    counter += checkRange(bot, right) &&
+            origin.matrix[bot][right].color == currentColor
         ? 1
         : 0;
     return counter;
   }
 
   bool checkRange(int i, int j) {
-    return
-      i >= 0 &&
-      j >= 0 &&
-      i < origin.matrix.length &&
-      j < origin.matrix[0].length;
+    return i >= 0 &&
+        j >= 0 &&
+        i < origin.matrix.length &&
+        j < origin.matrix[0].length;
   }
 
   void printGrid() {

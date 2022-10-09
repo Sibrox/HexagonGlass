@@ -12,7 +12,6 @@ class Themes {
   }
 
   void loadThemes(String configThemes) {
-
     Map<String, dynamic> themesJson = jsonDecode(configThemes);
 
     themesJson.forEach((key, value) {
@@ -26,31 +25,32 @@ class Themes {
     planets = [];
   }
 
-  void updatePlanetGrid(int indexPlanet,int lastLvl){
+  void updatePlanetGrid(int indexPlanet, int lastLvl) {
+    String modifiedGrid = planets[indexPlanet].gridMenu;
+    int counter = 0;
 
-   String modifiedGrid = planets[indexPlanet].gridMenu;
-   int counter = 0;
+    for (int i = 0; i < modifiedGrid.length && counter < lastLvl + 1; i++) {
+      if (modifiedGrid[i] == "0" ||
+          modifiedGrid[i] == "2" ||
+          modifiedGrid[i] == "1") {
+        if (counter != lastLvl) {
+          modifiedGrid = modifiedGrid.substring(0, i) +
+              "1" +
+              modifiedGrid.substring(i + 1, modifiedGrid.length);
+        } else {
+          modifiedGrid = modifiedGrid.substring(0, i) +
+              "2" +
+              modifiedGrid.substring(i + 1, modifiedGrid.length);
+        }
+        counter++;
+      }
+    }
 
-   for(int i = 0; i < modifiedGrid.length && counter < lastLvl+1;i++){
-
-     if(modifiedGrid[i] == "0" || modifiedGrid[i] == "2" || modifiedGrid[i] == "1"){
-
-       if(counter != lastLvl) {
-         modifiedGrid = modifiedGrid.substring(0, i) + "1" + modifiedGrid.substring(i+1, modifiedGrid.length);
-       }else{
-         modifiedGrid = modifiedGrid.substring(0, i) + "2" + modifiedGrid.substring(i+1, modifiedGrid.length);
-       }
-       counter++;
-     }
-   }
-
-   planets[indexPlanet].gridMenu = modifiedGrid;
+    planets[indexPlanet].gridMenu = modifiedGrid;
   }
-
 }
 
 class PlanetTheme {
-
   late Color color_1;
   late Color color_2;
   late Color no_color;
@@ -69,7 +69,6 @@ class PlanetTheme {
   PlanetTheme() {}
 
   PlanetTheme.fromString(String key, Map<String, dynamic> theme) {
-
     color_1 = Color(int.parse(theme["color_1"], radix: 16));
     color_2 = Color(int.parse(theme["color_2"], radix: 16));
     gradient_1 = Color(int.parse(theme["gradient_1"], radix: 16));

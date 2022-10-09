@@ -15,52 +15,50 @@ class HexagonGrid extends StatefulWidget {
   final PlanetTheme currentTheme;
   final Function(int, int) onClick;
 
-  const HexagonGrid({Key? key,
+  const HexagonGrid({
+    Key? key,
     required this.grid,
     required this.currentTheme,
     required this.onClick,
-  })
-      : super(key: key);
+  }) : super(key: key);
 
   @override
   _GameGridState createState() => _GameGridState();
 }
 
 class _GameGridState extends State<HexagonGrid> {
-
   @override
   Widget build(BuildContext context) {
-
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constrain) {
-          var deviceWidth = constrain.biggest.width;
-          var deviceWHeight = constrain.biggest.height;
+      var deviceWidth = constrain.biggest.width;
+      var deviceWHeight = constrain.biggest.height;
 
-          var margin = deviceWidth * 0.05;
-          deviceWidth = deviceWidth - margin;
-          var rowWidth = deviceWidth - 0;
-          var hexagonWidth = rowWidth / widget.grid.nCol;
-          var apothem = hexagonWidth / 2 * sqrt(3) / 2;
+      var margin = deviceWidth * 0.05;
+      deviceWidth = deviceWidth - margin;
+      var rowWidth = deviceWidth - 0;
+      var hexagonWidth = rowWidth / widget.grid.nCol;
+      var apothem = hexagonWidth / 2 * sqrt(3) / 2;
 
-          return Stack(
-              alignment: Alignment.center,
-              children: List.generate(
-                widget.grid.nRow,
-                    (i) => Positioned(
-                    left: i % 2 != 0 ? 3 / 2 * apothem : apothem / 2,
-                    top: (i * (3 / 4 * hexagonWidth) +
+      return Stack(
+          alignment: Alignment.center,
+          children: List.generate(
+            widget.grid.nRow,
+            (i) => Positioned(
+                left: i % 2 != 0 ? 3 / 2 * apothem : apothem / 2,
+                top: (i * (3 / 4 * hexagonWidth) +
                         (apothem * widget.grid.nRow / 4)) +
-                        ((deviceWHeight - (hexagonWidth * widget.grid.nRow)) / 2),
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      alignment: WrapAlignment.start,
-                      spacing: -(hexagonWidth - (apothem * 2)),
-                      children: List.generate(
-                          widget.grid.nCol,
-                              (j) => HexagonButton(
+                    ((deviceWHeight - (hexagonWidth * widget.grid.nRow)) / 2),
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  alignment: WrapAlignment.start,
+                  spacing: -(hexagonWidth - (apothem * 2)),
+                  children: List.generate(
+                      widget.grid.nCol,
+                      (j) => HexagonButton(
                             width: hexagonWidth,
                             onClick: () {
-                              if(widget.grid.matrix[i][j].isVisible) {
+                              if (widget.grid.matrix[i][j].isVisible) {
                                 setState(() {
                                   widget.onClick(i, j);
                                 });
@@ -69,8 +67,8 @@ class _GameGridState extends State<HexagonGrid> {
                             block: widget.grid.matrix[i][j],
                             currentTheme: widget.currentTheme,
                           )),
-                    )),
-              ));
-        });
+                )),
+          ));
+    });
   }
 }

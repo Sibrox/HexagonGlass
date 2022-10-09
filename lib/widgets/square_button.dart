@@ -14,10 +14,10 @@ class SquareButton extends StatefulWidget {
 
   const SquareButton(
       {Key? key,
-        required this.width,
-        required this.onClick,
-        required this.block,
-        required this.currentTheme})
+      required this.width,
+      required this.onClick,
+      required this.block,
+      required this.currentTheme})
       : super(key: key);
 
   @override
@@ -83,32 +83,30 @@ class _HexagonButtonState extends State<SquareButton>
               duration: const Duration(milliseconds: 400),
               curve: Curves.bounceOut,
               child: Container(
-                  decoration: BoxDecoration(
-                    color: widget.block.color != BlockColor.color_1
-                        ? widget.block.color != BlockColor.color_2
-                        ? !widget.block.isVisible
-                        ? Colors.transparent
-                        : widget.currentTheme.no_color
-                        : widget.currentTheme.color_2
-                        : widget.currentTheme.color_1,
-                  ),
-                  child: Center(
-                    child: AnimatedDefaultTextStyle(
-                        duration: const Duration(milliseconds: 200),
-                        style: TextStyle(
-                            fontSize: textScale, fontFamily: 'Rowdies'),
-                        child: StrokeText(
-                            text: widget.block.isVisible
-                                ? '${widget.block.value}'
-                                : ""
-                        )
-                    ),
-                  ),
+                decoration: BoxDecoration(
+                  color: widget.block.color != BlockColor.color_1
+                      ? widget.block.color != BlockColor.color_2
+                          ? !widget.block.isVisible
+                              ? Colors.transparent
+                              : widget.currentTheme.no_color
+                          : widget.currentTheme.color_2
+                      : widget.currentTheme.color_1,
+                ),
+                child: Center(
+                  child: AnimatedDefaultTextStyle(
+                      duration: const Duration(milliseconds: 200),
+                      style:
+                          TextStyle(fontSize: textScale, fontFamily: 'Rowdies'),
+                      child: StrokeText(
+                          text: widget.block.isVisible
+                              ? '${widget.block.value}'
+                              : "")),
                 ),
               ),
             ),
           ),
         ),
+      ),
     );
   }
 }

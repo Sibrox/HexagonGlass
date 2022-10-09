@@ -1,7 +1,6 @@
 enum BlockColor { color_1, color_2, noColor }
 
 class Block {
-
   late int value;
   late bool isVisible;
   late bool isEnabled;
@@ -19,8 +18,8 @@ class Block {
   Block.random(int rand) {
     color = rand != 1
         ? rand == 2
-        ? BlockColor.color_2
-        : BlockColor.noColor
+            ? BlockColor.color_2
+            : BlockColor.noColor
         : BlockColor.color_1;
     isVisible = color == BlockColor.noColor ? false : true;
     isEnabled = isVisible;
@@ -39,16 +38,16 @@ class Block {
 
   @override
   String toString() {
-    return
-      isVisible?
-      color != BlockColor.color_1 ?
-      color != BlockColor.color_2 ?
-      "0" : "2" : "1" : "-";
+    return isVisible
+        ? color != BlockColor.color_1
+            ? color != BlockColor.color_2
+                ? "0"
+                : "2"
+            : "1"
+        : "-";
   }
 
-  bool getVisible(){
-
+  bool getVisible() {
     return isVisible;
   }
-
 }

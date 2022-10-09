@@ -14,11 +14,12 @@ class GameGrid extends StatefulWidget {
   final PlanetTheme currentTheme;
   final Function(int, int) onClick;
 
-  const GameGrid({Key? key,
-    required this.gameLogic,
-    required this.currentTheme,
-    required this.onClick, required gameGrid
-  })
+  const GameGrid(
+      {Key? key,
+      required this.gameLogic,
+      required this.currentTheme,
+      required this.onClick,
+      required gameGrid})
       : super(key: key);
 
   @override
@@ -36,16 +37,16 @@ class _GameGridState extends State<GameGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return gameLogic.type == GridType.hexagon ?
-      HexagonGrid(
-          grid: gameLogic.status,
-          currentTheme: widget.currentTheme,
-          onClick: widget.onClick,
-      ) :
-      SquareGrid(
-          grid: gameLogic.status,
-          currentTheme: widget.currentTheme,
-          onClick: widget.onClick,
-      );
+    return gameLogic.type == GridType.hexagon
+        ? HexagonGrid(
+            grid: gameLogic.status,
+            currentTheme: widget.currentTheme,
+            onClick: widget.onClick,
+          )
+        : SquareGrid(
+            grid: gameLogic.status,
+            currentTheme: widget.currentTheme,
+            onClick: widget.onClick,
+          );
   }
 }
