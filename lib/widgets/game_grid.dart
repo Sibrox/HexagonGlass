@@ -2,12 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/core/game_logic.dart';
-import 'package:hexagon_glass/widgets/hexagon_button.dart';
 
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:hexagon_glass/widgets/hexagon_grid.dart';
-import 'package:hexagon_glass/widgets/square_button.dart';
-import 'package:hexagon_glass/widgets/square_grid.dart';
 
 class GameGrid extends StatefulWidget {
   final GameLogic gameLogic;
@@ -37,16 +34,10 @@ class _GameGridState extends State<GameGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return gameLogic.type == GridType.hexagon
-        ? HexagonGrid(
-            grid: gameLogic.status,
-            currentTheme: widget.currentTheme,
-            onClick: widget.onClick,
-          )
-        : SquareGrid(
-            grid: gameLogic.status,
-            currentTheme: widget.currentTheme,
-            onClick: widget.onClick,
-          );
+    return HexagonGrid(
+      grid: gameLogic.status,
+      currentTheme: widget.currentTheme,
+      onClick: widget.onClick,
+    );
   }
 }
