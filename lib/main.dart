@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/screens/loading.dart';
 import 'package:hexagon_glass/screens/menu.dart';
 import 'package:flutter/services.dart';
+import 'package:hexagon_glass/screens/tutorial.dart';
+
+import 'dart:async' show Future;
 
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -46,6 +51,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool loaded = false;
+  bool tutorial = true; // TODO: read from status
 
   @override
   void dispose() {
@@ -72,12 +78,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       loaded = true;
+      tutorial = Status.instance.getInfoJson()["player"]["tutorial"];
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return loaded ? const Scaffold(body: Menu()) : const Scaffold(body: LoadingScreen());
+    return loaded
+        ? Scaffold(
+            body: tutorial
+                ? Tutorial(
+                    endTutorial: () {
+                      setState(() {
+                        tutorial = false;
+                      });
+                    },
+                  )
+                : const Menu())
+        : const Scaffold(body: LoadingScreen());
   }
 }
 

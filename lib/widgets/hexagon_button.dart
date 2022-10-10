@@ -101,7 +101,8 @@ class _HexagonButtonState extends State<HexagonButton>
                 rotate: 60,
                 boxShadows: [
                   PolygonBoxShadow(
-                      color: Colors.black,
+                      color: Colors.black
+                          .withAlpha(255 * (widget.block.isEnabled ? 1 : 0)),
                       elevation: widget.block.isVisible ? 5.0 : 0)
                 ],
                 child: Container(
@@ -110,7 +111,8 @@ class _HexagonButtonState extends State<HexagonButton>
                         ? widget.block.color != BlockColor.color_2
                             ? !widget.block.isVisible
                                 ? Colors.transparent
-                                : widget.currentTheme.no_color
+                                : widget.currentTheme.no_color.withAlpha(
+                                    (255 ~/ (widget.block.isEnabled ? 1 : 2)))
                             : widget.currentTheme.color_2
                         : widget.currentTheme.color_1,
                   ),

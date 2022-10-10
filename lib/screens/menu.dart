@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:hexagon_glass/widgets/page_menu.dart';
+import 'package:hexagon_glass/core/save_folder.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import '../core/player_status.dart';
+import '../widgets/game_grid.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
@@ -22,8 +27,22 @@ class _MenuState extends State<Menu> {
   void initState() {
     super.initState();
     position = 0;
+    loadThemes();
   }
 
+  void loadThemes() async {
+    var permission = await Permission.storage.request();
+    if (permission.isGranted) {
+      Map<String, dynamic> json = await SaveFolder.getSaveFile();
+      Status.instance.loadStatus(json);
+    } else {
+      //TODO:handle the case: user deny storage permission.
+    }
+
+    setState(() {
+      loadedThemes = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +86,6 @@ class _MenuState extends State<Menu> {
         ),
       );
     });
-    return menuPage;
+    return loadedThemes ? menuPage : const CircularProgressIndicator();
   }
 }

@@ -1,0 +1,56 @@
+{
+  "gameGrid" : "- 2 - 2 \n 2 1 2 - \n2 - 2 - \n- - - - ",
+  "flow": [
+    {
+      "sentence" : "Benvenuto in HexagonSpace!",
+      "interaction" : false
+    },
+    {
+      "sentence" : "L'obiettivo del gioco è quello di colorare tutte le caselle esagonali.",
+      "interaction" : false
+    },
+    {
+      "sentence" : "Sono disponibili solo due colori, il tuo obiettivo è capire il colore giusto per ogni esagono.",
+      "interaction" : false
+    },
+    {
+      "sentence" :  "Per colorare ti basta cliccare su un esagono.",
+      "interaction" : false
+    },
+    {
+      "sentence" : "Vediamo insieme un esempio: colora l'esagono al centro.",
+      "interaction" : true,
+      "clickable" : [[1,1]],
+      "condition" : "- 0 - 0 \n0 1 0 - \n0 - 0 - \n- - - - \n"
+    },
+    {
+      "sentence" :  "Bravo! Puoi cambiare colore di un esagano cliccando un'altra volta su lo stesso.",
+      "interaction" : false
+    },
+    {
+      "sentence" : "Adesso colora gli esagoni adiacenti del colore opposto",
+      "interaction" : true,
+      "clickable" : [[0,1],[1,0],[1,2],[2,2]],
+      "condition" : "- 2 - 0 \n2 1 2 - \n0 - 2 - \n- - - - \n"
+    },
+    {
+      "sentence" :  "Non sembra così difficile, no?",
+      "interaction" : false
+    },
+    {
+      "sentence" : "Ora prova a completare il livello.",
+      "interaction" : true,
+      "clickable" : [[0,3],[2,0]],
+      "condition" : "- 2 - 2 \n2 1 2 - \n2 - 2 - \n- - - - \n"
+    },
+    {
+      "sentence" : "Complimenti, hai terminato livello.",
+      "interaction" : false
+    },
+    {
+      "sentence" : "Attenzione! Esistono due soluzioni speculari. Una volta scelto il primo colore solo una soluzione sarà possibile. Buona fortuna!",
+      "image": "images/tutorial/double_solution.png",
+      "interaction" : false
+    }
+  ]
+}

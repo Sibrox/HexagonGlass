@@ -8,13 +8,9 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-
   @override
   Widget build(BuildContext context) {
-
     //TODO: add Loading Screen or animation
-    return  const Center(
-      child: CircularProgressIndicator()
-    );
+    return const Center(child: CircularProgressIndicator());
   }
 }

@@ -21,6 +21,21 @@ class GameLogic {
     initGame();
   }
 
+  GameLogic.tutorial(String tutorialGrid) {
+    origin = BlockGrid.fromString(tutorialGrid);
+
+    for (int i = 0; i < origin.matrix.length; i++) {
+      for (int j = 0; j < origin.matrix[i].length; j++) {
+        origin.matrix[i][j].isEnabled = false;
+      }
+    }
+
+    origin.matrix[1][1].isEnabled = true;
+
+    calculateValues();
+    initGame();
+  }
+
   int nRows() {
     return origin.matrix.length;
   }
@@ -226,9 +241,28 @@ class GameLogic {
     }
     return checkMatrix;
   }
-}
 
-void main() {
-  GameLogic gameLogic = GameLogic(GridType.hexagon, width: 5, height: 5);
-  gameLogic.printGrid();
+  void setClickable(List<List<int>> clickable) {
+    for (int i = 0; i < status.matrix.length; i++) {
+      for (int j = 0; j < status.matrix[0].length; j++) {
+        status.matrix[i][j].isEnabled = false;
+      }
+    }
+
+    for (var point in clickable) {
+      status.matrix[point[0]][point[1]].isEnabled = true;
+    }
+  }
+
+  String getGameGridStatus() {
+    String stringStatus = "";
+    for (int i = 0; i < status.matrix.length; i++) {
+      for (int j = 0; j < status.matrix[0].length; j++) {
+        stringStatus += status.matrix[i][j].toString() + " ";
+      }
+      stringStatus += "\n";
+    }
+
+    return stringStatus;
+  }
 }

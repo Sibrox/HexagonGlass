@@ -1,6 +1,6 @@
 {
   "player":{
-    "tutorial": 0
+    "tutorial": true
   },
 
   "hexagon":{

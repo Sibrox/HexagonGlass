@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 class StrokeText extends StatelessWidget {
   final String text;
   final double fontSize;
+  final TextAlign? textAlign;
 
-  const StrokeText({
-    Key? key,
-    required this.text,
-    this.fontSize = 20,
-  }) : super(key: key);
+  const StrokeText(
+      {Key? key, required this.text, this.fontSize = 20, this.textAlign})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +16,7 @@ class StrokeText extends StatelessWidget {
         // The text border
         Text(
           text,
+          textAlign: textAlign,
           style: TextStyle(
             fontSize: fontSize,
             fontWeight: FontWeight.bold,
@@ -29,6 +29,7 @@ class StrokeText extends StatelessWidget {
         // The text inside
         Text(
           text,
+          textAlign: textAlign,
           style: TextStyle(
             fontSize: fontSize,
             fontWeight: FontWeight.bold,
