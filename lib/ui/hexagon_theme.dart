@@ -24,30 +24,6 @@ class Themes {
   Themes._internal() {
     planets = [];
   }
-
-  void updatePlanetGrid(int indexPlanet, int lastLvl) {
-    String modifiedGrid = planets[indexPlanet].gridMenu;
-    int counter = 0;
-
-    for (int i = 0; i < modifiedGrid.length && counter < lastLvl + 1; i++) {
-      if (modifiedGrid[i] == "0" ||
-          modifiedGrid[i] == "2" ||
-          modifiedGrid[i] == "1") {
-        if (counter != lastLvl) {
-          modifiedGrid = modifiedGrid.substring(0, i) +
-              "1" +
-              modifiedGrid.substring(i + 1, modifiedGrid.length);
-        } else {
-          modifiedGrid = modifiedGrid.substring(0, i) +
-              "2" +
-              modifiedGrid.substring(i + 1, modifiedGrid.length);
-        }
-        counter++;
-      }
-    }
-
-    planets[indexPlanet].gridMenu = modifiedGrid;
-  }
 }
 
 class PlanetTheme {

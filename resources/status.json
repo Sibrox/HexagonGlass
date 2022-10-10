@@ -13,22 +13,6 @@
     },
     "hard": {
       "level": 0
-    },
-    "secret": {
-      "level": 0
-    }
-  },
-
-  "rectangle":{
-
-    "easy": {
-      "level": 0
-    },
-    "medium": {
-      "level": 0
-    },
-    "hard": {
-      "level": 0
     }
   }
 }

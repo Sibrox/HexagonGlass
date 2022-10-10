@@ -40,11 +40,13 @@ class GameLogic {
         if (!origin.matrix[i][j].isVisible) continue;
         if (status.matrix[i][j].color == BlockColor.noColor) return false;
 
-        if (!reversed && status.matrix[i][j].color != origin.matrix[i][j].color) {
+        if (!reversed &&
+            status.matrix[i][j].color != origin.matrix[i][j].color) {
           return false;
         }
 
-        if (reversed && status.matrix[i][j].color == origin.matrix[i][j].color ) {
+        if (reversed &&
+            status.matrix[i][j].color == origin.matrix[i][j].color) {
           return false;
         }
       }
