@@ -149,9 +149,8 @@ class _PageMenuState extends State<PageMenu> {
               child: Hero(
                   tag: "planet",
                   child: AnimatedPulse(
-                    child: Image.asset(
-                      (widget.currentTheme.planet_path),
-                      fit: BoxFit.contain,
+                    child: Planet(
+                      planet_path: widget.currentTheme.planet_path,
                     ),
                     duration: const Duration(milliseconds: 800),
                   ))),
@@ -172,7 +171,7 @@ class Planet extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withOpacity(0.3),
               blurRadius: 10.0,
               spreadRadius: 2.0,
             )

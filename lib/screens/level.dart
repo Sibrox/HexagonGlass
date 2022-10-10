@@ -10,9 +10,14 @@ import 'package:hexagon_glass/widgets/game_grid.dart';
 import '../core/player_status.dart';
 
 class Level extends StatefulWidget {
-  PlanetTheme currentTheme;
   final int level;
-  Level({Key? key, required this.currentTheme, required this.level})
+  final PlanetTheme currentTheme;
+
+  const Level(
+      {Key? key,
+      required this.currentTheme,
+      required this.level,
+      })
       : super(key: key);
 
   @override
@@ -33,14 +38,26 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     gameLogic = GameLogic(GridType.hexagon,
-        width: widget.currentTheme.levelDimension[0],
-        height: widget.currentTheme.levelDimension[1]);
+            width: widget.currentTheme.levelDimension[0],
+            height: widget.currentTheme.levelDimension[1]);
   }
 
   @override
   void dispose() {
     _controllerRotation.dispose();
     super.dispose();
+  }
+
+  void onGameClick(int i, int j) {
+    setState(() {
+      gameLogic.status.changeColor(i, j);
+      completed = gameLogic.checkGame();
+      if (completed) {
+        Status.instance.updateLvlStatus(widget.currentTheme.difficult,
+            widget.level, widget.currentTheme.position);
+        Navigator.of(context).pop();
+      }
+    });
   }
 
   @override
@@ -87,23 +104,10 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
             Flexible(
                 flex: 8,
                 child: GameGrid(
-                  gameGrid: null,
-                  gameLogic: gameLogic,
-                  currentTheme: widget.currentTheme,
-                  onClick: (i, j) {
-                    setState(() {
-                      gameLogic.status.changeColor(i, j);
-                      completed = gameLogic.checkGame();
-                      if (completed) {
-                        Status.instance.updateLvlStatus(
-                            widget.currentTheme.difficult,
-                            widget.level,
-                            widget.currentTheme.position);
-                      }
-                      //TODO: add end game
-                    });
-                  },
-                )),
+                    gameGrid: null,
+                    gameLogic: gameLogic,
+                    currentTheme: widget.currentTheme,
+                    onClick: onGameClick)),
             Flexible(
                 flex: 1,
                 child: Center(
@@ -167,5 +171,3 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
         ));
   }
 }
-
-//Image.asset("images/refresh_icon.png"),

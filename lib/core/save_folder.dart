@@ -16,13 +16,14 @@ class SaveFolder {
 
   static Future<Map<String, dynamic>> getSaveFile() async {
     File saveFile = await getFile();
+
     String stringInfo = saveFile.readAsStringSync();
 
     if (stringInfo.isEmpty) {
       Map<String, dynamic> initJson = {};
 
       initJson["player"] = {};
-      initJson["player"]["tutorial"] = 0;
+      initJson["player"]["tutorial"] = true;
       initJson["hexagon"] = {};
       initJson["hexagon"]["easy"] = {};
       initJson["hexagon"]["easy"]["level"] = 0;
