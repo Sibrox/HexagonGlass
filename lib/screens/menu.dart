@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:hexagon_glass/widgets/page_menu.dart';
+import 'package:hexagon_glass/core/save_folder.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../core/player_status.dart';
 import '../widgets/game_grid.dart';
 
 class Menu extends StatefulWidget {
-  Menu({Key? key}) : super(key: key);
+  const Menu({Key? key}) : super(key: key);
 
   @override
   _MenuState createState() => _MenuState();
@@ -21,7 +23,7 @@ class _MenuState extends State<Menu> {
     initialPage: 0,
   );
 
-  late var position;
+  late int position;
 
   bool loadedThemes = false;
 
@@ -35,8 +37,13 @@ class _MenuState extends State<Menu> {
   void loadThemes() async {
     String themes = await rootBundle.loadString('resources/themes.json');
     Themes.instance.loadThemes(themes);
-    String info = await rootBundle.loadString('resources/status.json');
-    Status.instance.loadStatus(info);
+    var permission = await Permission.storage.request();
+    if (permission.isGranted) {
+      Map<String, dynamic> json = await SaveFolder.getSaveFile();
+      Status.instance.loadStatus(json);
+    } else {
+      //TODO:handle the case: user deny storage permission.
+    }
 
     setState(() {
       loadedThemes = true;

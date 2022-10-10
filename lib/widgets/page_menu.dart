@@ -8,11 +8,8 @@ import 'package:hexagon_glass/core/block_grid.dart';
 import 'package:hexagon_glass/screens/level.dart';
 import 'package:hexagon_glass/ui/stroke_text.dart';
 import 'package:hexagon_glass/widgets/hexagon_grid.dart';
-
-import '../core/game_logic.dart';
 import '../core/player_status.dart';
 import '../ui/hexagon_theme.dart';
-import 'game_grid.dart';
 
 class PageMenu extends StatefulWidget {
   PlanetTheme currentTheme;
@@ -24,8 +21,9 @@ class PageMenu extends StatefulWidget {
 }
 
 class _PageMenuState extends State<PageMenu> {
-  late BlockGrid menuGrid =
-      BlockGrid.fromString(widget.currentTheme.gridMenu, isMenu: true);
+  late BlockGrid menuGrid = BlockGrid.fromString(
+      Status.instance.getGrid(widget.currentTheme.position),
+      isMenu: true);
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +49,10 @@ class _PageMenuState extends State<PageMenu> {
                 margin:
                     EdgeInsets.only(top: planetDim / 2, left: 20, right: 20),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
                     color: Colors.black.withOpacity(0.25)),
                 child: Container(
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   child: HexagonGrid(
                       currentTheme: widget.currentTheme,
                       grid: menuGrid,
@@ -62,9 +60,10 @@ class _PageMenuState extends State<PageMenu> {
                         Navigator.of(context)
                             .push(
                               PageRouteBuilder(
-                                transitionDuration: Duration(milliseconds: 800),
+                                transitionDuration:
+                                    const Duration(milliseconds: 800),
                                 reverseTransitionDuration:
-                                    Duration(milliseconds: 500),
+                                    const Duration(milliseconds: 500),
                                 pageBuilder: (_, __, ___) => Level(
                                   currentTheme: widget.currentTheme,
                                   level: menuGrid.matrix[i][j].value,
@@ -83,7 +82,8 @@ class _PageMenuState extends State<PageMenu> {
                             .then((value) => {
                                   setState(() {
                                     menuGrid = BlockGrid.fromString(
-                                        widget.currentTheme.gridMenu,
+                                        Status.instance.grids[
+                                            widget.currentTheme.position],
                                         isMenu: true);
                                   })
                                 });
@@ -108,7 +108,7 @@ class _PageMenuState extends State<PageMenu> {
                   Rect.fromLTWH(0, boxLevelDim + planetDim / 6,
                       constraints.biggest.width, boxPlanetDim),
                   constraints.biggest),
-              duration: Duration(milliseconds: 1000),
+              duration: const Duration(milliseconds: 1000),
               child: Hero(
                 tag: "background",
                 child: Container(
@@ -125,7 +125,7 @@ class _PageMenuState extends State<PageMenu> {
                         color: Colors.black.withOpacity(0.5),
                         spreadRadius: 2,
                         blurRadius: 5,
-                        offset: Offset(0,
+                        offset: const Offset(0,
                             3), // changes position of shadow // changes position of shadow
                       ),
                     ],
@@ -145,7 +145,7 @@ class _PageMenuState extends State<PageMenu> {
                   Rect.fromLTWH(constraints.biggest.width / 2 - planetDim / 2,
                       boxLevelDim - planetDim / 6, planetDim, planetDim),
                   constraints.biggest),
-              duration: Duration(milliseconds: 1000),
+              duration: const Duration(milliseconds: 1000),
               child: Hero(
                   tag: "planet",
                   child: AnimatedPulse(

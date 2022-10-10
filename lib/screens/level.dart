@@ -96,9 +96,9 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                       completed = gameLogic.checkGame();
                       if (completed) {
                         Status.instance.updateLvlStatus(
-                            widget.currentTheme.difficult, widget.level);
-                        Themes.instance.updatePlanetGrid(
-                            widget.currentTheme.position, widget.level);
+                            widget.currentTheme.difficult,
+                            widget.level,
+                            widget.currentTheme.position);
                       }
                       //TODO: add end game
                     });

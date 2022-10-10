@@ -58,3 +58,7 @@ linux/
 windows/
 web/
 macos/
+
+# Custom
+.flutter-plugins-dependencies
+.flutter-plugins
