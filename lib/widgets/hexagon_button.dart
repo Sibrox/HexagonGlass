@@ -75,6 +75,15 @@ class _HexagonButtonState extends State<HexagonButton>
           });
         }
       },
+      onTapCancel: () {
+        if (widget.block.isEnabled) {
+          setState(() {
+            hexagonWidthAnimated *= 5;
+            textScale = 15;
+          });
+          widget.onClick();
+        }
+      },
       child: SizedBox(
         width: hexagonWidthFixed,
         child: Center(
