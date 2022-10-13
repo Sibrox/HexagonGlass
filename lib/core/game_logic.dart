@@ -38,14 +38,13 @@ class GameLogic {
     for (int i = 0; i < origin.matrix.length; i++) {
       for (int j = 0; j < origin.matrix[i].length; j++) {
         if (!origin.matrix[i][j].isVisible) continue;
+        if (status.matrix[i][j].color == BlockColor.noColor) return false;
 
-        if (status.matrix[i][j].color != origin.matrix[i][j].color &&
-            !reversed) {
+        if (!reversed && status.matrix[i][j].color != origin.matrix[i][j].color) {
           return false;
         }
 
-        if (status.matrix[i][j].color == origin.matrix[i][j].color &&
-            reversed) {
+        if (reversed && status.matrix[i][j].color == origin.matrix[i][j].color ) {
           return false;
         }
       }
