@@ -8,7 +8,7 @@ import 'package:hexagon_glass/main.dart';
 
 void main() {
   test('Check game', () {
-    GameLogic game = GameLogic(GridType.hexagon, 4, 4);
+    GameLogic game = GameLogic(GridType.hexagon);
     for (int i = 0; i < game.nRows(); i++) {
       for (int j = 0; j < game.nColumns(); j++) {
         game.status.matrix[i][j].color = game.origin.matrix[i][j].color;
@@ -30,7 +30,7 @@ void main() {
   });
 
   test('Check uncompleted game', () {
-    GameLogic game = GameLogic(GridType.hexagon, 4, 4);
+    GameLogic game = GameLogic(GridType.hexagon);
     for (int i = 0; i < game.nRows(); i++) {
       for (int j = 0; j < game.nColumns(); j++) {
         game.status.matrix[i][j].color = game.origin.matrix[i][j].color;

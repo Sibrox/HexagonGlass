@@ -65,6 +65,7 @@ class PlanetTheme {
 
   late String difficult;
   late String gridMenu;
+  late List<int> levelDimension;
 
   PlanetTheme() {}
 
@@ -81,5 +82,6 @@ class PlanetTheme {
     background_path = theme["background_path"];
     difficult = key[0].toUpperCase() + key.substring(1);
     gridMenu = theme["grid"];
+    levelDimension = List<int>.from(theme["level_dimension"]);
   }
 }
