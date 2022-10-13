@@ -20,7 +20,7 @@ class Level extends StatefulWidget {
 }
 
 class _LevelState extends State<Level> with TickerProviderStateMixin {
-  GameLogic gameLogic = GameLogic(GridType.hexagon, 5, 8);
+  late GameLogic gameLogic;
 
   var animationTime = const Duration(milliseconds: 1000);
 
@@ -28,6 +28,14 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
       vsync: this, duration: const Duration(milliseconds: 300));
 
   bool completed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    gameLogic = GameLogic(GridType.hexagon,
+        width: widget.currentTheme.levelDimension[0],
+        height: widget.currentTheme.levelDimension[1]);
+  }
 
   @override
   void dispose() {

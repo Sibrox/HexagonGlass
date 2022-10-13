@@ -10,7 +10,7 @@ class GameLogic {
   late BlockGrid origin;
   late GridType type;
 
-  GameLogic(this.type, int width, int height) {
+  GameLogic(this.type, {int width = 4, int height = 4}) {
     origin = BlockGrid.buildRandom(width, height);
     calculateValues();
     initGame();
@@ -156,6 +156,6 @@ class GameLogic {
 }
 
 void main() {
-  GameLogic gameLogic = GameLogic(GridType.hexagon, 6, 6);
+  GameLogic gameLogic = GameLogic(GridType.hexagon, width: 5, height: 5);
   gameLogic.printGrid();
 }
