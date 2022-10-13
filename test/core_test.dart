@@ -9,13 +9,16 @@ import 'package:hexagon_glass/main.dart';
 void main() {
   test('Check game', () {
     GameLogic game = GameLogic(GridType.hexagon);
+
+    expect(game.checkGame(), false);
+
     for (int i = 0; i < game.nRows(); i++) {
       for (int j = 0; j < game.nColumns(); j++) {
         game.status.matrix[i][j].color = game.origin.matrix[i][j].color;
       }
     }
 
-    assert(game.checkGame());
+    expect(game.checkGame(), true);
 
     for (int i = 0; i < game.nRows(); i++) {
       for (int j = 0; j < game.nColumns(); j++) {
@@ -26,7 +29,7 @@ void main() {
       }
     }
 
-    assert(game.checkGame());
+    expect(game.checkGame(), true);
   });
 
   test('Check uncompleted game', () {
