@@ -11,7 +11,12 @@ class GameLogic {
   late GridType type;
 
   GameLogic(this.type, {int width = 4, int height = 4}) {
-    origin = BlockGrid.buildRandom(width, height);
+    int counter = 0;
+    bool isAllConnected = false;
+    while (!isAllConnected) {
+      origin = BlockGrid.buildRandom(width, height);
+      isAllConnected = _allHexesAreConnected(origin.matrix);
+    }
     calculateValues();
     initGame();
   }
@@ -91,47 +96,44 @@ class GameLogic {
     var right = j + 1;
 
     // left
-    counter +=
-        checkRange(i, left) && origin.matrix[i][left].color == currentColor
-            ? 1
-            : 0;
+    counter += checkRange(i, left, origin.matrix) &&
+            origin.matrix[i][left].color == currentColor
+        ? 1
+        : 0;
     // right
-    counter +=
-        checkRange(i, right) && origin.matrix[i][right].color == currentColor
-            ? 1
-            : 0;
+    counter += checkRange(i, right, origin.matrix) &&
+            origin.matrix[i][right].color == currentColor
+        ? 1
+        : 0;
 
     left += offset;
     right = left + 1;
     // top left
-    counter +=
-        checkRange(top, left) && origin.matrix[top][left].color == currentColor
-            ? 1
-            : 0;
+    counter += checkRange(top, left, origin.matrix) &&
+            origin.matrix[top][left].color == currentColor
+        ? 1
+        : 0;
     // top right
-    counter += checkRange(top, right) &&
+    counter += checkRange(top, right, origin.matrix) &&
             origin.matrix[top][right].color == currentColor
         ? 1
         : 0;
 
     // bot left
-    counter +=
-        checkRange(bot, left) && origin.matrix[bot][left].color == currentColor
-            ? 1
-            : 0;
+    counter += checkRange(bot, left, origin.matrix) &&
+            origin.matrix[bot][left].color == currentColor
+        ? 1
+        : 0;
     // bot right
-    counter += checkRange(bot, right) &&
+    counter += checkRange(bot, right, origin.matrix) &&
             origin.matrix[bot][right].color == currentColor
         ? 1
         : 0;
     return counter;
   }
 
-  bool checkRange(int i, int j) {
-    return i >= 0 &&
-        j >= 0 &&
-        i < origin.matrix.length &&
-        j < origin.matrix[0].length;
+  bool checkRange(int i, int j, List<List<dynamic>> matrix) {
+    return i >= 0 && j >= 0 && i < matrix.length && j < matrix[0].length;
   }
 
   void printGrid() {
@@ -153,6 +155,76 @@ class GameLogic {
       }
       stdout.write('\n');
     }
+  }
+
+  bool _allHexesAreConnected(List<List<Block>> matrix) {
+    bool allConnected = true;
+    List<List<int>> checkMatrix = _createCheckMatrix(matrix);
+
+    for (int i = 0; i < checkMatrix.length; i++) {
+      for (int j = 0; j < checkMatrix[0].length; j++) {
+        if (checkMatrix[i][j] != 0) {
+          _startChecking(i, j, checkMatrix);
+        }
+        break;
+      }
+      break;
+    }
+
+    for (int i = 0; i < checkMatrix.length && allConnected; i++) {
+      for (int j = 0; j < checkMatrix[0].length && allConnected; j++) {
+        if (checkMatrix[i][j] == 1) allConnected = false;
+      }
+    }
+    return allConnected;
+  }
+
+  void _startChecking(int rowsIndex, int colsIndex, List<List<int>> cMatrix) {
+    int offset = rowsIndex % 2 == 0 ? 0 : 1;
+    int left = colsIndex - 1;
+    int right = colsIndex + 1;
+    int top = rowsIndex - 1;
+    int bot = rowsIndex + 1;
+
+    cMatrix[rowsIndex][colsIndex] = 2;
+
+    if (checkRange(rowsIndex, left, cMatrix) && cMatrix[rowsIndex][left] == 1) {
+      _startChecking(rowsIndex, left, cMatrix);
+    }
+    if (checkRange(rowsIndex, right, cMatrix) &&
+        cMatrix[rowsIndex][right] == 1) {
+      _startChecking(rowsIndex, right, cMatrix);
+    }
+
+    left = left + offset;
+    right = left + 1;
+
+    if (checkRange(top, right, cMatrix) && cMatrix[top][right] == 1) {
+      _startChecking(top, right, cMatrix);
+    }
+    if (checkRange(top, left, cMatrix) && cMatrix[top][left] == 1) {
+      _startChecking(top, left, cMatrix);
+    }
+    if (checkRange(bot, right, cMatrix) && cMatrix[bot][right] == 1) {
+      _startChecking(bot, right, cMatrix);
+    }
+    if (checkRange(bot, left, cMatrix) && cMatrix[bot][left] == 1) {
+      _startChecking(bot, left, cMatrix);
+    }
+  }
+
+  List<List<int>> _createCheckMatrix(List<List<Block>> matrix) {
+    var checkMatrix = List.generate(
+        matrix.length, (index) => List.filled(matrix[0].length, 0));
+
+    for (int i = 0; i < matrix.length; i++) {
+      for (int j = 0; j < matrix[0].length; j++) {
+        if (matrix[i][j].isEnabled) {
+          checkMatrix[i][j] = 1;
+        }
+      }
+    }
+    return checkMatrix;
   }
 }
 
