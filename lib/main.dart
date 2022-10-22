@@ -1,12 +1,13 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:hexagon_glass/screens/loading.dart';
 import 'package:hexagon_glass/screens/menu.dart';
 import 'package:flutter/services.dart';
 
-import 'dart:async' show Future;
-
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import 'core/player_status.dart';
+import 'core/save_folder.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +45,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool selected = false;
+  bool loaded = false;
 
   @override
   void dispose() {
@@ -52,8 +53,31 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    loadResources();
+  }
+
+  void loadResources() async {
+    var themes = await rootBundle.loadString('resources/themes.json');
+    Themes().loadThemes(themes);
+
+    var permission = await Permission.storage.request();
+    if (permission.isGranted) {
+      Map<String, dynamic> json = await SaveFolder.getSaveFile();
+      Status.instance.loadStatus(json);
+    } else {
+      //TODO:handle the case: user deny storage permission.
+    }
+
+    setState(() {
+      loaded = true;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Menu());
+    return loaded ? const Scaffold(body: Menu()) : const Scaffold(body: LoadingScreen());
   }
 }
 
