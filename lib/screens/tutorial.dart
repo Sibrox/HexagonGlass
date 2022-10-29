@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexagon_glass/core/game_logic.dart';
+import 'package:hexagon_glass/core/player_status.dart';
+import 'package:hexagon_glass/screens/level.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:hexagon_glass/ui/stroke_text.dart';
 
@@ -43,6 +45,8 @@ class _TutorialState extends State<Tutorial> {
 
     // Check end tutorial
     if (status == totalStatus() - 1) {
+      // Save on file
+      Status().saveTutorialCompleted();
       widget.endTutorial();
     }
 
