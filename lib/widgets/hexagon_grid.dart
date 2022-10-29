@@ -22,45 +22,76 @@ class HexagonGrid extends StatefulWidget {
   _GameGridState createState() => _GameGridState();
 }
 
+bool isOdd(int num) {
+  return num % 2 != 0;
+}
+
 class _GameGridState extends State<HexagonGrid> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constrain) {
-      var deviceWidth = constrain.biggest.width;
-      var deviceWHeight = constrain.biggest.height;
+      var widgetGridWidth = constrain.biggest.width;
+      var widgetGridHeight = constrain.biggest.height;
 
-      var margin = deviceWidth * 0.05;
-      deviceWidth = deviceWidth - margin;
-      var rowWidth = deviceWidth - 0;
-      var hexagonWidth = rowWidth / widget.grid.nCol;
-      var apothem = hexagonWidth / 2 * sqrt(3) / 2;
+      //          Hexagon
+      //        ___________
+      //      /             \
+      //     /               \
+      //    /   r             \
+      //    ---------.         -
+      //    \       /|\       /
+      //     \    / a| \     / L
+      //      \ /    |   \  /
+      //        -----------
 
+      // a = (r  * (sqrt(3)) / 2
+      // r = (2 * apothem) / sqrt(3)
+
+      // N.B: hexagon is drawn ROTATED respected the screen
+      double hexagonSide; // r = L
+      double hexagonApothem; // a
+
+      // This means:
+      // - 'nRow' is the constrain if widgetGridWidth < widgetGridHeight
+      // - 'nCol' is the constrain if widgetGridHeight < widgetGridWidth
+      var nHexesPerRow = widget.grid.nCol;
+      var availableSpace = widgetGridWidth;
+
+      hexagonSide = availableSpace / (nHexesPerRow);
+      hexagonApothem = (hexagonSide * sqrt(3)) / 2;
+
+      // every hex is built in a widget square of hexagonSide
+      // rightSide and leftSide are distant 2 * hexagonApothem
+      // this means that every time I render an hex
+      // it takes clippedValue empty space on the right and on the left
+      var clippedValue = hexagonSide - hexagonApothem;
       return Stack(
           alignment: Alignment.center,
           children: List.generate(
             widget.grid.nRow,
-            (i) => Positioned(
-                left: i % 2 != 0 ? 3 / 2 * apothem : apothem / 2,
-                top: (i * (3 / 4 * hexagonWidth) +
-                        (apothem * widget.grid.nRow / 4)) +
-                    ((deviceWHeight - (hexagonWidth * widget.grid.nRow)) / 2),
+            (nRow) => Positioned(
+                left: ((isOdd(nRow) ? hexagonApothem / 2 : 0)) +
+                    clippedValue * (widget.grid.nCol - 1) / 2,
+                top: ((hexagonSide - clippedValue * 2) * nRow)
+                    + (widgetGridHeight - ((hexagonSide / 2 + clippedValue) * (widget.grid.nRow + 1))) / 2
+                    ,
                 child: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   alignment: WrapAlignment.start,
-                  spacing: -(hexagonWidth - (apothem * 2)),
+                  spacing: -clippedValue,
                   children: List.generate(
                       widget.grid.nCol,
-                      (j) => HexagonButton(
-                            width: hexagonWidth,
+                      (nCol) => HexagonButton(
+                            width: hexagonSide,
                             onClick: () {
-                              if (widget.grid.matrix[i][j].isVisible) {
+                              if (widget.grid.matrix[nRow][nCol].isVisible) {
                                 setState(() {
-                                  widget.onClick(i, j);
+                                  widget.onClick(nRow, nCol);
                                 });
                               }
                             },
-                            block: widget.grid.matrix[i][j],
+                            block: widget.grid.matrix[nRow][nCol],
                             currentTheme: widget.currentTheme,
                           )),
                 )),

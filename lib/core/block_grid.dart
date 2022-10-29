@@ -20,8 +20,13 @@ class BlockGrid {
     for (int i = 0; i < nRow; i++) {
       matrix.add([]);
       for (int j = 0; j < nCol; j++) {
-        var rand = randomGenerator.nextInt(3);
-        matrix[i].add(Block.random(rand));
+        if (i % 2 != 0 && j == nCol - 1) {
+          matrix[i].add(Block.build(0, false, BlockColor.noColor, false));
+          continue;
+        } else {
+          var rand = randomGenerator.nextInt(3);
+          matrix[i].add(Block.random(rand));
+        }
       }
     }
   }
