@@ -41,6 +41,11 @@ class Status {
     return grids[index];
   }
 
+  void saveTutorialCompleted() async {
+    infoJson["player"]["tutorial"] = false;
+    await SaveFolder.updateFile(infoJson);
+  }
+
   void updatePlanetGrid(int indexPlanet, int lastLvl) {
     String modifiedGrid = grids[indexPlanet];
     int counter = 0;
