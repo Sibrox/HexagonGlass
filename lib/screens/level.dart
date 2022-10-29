@@ -37,8 +37,8 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     gameLogic = GameLogic(GridType.hexagon,
-            width: widget.currentTheme.levelDimension[0],
-            height: widget.currentTheme.levelDimension[1]);
+        width: widget.currentTheme.levelDimension[0],
+        height: widget.currentTheme.levelDimension[1]);
   }
 
   @override
@@ -103,7 +103,6 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
             Flexible(
                 flex: 8,
                 child: GameGrid(
-                    gameGrid: null,
                     gameLogic: gameLogic,
                     currentTheme: widget.currentTheme,
                     onClick: onGameClick)),

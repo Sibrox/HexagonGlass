@@ -15,8 +15,7 @@ class GameGrid extends StatefulWidget {
       {Key? key,
       required this.gameLogic,
       required this.currentTheme,
-      required this.onClick,
-      required gameGrid})
+      required this.onClick})
       : super(key: key);
 
   @override

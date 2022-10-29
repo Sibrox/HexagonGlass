@@ -11,7 +11,6 @@ class GameLogic {
   late GridType type;
 
   GameLogic(this.type, {int width = 4, int height = 4}) {
-    int counter = 0;
     bool isAllConnected = false;
     while (!isAllConnected) {
       origin = BlockGrid.buildRandom(width, height);
