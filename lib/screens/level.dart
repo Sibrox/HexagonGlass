@@ -13,12 +13,11 @@ class Level extends StatefulWidget {
   final int level;
   final PlanetTheme currentTheme;
 
-  const Level(
-      {Key? key,
-      required this.currentTheme,
-      required this.level,
-      })
-      : super(key: key);
+  const Level({
+    Key? key,
+    required this.currentTheme,
+    required this.level,
+  }) : super(key: key);
 
   @override
   _LevelState createState() => _LevelState();
@@ -137,7 +136,7 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
-                          child: Text("Level " + widget.level.toString())),
+                          child: Text(widget.level == 0?"Level ∞" :"Level " +  widget.level.toString())),
                       Flexible(
                           child: Align(
                               alignment: Alignment.bottomRight,

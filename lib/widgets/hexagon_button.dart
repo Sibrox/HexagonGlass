@@ -10,6 +10,7 @@ class HexagonButton extends StatefulWidget {
   final double width;
   final Function onClick;
   final Block block;
+  final String? text;
   final PlanetTheme currentTheme;
 
   const HexagonButton(
@@ -17,6 +18,7 @@ class HexagonButton extends StatefulWidget {
       required this.width,
       required this.onClick,
       required this.block,
+      this.text,
       required this.currentTheme})
       : super(key: key);
 
@@ -123,7 +125,7 @@ class _HexagonButtonState extends State<HexagonButton>
                             fontSize: textScale, fontFamily: 'Rowdies'),
                         child: StrokeText(
                             text: widget.block.isVisible
-                                ? '${widget.block.value}'
+                                ? widget.text ?? '${widget.block.value}'
                                 : "")),
                   ),
                 ),

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexagon_glass/core/game_logic.dart';
-import 'package:hexagon_glass/screens/level.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:hexagon_glass/ui/stroke_text.dart';
 
@@ -32,7 +31,6 @@ class _TutorialState extends State<Tutorial> {
 
   void loadTutorial() async {
     var tutorialString = await rootBundle.loadString('resources/tutorial.json');
-
 
     setState(() {
       tutorial = jsonDecode(tutorialString);
@@ -151,9 +149,7 @@ class _TutorialState extends State<Tutorial> {
   void onTutorialClick(int i, int j) {
     tutorialLogic.status.changeColor(i, j);
     List<List<int>> clickable = getClickable();
-    var condition =
-      checkForNext(tutorialLogic.getGameGridStatus());
-
+    var condition = checkForNext(tutorialLogic.getGameGridStatus());
     if (condition) {
       tutorialLogic.setClickable(clickable);
     }
@@ -161,34 +157,33 @@ class _TutorialState extends State<Tutorial> {
 
   @override
   Widget build(BuildContext context) {
-
     return tutorial.isNotEmpty
         ? Stack(children: [
-
-                Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Themes().planets[0].gradient_1,
-                      Themes().planets[0].gradient_2,
-                    ],
-                  )),
-                child: status < totalStatus() - 1 ? GameGrid(
-                gameGrid: null,
-                gameLogic: tutorialLogic,
-                currentTheme: Themes().planets[0],
-                onClick: onTutorialClick ): Container()),
-
-            // This is the opaque container that contains instructions to follow
-            GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  checkForNext();
-                },
-                child: calculateTutorialInstruction()),
-          ])
+      Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Themes().planets[0].gradient_1,
+                  Themes().planets[0].gradient_2,
+                ],
+              )),
+          child: status < totalStatus() - 1
+              ? GameGrid(
+              gameGrid: null,
+              gameLogic: tutorialLogic,
+              currentTheme: Themes().planets[0],
+              onClick: onTutorialClick)
+              : Container()),
+      // This is the opaque container that contains instructions to follow
+      GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            checkForNext();
+          },
+          child: calculateTutorialInstruction()),
+    ])
         : Container();
   }
 }

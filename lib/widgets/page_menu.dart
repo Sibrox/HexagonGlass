@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/animated/animated_pop.dart';
 import 'package:hexagon_glass/animated/animated_pulse.dart';
+import 'package:hexagon_glass/core/block.dart';
 import 'package:hexagon_glass/core/block_grid.dart';
 import 'package:hexagon_glass/screens/level.dart';
 import 'package:hexagon_glass/ui/stroke_text.dart';
+import 'package:hexagon_glass/widgets/hexagon_button.dart';
 import 'package:hexagon_glass/widgets/hexagon_grid.dart';
 import '../core/player_status.dart';
 import '../ui/hexagon_theme.dart';
@@ -24,6 +26,58 @@ class _PageMenuState extends State<PageMenu> {
   late BlockGrid menuGrid = BlockGrid.fromString(
       Status.instance.getGrid(widget.currentTheme.position),
       isMenu: true);
+
+  bool infinityMode = false;
+
+  @override
+  void initState() {
+    infinityMode = Status().planetCompleted(
+        "hexagon",
+        widget.currentTheme.difficult.toLowerCase(),
+        widget.currentTheme.levels);
+    super.initState();
+  }
+
+  void goToLevel(int i, int j) {
+    Navigator.of(context)
+        .push(PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 800),
+          reverseTransitionDuration: const Duration(milliseconds: 500),
+          pageBuilder: (_, __, ___) => Level(
+            currentTheme: widget.currentTheme,
+            level: menuGrid.matrix[i][j].value,
+          ),
+          transitionsBuilder: (BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+              Widget child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        ))
+        .then((value) => {
+              setState(() {
+                menuGrid = BlockGrid.fromString(
+                    Status.instance.grids[widget.currentTheme.position],
+                    isMenu: true);
+                infinityMode = Status().planetCompleted(
+                    "hexagon",
+                    widget.currentTheme.difficult.toLowerCase(),
+                    widget.currentTheme.levels);
+              })
+            });
+  }
+
+  HexagonGrid gridMenu() {
+    return HexagonGrid(
+        currentTheme: widget.currentTheme,
+        grid: menuGrid,
+        onClick: (i, j) {
+          goToLevel(i, j);
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,43 +106,18 @@ class _PageMenuState extends State<PageMenu> {
                     borderRadius: const BorderRadius.all(Radius.circular(20)),
                     color: Colors.black.withOpacity(0.25)),
                 child: Container(
-                  margin: const EdgeInsets.all(10),
-                  child: HexagonGrid(
-                      currentTheme: widget.currentTheme,
-                      grid: menuGrid,
-                      onClick: (i, j) {
-                        Navigator.of(context)
-                            .push(
-                              PageRouteBuilder(
-                                transitionDuration:
-                                    const Duration(milliseconds: 800),
-                                reverseTransitionDuration:
-                                    const Duration(milliseconds: 500),
-                                pageBuilder: (_, __, ___) => Level(
-                                  currentTheme: widget.currentTheme,
-                                  level: menuGrid.matrix[i][j].value,
-                                ),
-                                transitionsBuilder: (BuildContext context,
-                                    Animation<double> animation,
-                                    Animation<double> secondaryAnimation,
-                                    Widget child) {
-                                  return FadeTransition(
-                                    opacity: animation,
-                                    child: child,
-                                  );
-                                },
-                              ),
-                            )
-                            .then((value) => {
-                                  setState(() {
-                                    menuGrid = BlockGrid.fromString(
-                                        Status.instance.grids[
-                                            widget.currentTheme.position],
-                                        isMenu: true);
-                                  })
-                                });
-                      }),
-                )),
+                    margin: const EdgeInsets.all(10),
+                    child: infinityMode
+                        ? HexagonButton(
+                            width: planetDim * 2,
+                            onClick: () {
+                              goToLevel(0, 0);
+                            },
+                            block:
+                                Block.build(0, true, BlockColor.color_1, true),
+                            text: "Play",
+                            currentTheme: widget.currentTheme)
+                        : gridMenu())),
           ),
           Positioned(
             top: 30,

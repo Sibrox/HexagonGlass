@@ -9,7 +9,8 @@
     "background_path": "images/background/mozilla_background_2.png",
     "planet_path" : "images/planets/mozilla_planet.png",
     "grid" : "- 1 0 - \n 0 0 0 - \n- 0 0 - \n- 0 -  - ",
-    "level_dimension" : [4,4]
+    "level_dimension" : [4,4],
+    "levels" : 8
   },
   "medium" : {
     "color_1"   : "FFFF75AD",
@@ -21,7 +22,8 @@
     "background_path": "images/background/pink_background.jpg",
     "planet_path" : "images/planets/pink_planet.png",
     "grid" : "1 0 0 0 \n 0 - 0 - \n- 0 0 - \n0 - 0 - ",
-    "level_dimension" : [5,6]
+    "level_dimension" : [5,6],
+    "levels" : 10
   },
   "hard" : {
     "color_1"   : "FF2CE295",
@@ -33,6 +35,7 @@
     "background_path": "images/background/dino_background.jpg",
     "planet_path" : "images/planets/dino_planet.png",
     "grid" : "1 0 0 0 \n 0 - 0 - \n0 0 0 0 \n0 0 0 - ",
-    "level_dimension" : [6,8]
+    "level_dimension" : [6,8],
+    "levels" : 13
   }
 }
