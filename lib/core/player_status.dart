@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hexagon_glass/core/save_folder.dart';
 
 class Status {
@@ -28,8 +29,8 @@ class Status {
     await SaveFolder.updateFile(infoJson);
   }
 
-  int getLastLvl(String type, String diff) {
-    return infoJson[type][diff.toLowerCase()];
+  bool planetCompleted(String type, String diff, int lastLevel) {
+    return infoJson[type][diff.toLowerCase()]["level"] == lastLevel;
   }
 
   Map<String, dynamic> getInfoJson() {

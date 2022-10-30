@@ -42,6 +42,7 @@ class PlanetTheme {
   late String difficult;
   late String gridMenu;
   late List<int> levelDimension;
+  late int levels;
 
   PlanetTheme() {}
 
@@ -51,6 +52,7 @@ class PlanetTheme {
     gradient_1 = Color(int.parse(theme["gradient_1"], radix: 16));
     gradient_2 = Color(int.parse(theme["gradient_2"], radix: 16));
     position = theme["position"];
+    levels = theme["levels"];
 
     no_color = const Color(0xFFD6D6D6);
 
