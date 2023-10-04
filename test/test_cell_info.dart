@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hexagon_glass/models/game/cell_colors.dart';
-import 'package:hexagon_glass/models/game/cell_info.dart';
+import 'package:hexagon_glass/game/cell_colors.dart';
+import 'package:hexagon_glass/game/cell_info.dart';
 
 void main() {
   test('Test CellInfo build from originInfo', () {
@@ -25,12 +25,21 @@ void main() {
   });
 
   test('Test CellInfo deserialize', () {
-    assert(
-        CellInfo(color: CellColors.primary).equals(CellInfo.fromString('1')));
-    assert(
-        CellInfo(color: CellColors.secondary).equals(CellInfo.fromString('2')));
-    assert(CellInfo(color: CellColors.grey).equals(CellInfo.fromString('0')));
-    assert(CellInfo(color: CellColors.grey, isVisible: false)
-        .equals(CellInfo.fromString('-')));
+    assert(CellInfo(color: CellColors.primary) == CellInfo.fromString('1'));
+    assert(CellInfo(color: CellColors.secondary) == CellInfo.fromString('2'));
+    assert(CellInfo(color: CellColors.grey) == CellInfo.fromString('0'));
+    assert(CellInfo(color: CellColors.grey, isVisible: false) ==
+        CellInfo.fromString('-'));
+  });
+
+  test('Test toggle CellInfo', () {
+    CellInfo info = CellInfo(color: CellColors.primary);
+
+    info.toggle();
+    assert(info.color == CellColors.secondary);
+    info.toggle();
+    assert(info.color == CellColors.grey);
+    info.toggle();
+    assert(info.color == CellColors.primary);
   });
 }

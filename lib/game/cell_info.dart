@@ -1,5 +1,11 @@
 import 'cell_colors.dart';
 
+const nextColor = {
+  CellColors.primary: CellColors.secondary,
+  CellColors.secondary: CellColors.grey,
+  CellColors.grey: CellColors.primary
+};
+
 class CellInfo {
   CellColors color;
   bool isEnable;
@@ -14,6 +20,10 @@ class CellInfo {
         isVisible: originInfo.isVisible);
   }
 
+  void toggle() {
+    color = nextColor[color] as CellColors;
+  }
+
   factory CellInfo.fromString(String stringCellInfo) {
     return CellInfo(
         color: stringToCellColors[stringCellInfo] as CellColors,
@@ -24,11 +34,16 @@ class CellInfo {
   String toString() {
     return !isVisible ? "-" : cellColorsToString[color] as String;
   }
-  
-  bool equals(Object other) {
-    CellInfo otherCellInfo = (other as CellInfo);
+
+  @override
+  bool operator ==(Object other) {
+    CellInfo otherCellInfo = other as CellInfo;
     return color == otherCellInfo.color &&
         isVisible == otherCellInfo.isVisible &&
         isEnable == otherCellInfo.isEnable;
   }
+
+  @override
+  int get hashCode =>
+      (color.toString() + isVisible.toString() + isEnable.toString()).hashCode;
 }
