@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import 'cell_info.dart';
 
 class Game {
@@ -57,12 +59,8 @@ class Game {
     Game otherGame = (other as Game);
     if (otherGame.status.length != status.length) return false;
 
-    for (var (i, row) in status.indexed) {
-      for (var (j, cellInfo) in row.indexed) {
-        if (cellInfo != otherGame.status[i][j]) {
-          return false;
-        }
-      }
+    for (var (i, _) in status.indexed) {
+      if (!listEquals(status[i], otherGame.status[i])) return false;
     }
     return true;
   }
