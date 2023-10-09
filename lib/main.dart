@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexagon_glass/data/bloc/data_bloc.dart';
+import 'package:hexagon_glass/game/bloc/game_bloc.dart';
+import 'package:hexagon_glass/game/game.dart';
 import 'package:hexagon_glass/screens/loading.dart';
 import 'package:hexagon_glass/screens/menu.dart';
 import 'package:flutter/services.dart';
 import 'package:hexagon_glass/screens/tutorial.dart';
 
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
+import 'package:hexagon_glass/game/view/game_grid.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'core/player_status.dart';
@@ -26,13 +31,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Rowdies',
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          fontFamily: 'Rowdies',
+        ),
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+                create: (context) =>
+                    GameBloc(Game.buildFromString("0 1 0 1\n0 1 0 0"))),
+            BlocProvider(create: (context) => DataBloc())
+          ],
+          child: Container(child: GameGrid()),
+        ));
   }
 }
 
