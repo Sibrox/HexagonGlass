@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/animated/animated_pop.dart';
 import 'package:hexagon_glass/animated/animated_pulse.dart';

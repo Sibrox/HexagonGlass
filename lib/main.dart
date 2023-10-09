@@ -1,12 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hexagon_glass/screens/loading.dart';
 import 'package:hexagon_glass/screens/menu.dart';
 import 'package:flutter/services.dart';
 import 'package:hexagon_glass/screens/tutorial.dart';
-
-import 'dart:async' show Future;
 
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:permission_handler/permission_handler.dart';

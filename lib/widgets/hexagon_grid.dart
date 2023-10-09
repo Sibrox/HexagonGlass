@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hexagon_glass/core/block_grid.dart';
 import 'package:hexagon_glass/widgets/hexagon_button.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
-import '../core/player_status.dart';
 
 class HexagonGrid extends StatefulWidget {
   final BlockGrid grid;
@@ -73,9 +72,11 @@ class _GameGridState extends State<HexagonGrid> {
             (nRow) => Positioned(
                 left: ((isOdd(nRow) ? hexagonApothem / 2 : 0)) +
                     clippedValue * (widget.grid.nCol - 1) / 2,
-                top: ((hexagonSide - clippedValue * 2) * nRow)
-                    + (widgetGridHeight - ((hexagonSide / 2 + clippedValue) * (widget.grid.nRow + 1))) / 2
-                    ,
+                top: ((hexagonSide - clippedValue * 2) * nRow) +
+                    (widgetGridHeight -
+                            ((hexagonSide / 2 + clippedValue) *
+                                (widget.grid.nRow + 1))) /
+                        2,
                 child: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   alignment: WrapAlignment.start,

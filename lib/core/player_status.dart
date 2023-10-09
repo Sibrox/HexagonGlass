@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:hexagon_glass/core/save_folder.dart';
 
 class Status {

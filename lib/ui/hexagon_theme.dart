@@ -44,7 +44,7 @@ class PlanetTheme {
   late List<int> levelDimension;
   late int levels;
 
-  PlanetTheme() {}
+  PlanetTheme();
 
   PlanetTheme.fromString(String key, Map<String, dynamic> theme) {
     color_1 = Color(int.parse(theme["color_1"], radix: 16));

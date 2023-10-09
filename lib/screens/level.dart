@@ -135,7 +135,9 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
-                          child: Text(widget.level == 0?"Level ∞" :"Level " +  widget.level.toString())),
+                          child: Text(widget.level == 0
+                              ? "Level ∞"
+                              : "Level " + widget.level.toString())),
                       Flexible(
                           child: Align(
                               alignment: Alignment.bottomRight,

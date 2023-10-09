@@ -5,7 +5,6 @@ import 'package:hexagon_glass/core/save_folder.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../core/player_status.dart';
-import '../widgets/game_grid.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);

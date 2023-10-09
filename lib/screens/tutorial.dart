@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexagon_glass/core/game_logic.dart';
 import 'package:hexagon_glass/core/player_status.dart';
-import 'package:hexagon_glass/screens/level.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:hexagon_glass/ui/stroke_text.dart';
 
 import '../widgets/game_grid.dart';
-import 'menu.dart';
 
 class Tutorial extends StatefulWidget {
   Function endTutorial;
@@ -153,8 +151,7 @@ class _TutorialState extends State<Tutorial> {
   void onTutorialClick(int i, int j) {
     tutorialLogic.status.changeColor(i, j);
     List<List<int>> clickable = getClickable();
-    var condition =
-      checkForNext(tutorialLogic.getGameGridStatus());
+    var condition = checkForNext(tutorialLogic.getGameGridStatus());
 
     if (condition) {
       tutorialLogic.setClickable(clickable);

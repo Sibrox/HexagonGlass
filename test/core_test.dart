@@ -1,10 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hexagon_glass/core/block.dart';
-import 'package:hexagon_glass/core/block_grid.dart';
 import 'package:hexagon_glass/core/game_logic.dart';
-
-import 'package:hexagon_glass/main.dart';
 
 void main() {
   test('Check game', () {
