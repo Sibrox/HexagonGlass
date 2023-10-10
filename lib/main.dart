@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(
                 create: (context) => GameBloc(
-                    Game.buildFromString("0 2 0 2\n0 1 0 -\n0 0 0 0"))),
+                    Game.buildFromString("1 2 1 2\n2 1 1 -\n1 2 2 2"))),
             BlocProvider(create: (context) => DataBloc())
           ],
           child: Container(

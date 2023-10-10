@@ -33,11 +33,11 @@ class HexagonCell extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: chooseColor[cellInfo.color],
                   ),
-                  child: const Center(
+                  child: Center(
                       child: DefaultTextStyle(
-                          style: TextStyle(fontSize: 40, fontFamily: 'Rowdies'),
+                          style: const TextStyle(fontSize: 40, fontFamily: 'Rowdies'),
                           child: StrokeText(
-                            text: "2",
+                            text: cellInfo.value.toString(),
                           ))))
               : Container(),
         ));
