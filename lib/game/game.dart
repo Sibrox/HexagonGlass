@@ -21,21 +21,30 @@ class Game extends Equatable {
 
     var nCol = 0;
     var nRow = rows.length;
-    List<List<CellInfo>> origin = [];
-    List<List<CellInfo>> status = [];
 
+    List<List<CellInfo>> origin = [];
     for (var (i, row) in rows.indexed) {
       origin.add([]);
-      status.add([]);
 
       var cellsInfo = row.split(" ");
+
       nCol = cellsInfo.length;
-      for (var (j, cellInfo) in cellsInfo.indexed) {
+      for (var (_, cellInfo) in cellsInfo.indexed) {
         origin[i].add(CellInfo.fromString(cellInfo));
-        status[i].add(CellInfo.buildFromOrigin(origin[i][j]));
       }
     }
 
+    origin = Logic.calculateValues(origin);
+
+    List<List<CellInfo>> status = [];
+    for (var (i, row) in origin.indexed) {
+      status.add([]);
+
+      for (var (_, originInfo) in row.indexed) {
+        status[i].add(CellInfo.buildFromOrigin(originInfo));
+      }
+    }
+    
     return Game(nCol: nCol, nRow: nRow, origin: origin, status: status);
   }
 
@@ -68,6 +77,14 @@ class Game extends Equatable {
 
   factory Game.random(int nCol, int nRow, [int? seed]) {
     throw Exception("Not implemented yet");
+  }
+
+  Game copyWith({nCol, nRow, origin, status}) {
+    return Game(
+        nCol: nCol ?? this.nCol,
+        nRow: nRow ?? this.nRow,
+        origin: origin ?? this.origin,
+        status: status ?? this.status);
   }
 
   @override
