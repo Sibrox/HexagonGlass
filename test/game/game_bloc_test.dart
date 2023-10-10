@@ -60,7 +60,7 @@ void main() {
         build: () {
           Game game =
               Game.buildFromString("- 2 - 2\n2 1 2 -\n2 - 2 -\n- - - 0");
-          game.status[0][1] = CellInfo.toggle(game.status[0][1]);
+          game.status[0][1] = game.status[0][1].toggle();
           return GameBloc(game);
         },
         act: (bloc) => bloc.add(const GameReloadEvent()),

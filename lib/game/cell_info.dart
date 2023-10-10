@@ -28,8 +28,8 @@ class CellInfo extends Equatable {
         value: originInfo.value);
   }
 
-  factory CellInfo.toggle(CellInfo current) {
-    return current.copyWith(color: nextColor[current.color] as CellColors);
+  CellInfo toggle() {
+    return copyWith(color: nextColor[color] as CellColors);
   }
 
   factory CellInfo.fromString(String stringCellInfo) {

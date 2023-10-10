@@ -38,12 +38,11 @@ void main() {
   test('Test toggle CellInfo', () {
     CellInfo info = const CellInfo(color: CellColors.primary);
 
-    info = CellInfo.toggle(info);
-    print(info);
+    info = info.toggle();
     assert(info.color == CellColors.secondary);
-    info = CellInfo.toggle(info);
+    info = info.toggle();
     assert(info.color == CellColors.grey);
-    info = CellInfo.toggle(info);
+    info = info.toggle();
     assert(info.color == CellColors.primary);
   });
 }

@@ -66,7 +66,7 @@ class Game extends Equatable {
   factory Game.generateFromClick(Game currentState, int i, int j) {
     List<List<CellInfo>> changeGame =
         List.from(currentState.status.map((list) => List<CellInfo>.from(list)));
-    changeGame[i][j] = CellInfo.toggle(changeGame[i][j]);
+    changeGame[i][j] = changeGame[i][j].toggle();
 
     return Game(
         nRow: currentState.nRow,
