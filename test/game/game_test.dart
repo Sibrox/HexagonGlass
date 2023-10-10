@@ -28,7 +28,8 @@ void main() {
     Game game = Game.buildFromString(gameString);
 
     Game fromOrigin = Game.buildFromOrigin(game.origin);
-    assert(fromOrigin.status[0][1] == const CellInfo(color: CellColors.grey, value: 1));
+    assert(fromOrigin.status[0][1] ==
+        const CellInfo(color: CellColors.grey, value: 1));
   });
 
   test('Test generate from click', () {
@@ -36,18 +37,19 @@ void main() {
     Game game = Game.buildFromString(gameString);
 
     Game assertGame = Game.generateFromClick(game, 0, 1);
-    assert(
-        assertGame.status[0][1] == const CellInfo(color: CellColors.primary, value: 1));
+    assert(assertGame.status[0][1] ==
+        const CellInfo(color: CellColors.primary, value: 1));
 
     assertGame = Game.generateFromClick(assertGame, 0, 1);
-    assert(
-        assertGame.status[0][1] == const CellInfo(color: CellColors.secondary, value: 1));
+    assert(assertGame.status[0][1] ==
+        const CellInfo(color: CellColors.secondary, value: 1));
 
     assertGame = Game.generateFromClick(assertGame, 0, 1);
-    assert(assertGame.status[0][1] == const CellInfo(color: CellColors.grey, value: 1));
+    assert(assertGame.status[0][1] ==
+        const CellInfo(color: CellColors.grey, value: 1));
 
     assertGame = Game.generateFromClick(assertGame, 0, 1);
-    assert(
-        assertGame.status[0][1] == const CellInfo(color: CellColors.primary, value: 1));
+    assert(assertGame.status[0][1] ==
+        const CellInfo(color: CellColors.primary, value: 1));
   });
 }

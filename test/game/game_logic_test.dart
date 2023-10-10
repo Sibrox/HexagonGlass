@@ -5,10 +5,14 @@ void main() {
   test('Test checkRange', () {
     Game game = Game.buildFromString("1 2 1 1\n2 2 2 -\n1 2 1 -");
 
-    assert(Logic.checkRange(-1, 0, game.origin.length, game.origin[0].length) == false);
-    assert(Logic.checkRange(0, -1, game.origin.length, game.origin[0].length) == false);
-    assert(Logic.checkRange(3, 0, game.origin.length, game.origin[0].length) == false);
-    assert(Logic.checkRange(0, 4, game.origin.length, game.origin[0].length) == false);
+    assert(Logic.checkRange(-1, 0, game.origin.length, game.origin[0].length) ==
+        false);
+    assert(Logic.checkRange(0, -1, game.origin.length, game.origin[0].length) ==
+        false);
+    assert(Logic.checkRange(3, 0, game.origin.length, game.origin[0].length) ==
+        false);
+    assert(Logic.checkRange(0, 4, game.origin.length, game.origin[0].length) ==
+        false);
 
     assert(Logic.checkRange(0, 0, game.origin.length, game.origin[0].length));
     assert(Logic.checkRange(2, 0, game.origin.length, game.origin[0].length));

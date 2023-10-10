@@ -35,7 +35,8 @@ class HexagonCell extends StatelessWidget {
                   ),
                   child: Center(
                       child: DefaultTextStyle(
-                          style: const TextStyle(fontSize: 40, fontFamily: 'Rowdies'),
+                          style: const TextStyle(
+                              fontSize: 40, fontFamily: 'Rowdies'),
                           child: StrokeText(
                             text: cellInfo.value.toString(),
                           ))))

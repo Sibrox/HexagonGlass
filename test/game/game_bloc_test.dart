@@ -47,11 +47,13 @@ void main() {
     }, expect: () {
       Game firstState =
           Game.buildFromString("- 2 - 2\n2 1 2 -\n2 - 2 -\n- - - 1");
-      firstState.status[0][1] = firstState.status[0][1].copyWith(color: CellColors.primary);
+      firstState.status[0][1] =
+          firstState.status[0][1].copyWith(color: CellColors.primary);
 
       Game secondState =
           Game.buildFromString("- 2 - 2\n2 1 2 -\n2 - 2 -\n- - - 1");
-      secondState.status[0][1] = secondState.status[0][1].copyWith(color: CellColors.secondary);
+      secondState.status[0][1] =
+          secondState.status[0][1].copyWith(color: CellColors.secondary);
 
       return [firstState, secondState];
     });
