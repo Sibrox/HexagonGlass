@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 import 'cell_colors.dart';
 
 const nextColor = {
@@ -6,22 +8,28 @@ const nextColor = {
   CellColors.grey: CellColors.primary
 };
 
-class CellInfo {
-  CellColors color;
-  bool isEnable;
-  bool isVisible;
+class CellInfo extends Equatable {
+  final CellColors color;
+  final bool isEnable;
+  final bool isVisible;
+  final int value;
 
-  CellInfo({required this.color, this.isEnable = true, this.isVisible = true});
+  const CellInfo(
+      {required this.color,
+      this.isEnable = true,
+      this.isVisible = true,
+      this.value = 0});
 
   factory CellInfo.buildFromOrigin(CellInfo originInfo) {
     return CellInfo(
         color: CellColors.grey,
         isEnable: originInfo.isEnable,
-        isVisible: originInfo.isVisible);
+        isVisible: originInfo.isVisible,
+        value: originInfo.value);
   }
 
-  void toggle() {
-    color = nextColor[color] as CellColors;
+  factory CellInfo.toggle(CellInfo current) {
+    return CellInfo(color: nextColor[current.color] as CellColors);
   }
 
   factory CellInfo.fromString(String stringCellInfo) {
@@ -30,20 +38,19 @@ class CellInfo {
         isVisible: stringCellInfo != '-' ? true : false);
   }
 
+  CellInfo copyWith({color, isEnable, isVisible, value}) {
+    return CellInfo(
+        color: color ?? this.color,
+        isEnable: isEnable ?? this.isEnable,
+        isVisible: isVisible ?? this.isVisible,
+        value: value ?? this.value);
+  }
+
   @override
   String toString() {
     return !isVisible ? "-" : cellColorsToString[color] as String;
   }
 
   @override
-  bool operator ==(Object other) {
-    CellInfo otherCellInfo = other as CellInfo;
-    return color == otherCellInfo.color &&
-        isVisible == otherCellInfo.isVisible &&
-        isEnable == otherCellInfo.isEnable;
-  }
-
-  @override
-  int get hashCode =>
-      (color.toString() + isVisible.toString() + isEnable.toString()).hashCode;
+  List<Object?> get props => [color, isVisible, isEnable, value];
 }

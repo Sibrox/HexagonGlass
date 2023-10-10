@@ -12,37 +12,40 @@ void main() {
     assert(game.nCol == 4);
 
     assert(game.origin[0][0] ==
-        CellInfo(color: CellColors.grey, isVisible: false));
+        const CellInfo(color: CellColors.grey, isVisible: false));
     assert(game.origin[0][1] ==
-        CellInfo(color: CellColors.secondary, isVisible: true));
+        const CellInfo(color: CellColors.secondary, isVisible: true));
     assert(game.origin[1][1] ==
-        CellInfo(color: CellColors.primary, isVisible: true));
-    assert(
-        game.origin[3][3] == CellInfo(color: CellColors.grey, isVisible: true));
+        const CellInfo(color: CellColors.primary, isVisible: true));
+    assert(game.origin[3][3] ==
+        const CellInfo(color: CellColors.grey, isVisible: true));
   });
 
   test('Test build from origin', () {
     String gameString = "- 2 - 2\n2 1 2 -\n2 - 2 -\n- - - 0";
     Game game = Game.buildFromString(gameString);
 
-    Game fromOrigin = game.buildFromOrigin();
-    assert(fromOrigin.status[0][1] == CellInfo(color: CellColors.grey));
+    Game fromOrigin = Game.buildFromOrigin(game.origin);
+    assert(fromOrigin.status[0][1] == const CellInfo(color: CellColors.grey));
   });
 
   test('Test generate from click', () {
     String gameString = "- 2 - 2\n2 1 2 -\n2 - 2 -\n- - - 0";
     Game game = Game.buildFromString(gameString);
 
-    Game assertGame = game.generateFromClick(0, 1);
-    assert(assertGame.status[0][1] == CellInfo(color: CellColors.primary));
+    Game assertGame = Game.generateFromClick(game, 0, 1);
+    assert(
+        assertGame.status[0][1] == const CellInfo(color: CellColors.primary));
 
-    assertGame = assertGame.generateFromClick(0, 1);
-    assert(assertGame.status[0][1] == CellInfo(color: CellColors.secondary));
+    assertGame = Game.generateFromClick(assertGame, 0, 1);
+    assert(
+        assertGame.status[0][1] == const CellInfo(color: CellColors.secondary));
 
-    assertGame = assertGame.generateFromClick(0, 1);
-    assert(assertGame.status[0][1] == CellInfo(color: CellColors.grey));
+    assertGame = Game.generateFromClick(assertGame, 0, 1);
+    assert(assertGame.status[0][1] == const CellInfo(color: CellColors.grey));
 
-    assertGame = assertGame.generateFromClick(0, 1);
-    assert(assertGame.status[0][1] == CellInfo(color: CellColors.primary));
+    assertGame = Game.generateFromClick(assertGame, 0, 1);
+    assert(
+        assertGame.status[0][1] == const CellInfo(color: CellColors.primary));
   });
 }

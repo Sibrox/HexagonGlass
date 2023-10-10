@@ -39,11 +39,12 @@ class MyApp extends StatelessWidget {
         home: MultiBlocProvider(
           providers: [
             BlocProvider(
-                create: (context) =>
-                    GameBloc(Game.buildFromString("0 1 0 1\n0 1 0 0"))),
+                create: (context) => GameBloc(
+                    Game.buildFromString("0 2 0 2\n0 1 0 -\n0 0 0 0"))),
             BlocProvider(create: (context) => DataBloc())
           ],
-          child: Container(child: GameGrid()),
+          child: Container(
+              padding: const EdgeInsets.all(20), child: const GameGrid()),
         ));
   }
 }

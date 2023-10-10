@@ -1,4 +1,4 @@
-package com.sibrox.hexagon_glass
+package com.example.hexagon_glass
 
 import io.flutter.embedding.android.FlutterActivity
 

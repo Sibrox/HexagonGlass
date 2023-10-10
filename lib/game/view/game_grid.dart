@@ -15,7 +15,7 @@ class GameGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GameBloc, Game>(builder: (context, state) {
+    return BlocBuilder<GameBloc, Game>(builder: (bloc, state) {
       return LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constrain) {
         var widgetGridWidth = constrain.biggest.width;
@@ -71,9 +71,14 @@ class GameGrid extends StatelessWidget {
                       spacing: -clippedValue,
                       children: List.generate(
                           state.nCol,
-                          (nCol) => HexagonCell(
-                              cellInfo: state.status[nRow][nCol],
-                              size: hexagonSide)))),
+                          (nCol) => GestureDetector(
+                                onTap: () => bloc
+                                    .read<GameBloc>()
+                                    .add(GameClickEvent(nRow, nCol)),
+                                child: HexagonCell(
+                                    cellInfo: state.status[nRow][nCol],
+                                    size: hexagonSide),
+                              )))),
             ));
       });
     });

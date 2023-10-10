@@ -9,6 +9,11 @@ final class GameLoadEvent extends GameEvent {
   const GameLoadEvent(this.origin);
 }
 
+final class GenerateRandomLevel extends GameEvent {
+  final int nCol, nRow;
+  const GenerateRandomLevel(this.nCol, this.nRow);
+}
+
 final class GameReloadEvent extends GameEvent {
   const GameReloadEvent();
 }

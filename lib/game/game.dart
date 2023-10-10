@@ -1,23 +1,28 @@
-import 'package:flutter/foundation.dart';
+import 'package:equatable/equatable.dart';
+import 'package:hexagon_glass/game/cell_colors.dart';
 
 import 'cell_info.dart';
 
-class Game {
-  late int nRow, nCol;
-  late List<List<CellInfo>> origin;
-  late List<List<CellInfo>> status;
+part 'game_logic.dart';
 
-  Game(
+class Game extends Equatable {
+  final int nRow, nCol;
+  final List<List<CellInfo>> origin;
+  final List<List<CellInfo>> status;
+
+  const Game(
       {required this.origin,
       required this.status,
       required this.nRow,
       required this.nCol});
 
-  Game.buildFromString(String serializedGame) {
+  factory Game.buildFromString(String serializedGame) {
     var rows = serializedGame.split('\n');
-    nRow = rows.length;
-    origin = [];
-    status = [];
+
+    var nCol = 0;
+    var nRow = rows.length;
+    List<List<CellInfo>> origin = [];
+    List<List<CellInfo>> status = [];
 
     for (var (i, row) in rows.indexed) {
       origin.add([]);
@@ -30,11 +35,13 @@ class Game {
         status[i].add(CellInfo.buildFromOrigin(origin[i][j]));
       }
     }
+
+    return Game(nCol: nCol, nRow: nRow, origin: origin, status: status);
   }
 
-  Game buildFromOrigin() {
-    nRow = origin.length;
-    nCol = origin[0].length;
+  factory Game.buildFromOrigin(List<List<CellInfo>> origin) {
+    var nRow = origin.length;
+    var nCol = origin[0].length;
 
     List<List<CellInfo>> changeGame = [];
     for (var (i, row) in origin.indexed) {
@@ -47,24 +54,22 @@ class Game {
         nRow: nRow, nCol: nCol, origin: List.from(origin), status: changeGame);
   }
 
-  Game generateFromClick(int i, int j) {
-    List<List<CellInfo>> changeGame = List.from(status);
-    changeGame[i][j].toggle();
+  factory Game.generateFromClick(Game currentState, int i, int j) {
+    List<List<CellInfo>> changeGame =
+        List.from(currentState.status.map((list) => List<CellInfo>.from(list)));
+    changeGame[i][j] = CellInfo.toggle(changeGame[i][j]);
+
     return Game(
-        nRow: nRow, nCol: nCol, origin: List.from(origin), status: changeGame);
+        nRow: currentState.nRow,
+        nCol: currentState.nCol,
+        origin: currentState.origin,
+        status: changeGame);
+  }
+
+  factory Game.random(int nCol, int nRow, [int? seed]) {
+    throw Exception("Not implemented yet");
   }
 
   @override
-  bool operator ==(Object other) {
-    Game otherGame = (other as Game);
-    if (otherGame.status.length != status.length) return false;
-
-    for (var (i, _) in status.indexed) {
-      if (!listEquals(status[i], otherGame.status[i])) return false;
-    }
-    return true;
-  }
-
-  @override
-  int get hashCode => status.hashCode;
+  List<Object?> get props => [nCol, nRow, origin, status];
 }

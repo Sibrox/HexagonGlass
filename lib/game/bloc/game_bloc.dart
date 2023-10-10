@@ -10,11 +10,11 @@ class GameBloc extends Bloc<GameEvent, Game> {
     });
 
     on<GameClickEvent>((event, emit) {
-      emit(state.generateFromClick(event.i, event.j));
+      emit(Game.generateFromClick(state, event.i, event.j));
     });
 
     on<GameReloadEvent>((event, emit) {
-      emit(state.buildFromOrigin());
+      emit(Game.buildFromOrigin(state.origin));
     });
   }
 }
