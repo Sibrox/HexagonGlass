@@ -8,6 +8,12 @@ const nextColor = {
   CellColors.grey: CellColors.primary
 };
 
+const randomColor = {
+  0: CellColors.grey,
+  1: CellColors.primary,
+  2: CellColors.secondary,
+};
+
 class CellInfo extends Equatable {
   final CellColors color;
   final bool isEnable;
@@ -26,6 +32,10 @@ class CellInfo extends Equatable {
         isEnable: originInfo.isEnable,
         isVisible: originInfo.isVisible,
         value: originInfo.value);
+  }
+
+  factory CellInfo.random(int rand) {
+    return CellInfo(color: randomColor[rand]!, isEnable: rand != 0, isVisible:  rand != 0);
   }
 
   CellInfo toggle() {

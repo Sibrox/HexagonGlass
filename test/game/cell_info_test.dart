@@ -45,4 +45,15 @@ void main() {
     info = info.toggle();
     assert(info.color == CellColors.primary);
   });
+
+  test('Random CellInfo', () {
+    CellInfo primary = CellInfo.random(1);
+    assert(primary == const CellInfo(color: CellColors.primary));
+
+    CellInfo secondary = CellInfo.random(2);
+    assert(secondary == const CellInfo(color: CellColors.secondary));
+
+    CellInfo invisible = CellInfo.random(0);
+    assert(invisible == const CellInfo(color: CellColors.grey, isVisible: false, isEnable: false));
+  });
 }
