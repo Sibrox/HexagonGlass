@@ -1,10 +1,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexagon_glass/animated/animated_pop.dart';
 import 'package:hexagon_glass/animated/animated_pulse.dart';
 import 'package:hexagon_glass/core/block.dart';
 import 'package:hexagon_glass/core/block_grid.dart';
+import 'package:hexagon_glass/game/bloc/game_bloc.dart';
+import 'package:hexagon_glass/game/game.dart';
 import 'package:hexagon_glass/screens/level.dart';
 import 'package:hexagon_glass/ui/stroke_text.dart';
 import 'package:hexagon_glass/widgets/hexagon_button.dart';
@@ -42,9 +45,14 @@ class _PageMenuState extends State<PageMenu> {
         .push(PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 800),
           reverseTransitionDuration: const Duration(milliseconds: 500),
-          pageBuilder: (_, __, ___) => Level(
-            currentTheme: widget.currentTheme,
-            level: menuGrid.matrix[i][j].value,
+          pageBuilder: (_, __, ___) => BlocProvider(
+            create: (context) => GameBloc(Game.random(
+                widget.currentTheme.levelDimension[1],
+                widget.currentTheme.levelDimension[0])),
+            child: Level(
+              currentTheme: widget.currentTheme,
+              level: menuGrid.matrix[i][j].value,
+            ),
           ),
           transitionsBuilder: (BuildContext context,
               Animation<double> animation,

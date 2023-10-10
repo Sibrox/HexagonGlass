@@ -54,6 +54,8 @@ void main() {
     assert(secondary == const CellInfo(color: CellColors.secondary));
 
     CellInfo invisible = CellInfo.random(0);
-    assert(invisible == const CellInfo(color: CellColors.grey, isVisible: false, isEnable: false));
+    assert(invisible ==
+        const CellInfo(
+            color: CellColors.grey, isVisible: false, isEnable: false));
   });
 }

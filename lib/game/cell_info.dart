@@ -35,7 +35,9 @@ class CellInfo extends Equatable {
   }
 
   factory CellInfo.random(int rand) {
-    return CellInfo(color: randomColor[rand]!, isEnable: rand != 0, isVisible:  rand != 0);
+    assert(rand < 3 && rand >= 0);
+    return CellInfo(
+        color: randomColor[rand]!, isEnable: rand != 0, isVisible: rand != 0);
   }
 
   CellInfo toggle() {

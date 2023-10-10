@@ -16,5 +16,9 @@ class GameBloc extends Bloc<GameEvent, Game> {
     on<GameReloadEvent>((event, emit) {
       emit(Game.buildFromOrigin(state.origin));
     });
+
+    on<GenerateRandomEvent>((event, emit) {
+      emit(Game.random(event.nRow, event.nCol));
+    });
   }
 }

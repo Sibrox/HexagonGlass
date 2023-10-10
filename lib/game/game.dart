@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
 import 'package:hexagon_glass/game/cell_colors.dart';
 
@@ -44,7 +46,7 @@ class Game extends Equatable {
         status[i].add(CellInfo.buildFromOrigin(originInfo));
       }
     }
-    
+
     return Game(nCol: nCol, nRow: nRow, origin: origin, status: status);
   }
 
@@ -52,15 +54,9 @@ class Game extends Equatable {
     var nRow = origin.length;
     var nCol = origin[0].length;
 
-    List<List<CellInfo>> changeGame = [];
-    for (var (i, row) in origin.indexed) {
-      changeGame.add([]);
-      for (var cellInfo in row) {
-        changeGame[i].add(CellInfo.buildFromOrigin(cellInfo));
-      }
-    }
+    List<List<CellInfo>> status = Logic.buildStatus(origin);
     return Game(
-        nRow: nRow, nCol: nCol, origin: List.from(origin), status: changeGame);
+        nRow: nRow, nCol: nCol, origin: List.from(origin), status: status);
   }
 
   factory Game.generateFromClick(Game currentState, int i, int j) {
@@ -75,8 +71,12 @@ class Game extends Equatable {
         status: changeGame);
   }
 
-  factory Game.random(int nCol, int nRow, [int? seed]) {
-    throw Exception("Not implemented yet");
+  factory Game.random(int nRow, int nCol, [int? seed]) {
+    List<List<CellInfo>> origin = Logic.buildRandomOrigin(nRow, nCol);
+    origin = Logic.calculateValues(origin);
+    List<List<CellInfo>> status = Logic.buildStatus(origin);
+
+    return Game(nCol: nCol, nRow: nRow, origin: origin, status: status);
   }
 
   Game copyWith({nCol, nRow, origin, status}) {

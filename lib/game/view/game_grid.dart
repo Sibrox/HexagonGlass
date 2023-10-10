@@ -5,9 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexagon_glass/game/bloc/game_bloc.dart';
 import 'package:hexagon_glass/game/game.dart';
 import 'package:hexagon_glass/game/view/hexagon_cell.dart';
+import 'package:hexagon_glass/ui/hexagon_theme.dart';
 
 class GameGrid extends StatelessWidget {
-  const GameGrid({super.key});
+  final PlanetTheme theme;
+  const GameGrid({super.key, required this.theme});
 
   bool isOdd(int num) {
     return num % 2 != 0;
@@ -76,6 +78,7 @@ class GameGrid extends StatelessWidget {
                                     .read<GameBloc>()
                                     .add(GameClickEvent(nRow, nCol)),
                                 child: HexagonCell(
+                                    theme: theme,
                                     cellInfo: state.status[nRow][nCol],
                                     size: hexagonSide),
                               )))),

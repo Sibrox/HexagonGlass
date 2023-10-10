@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:hexagon_glass/screens/tutorial.dart';
 
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
-import 'package:hexagon_glass/game/view/game_grid.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'core/player_status.dart';
@@ -37,14 +36,8 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Rowdies',
         ),
         home: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-                create: (context) => GameBloc(
-                    Game.buildFromString("1 2 1 2\n2 1 1 -\n1 2 2 2"))),
-            BlocProvider(create: (context) => DataBloc())
-          ],
-          child: Container(
-              padding: const EdgeInsets.all(20), child: const GameGrid()),
+          providers: [BlocProvider(create: (context) => DataBloc())],
+          child: const MyHomePage(title: 'Flutter Demo Home Page'),
         ));
   }
 }
@@ -78,12 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Themes().loadThemes(themes);
 
     var permission = await Permission.storage.request();
-    if (permission.isGranted) {
-      Map<String, dynamic> json = await SaveFolder.getSaveFile();
-      Status.instance.loadStatus(json);
-    } else {
-      //TODO:handle the case: user deny storage permission.
-    }
+    Map<String, dynamic> json = await SaveFolder.getSaveFile();
+    Status.instance.loadStatus(json);
 
     setState(() {
       loaded = true;
