@@ -8,9 +8,12 @@ import 'package:hexagon_glass/game/game.dart';
 import 'package:hexagon_glass/game/view/hexagon_cell.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 
-class GameGrid extends StatelessWidget {
+class HexagonGrid extends StatelessWidget {
   final PlanetTheme theme;
-  const GameGrid({super.key, required this.theme});
+  final Game game;
+  final Function(int nRow, int nCol)? onTap;
+  const HexagonGrid(
+      {super.key, required this.game, this.onTap, required this.theme});
 
   bool isOdd(int num) {
     return num % 2 != 0;
