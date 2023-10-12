@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexagon_glass/animated/animated_tap.dart';
 import 'package:hexagon_glass/game/bloc/game_bloc.dart';
 import 'package:hexagon_glass/game/game.dart';
 import 'package:hexagon_glass/game/view/hexagon_cell.dart';
@@ -73,7 +74,7 @@ class GameGrid extends StatelessWidget {
                       spacing: -clippedValue,
                       children: List.generate(
                           state.nCol,
-                          (nCol) => GestureDetector(
+                          (nCol) => AnimatedTap(
                                 onTap: () => bloc
                                     .read<GameBloc>()
                                     .add(GameClickEvent(nRow, nCol)),

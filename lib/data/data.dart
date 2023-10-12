@@ -16,7 +16,7 @@ enum Difficulty {
 @JsonSerializable()
 class Data {
   bool tutorialDone;
-  late Map<Difficulty, int> progress;
+  final Map<Difficulty, int> progress;
 
   Data({this.tutorialDone = false, required this.progress});
 
