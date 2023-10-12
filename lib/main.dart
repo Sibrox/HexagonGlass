@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexagon_glass/data/bloc/data_bloc.dart';
-import 'package:hexagon_glass/game/bloc/game_bloc.dart';
-import 'package:hexagon_glass/game/game.dart';
 import 'package:hexagon_glass/screens/loading.dart';
 import 'package:hexagon_glass/screens/menu.dart';
 import 'package:flutter/services.dart';
@@ -70,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var themes = await rootBundle.loadString('resources/themes.json');
     Themes().loadThemes(themes);
 
-    var permission = await Permission.storage.request();
+    await Permission.storage.request();
     Map<String, dynamic> json = await SaveFolder.getSaveFile();
     Status.instance.loadStatus(json);
 

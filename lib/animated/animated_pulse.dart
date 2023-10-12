@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class AnimatedPulse extends StatefulWidget {
-  Widget child;
-  Duration duration;
-  AnimatedPulse({
+  final Widget child;
+  final Duration duration;
+  const AnimatedPulse({
     Key? key,
     required this.child,
     required this.duration,

@@ -41,7 +41,7 @@ void main() {
         act: (bloc) => bloc.add(const UpdatedProgressEvent(Difficulty.easy)),
         expect: () {
           return [
-            DataState(
+            const DataState(
                 data: Data(tutorialDone: false, progress: {
               Difficulty.easy: 1,
               Difficulty.medium: 0,
@@ -60,25 +60,25 @@ void main() {
         },
         expect: () {
           return [
-            DataState(
+            const DataState(
                 data: Data(tutorialDone: false, progress: {
               Difficulty.easy: 1,
               Difficulty.medium: 0,
               Difficulty.hard: 0
             })),
-            DataState(
+            const DataState(
                 data: Data(tutorialDone: false, progress: {
               Difficulty.easy: 1,
               Difficulty.medium: 1,
               Difficulty.hard: 0
             })),
-            DataState(
+            const DataState(
                 data: Data(tutorialDone: false, progress: {
               Difficulty.easy: 2,
               Difficulty.medium: 1,
               Difficulty.hard: 0
             })),
-            DataState(
+            const DataState(
                 data: Data(tutorialDone: false, progress: {
               Difficulty.easy: 2,
               Difficulty.medium: 1,

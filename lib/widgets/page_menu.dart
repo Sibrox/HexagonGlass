@@ -16,9 +16,8 @@ import '../core/player_status.dart';
 import '../ui/hexagon_theme.dart';
 
 class PageMenu extends StatefulWidget {
-  PlanetTheme currentTheme;
-
-  PageMenu({Key? key, required this.currentTheme}) : super(key: key);
+  final PlanetTheme currentTheme;
+  const PageMenu({Key? key, required this.currentTheme}) : super(key: key);
 
   @override
   _PageMenuState createState() => _PageMenuState();

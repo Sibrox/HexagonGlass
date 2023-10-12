@@ -4,7 +4,7 @@ import 'package:hexagon_glass/data/data.dart';
 
 void main() {
   test("Data equal", () {
-    var data = Data(progress: {
+    var data = const Data(progress: {
       Difficulty.easy: 0,
       Difficulty.medium: 0,
       Difficulty.hard: 0
