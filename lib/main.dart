@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexagon_glass/data/bloc/data_bloc.dart';
 import 'package:hexagon_glass/screens/loading.dart';
 import 'package:hexagon_glass/screens/menu.dart';
 import 'package:flutter/services.dart';
@@ -26,13 +28,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Rowdies',
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          fontFamily: 'Rowdies',
+        ),
+        home: MultiBlocProvider(
+          providers: [BlocProvider(create: (context) => DataBloc())],
+          child: const MyHomePage(title: 'Flutter Demo Home Page'),
+        ));
   }
 }
 
@@ -64,13 +68,9 @@ class _MyHomePageState extends State<MyHomePage> {
     var themes = await rootBundle.loadString('resources/themes.json');
     Themes().loadThemes(themes);
 
-    var permission = await Permission.storage.request();
-    if (permission.isGranted) {
-      Map<String, dynamic> json = await SaveFolder.getSaveFile();
-      Status.instance.loadStatus(json);
-    } else {
-      //TODO:handle the case: user deny storage permission.
-    }
+    await Permission.storage.request();
+    Map<String, dynamic> json = await SaveFolder.getSaveFile();
+    Status.instance.loadStatus(json);
 
     setState(() {
       loaded = true;

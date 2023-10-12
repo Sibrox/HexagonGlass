@@ -10,9 +10,8 @@ import 'package:hexagon_glass/ui/stroke_text.dart';
 import '../widgets/game_grid.dart';
 
 class Tutorial extends StatefulWidget {
-  Function endTutorial;
-
-  Tutorial({Key? key, required this.endTutorial}) : super(key: key);
+  final Function endTutorial;
+  const Tutorial({Key? key, required this.endTutorial}) : super(key: key);
 
   @override
   State<Tutorial> createState() => _TutorialState();

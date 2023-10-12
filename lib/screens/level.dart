@@ -1,11 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexagon_glass/core/game_logic.dart';
+import 'package:hexagon_glass/game/bloc/game_bloc.dart';
+import 'package:hexagon_glass/game/game.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:hexagon_glass/animated/animated_pulse.dart';
 
-import 'package:hexagon_glass/widgets/game_grid.dart';
+import 'package:hexagon_glass/game/view/hexagon_grid.dart';
 
 import '../core/player_status.dart';
 
@@ -102,10 +105,14 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                 )),
             Flexible(
                 flex: 8,
-                child: GameGrid(
-                    gameLogic: gameLogic,
-                    currentTheme: widget.currentTheme,
-                    onClick: onGameClick)),
+                child: BlocBuilder<GameBloc, Game>(
+                    builder: (context, state) => HexagonGrid(
+                        game: state,
+                        onTap: (nRow, nCol) {
+                          BlocProvider.of<GameBloc>(context)
+                              .add(GameClickEvent(nRow, nCol));
+                        },
+                        theme: widget.currentTheme))),
             Flexible(
                 flex: 1,
                 child: Center(
@@ -146,9 +153,8 @@ class _LevelState extends State<Level> with TickerProviderStateMixin {
                                     _controllerRotation.reset();
                                     _controllerRotation.forward();
 
-                                    setState(() {
-                                      gameLogic.resetGame();
-                                    });
+                                    BlocProvider.of<GameBloc>(context)
+                                        .add(const GameReloadEvent());
                                   },
                                   child: Padding(
                                       padding: const EdgeInsets.all(8),
