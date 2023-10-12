@@ -1,10 +1,10 @@
 part of 'data_bloc.dart';
 
-class DataState {
+class DataState extends Equatable {
   final bool loaded;
   final Data data;
 
-  DataState({required this.data, this.loaded = false});
+  const DataState({required this.data, this.loaded = false});
   factory DataState.init() {
     return DataState(data: Data.init());
   }
@@ -18,15 +18,10 @@ class DataState {
   }
 
   @override
-  bool operator ==(Object other) {
-    return other is DataState && loaded == other.loaded && data == other.data;
-  }
-
-  @override
-  int get hashCode => data.hashCode;
-
-  @override
   String toString() {
     return data.toString();
   }
+
+  @override
+  List<Object?> get props => [loaded, data];
 }

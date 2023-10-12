@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'data.g.dart';
 
@@ -14,11 +14,11 @@ enum Difficulty {
 }
 
 @JsonSerializable()
-class Data {
-  bool tutorialDone;
+class Data extends Equatable {
+  final bool tutorialDone;
   final Map<Difficulty, int> progress;
 
-  Data({this.tutorialDone = false, required this.progress});
+  const Data({this.tutorialDone = false, required this.progress});
 
   factory Data.init({tutorialDone = false}) {
     const progress = {
@@ -40,17 +40,10 @@ class Data {
   Map<String, dynamic> toJson() => _$DataToJson(this);
 
   @override
-  bool operator ==(Object other) {
-    return other is Data &&
-        other.tutorialDone == tutorialDone &&
-        mapEquals(other.progress, progress);
-  }
-
-  @override
-  int get hashCode => progress.hashCode;
-
-  @override
   String toString() {
     return const JsonEncoder.withIndent('  ').convert(toJson());
   }
+
+  @override
+  List<Object?> get props => [tutorialDone, progress];
 }

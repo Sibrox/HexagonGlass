@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class AnimatedTap extends StatefulWidget {
   final Widget child;
   final Function onTap;
-  const AnimatedTap({Key? key, required this.child, required this.onTap}) : super(key: key);
+  const AnimatedTap({Key? key, required this.child, required this.onTap})
+      : super(key: key);
 
   @override
   _AnimatedTapState createState() => _AnimatedTapState();

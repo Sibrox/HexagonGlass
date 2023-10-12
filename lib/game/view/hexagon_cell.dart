@@ -5,22 +5,23 @@ import 'package:hexagon_glass/game/cell_info.dart';
 import 'package:hexagon_glass/ui/hexagon_theme.dart';
 import 'package:hexagon_glass/ui/stroke_text.dart';
 
-var chooseColor = (PlanetTheme theme, CellColors cellColors) {
-  switch(cellColors) {
-    case CellColors.primary:
-      return theme.color_1;
-    case CellColors.secondary:
-      return theme.color_2;
-    case CellColors.grey:
-      return theme.no_color;
-  }
-};
-
 class HexagonCell extends StatelessWidget {
   final double size;
   final CellInfo cellInfo;
   final PlanetTheme theme;
-  const HexagonCell({super.key, required this.cellInfo,required this.theme, this.size = 15});
+  const HexagonCell(
+      {super.key, required this.cellInfo, required this.theme, this.size = 15});
+
+  Color chooseColor(PlanetTheme theme, CellColors cellColors) {
+    switch (cellColors) {
+      case CellColors.primary:
+        return theme.color_1;
+      case CellColors.secondary:
+        return theme.color_2;
+      case CellColors.grey:
+        return theme.no_color;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class HexagonCell extends StatelessWidget {
           child: cellInfo.isVisible
               ? Container(
                   decoration: BoxDecoration(
-                    color: chooseColor(theme,cellInfo.color),
+                    color: chooseColor(theme, cellInfo.color),
                   ),
                   child: Center(
                       child: DefaultTextStyle(
